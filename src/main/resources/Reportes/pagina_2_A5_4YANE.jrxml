@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="report name" pageWidth="595" pageHeight="421" orientation="Landscape" columnWidth="555"
+              leftMargin="20" rightMargin="20" topMargin="10" bottomMargin="7"
+              uuid="c2e8197a-6522-427e-86e5-f99d6e441241">
+    <property name="ireport.zoom" value="1.7715610000000015"/>
+    <property name="ireport.x" value="0"/>
+    <property name="ireport.y" value="0"/>
+    <parameter name="laboratorio" class="java.lang.String"/>
+    <parameter name="paciente" class="java.lang.String"/>
+    <parameter name="protocolo" class="java.lang.String"/>
+    <parameter name="medico" class="java.lang.String"/>
+    <parameter name="especialidad" class="java.lang.String"/>
+    <parameter name="motivo" class="java.lang.String"/>
+    <parameter name="lugar" class="java.lang.String"/>
+    <parameter name="fecha" class="java.lang.String"/>
+    <parameter name="hora" class="java.lang.String"/>
+    <parameter name="logo" class="java.lang.Object"/>
+    <parameter name="observacion2" class="java.lang.String"/>
+    <parameter name="dni" class="java.lang.String"/>
+    <queryString>
+        <![CDATA[SELECT titulos.nombre as titulos, analisis.nombre as analisis, resultados.resultado as resultados, analisis.unidad as unidades,analisis.valoresreferencia as referencias, resultados.observacion as observacion, metodos.Nombre as metodo,practicas.determinacion_practica as practica FROM resultados
+INNER JOIN practicas ON practicas.id_practicas = resultados.id_practicas 
+INNER JOIN analisis ON analisis.id_analisis = resultados.id_analisis 
+LEFT JOIN titulos ON titulos.id_titulo = analisis.id_titulo 
+INNER JOIN pacientes ON pacientes.id_pacientes = resultados.id_pacientes 
+INNER JOIN personas ON personas.dni = pacientes.personas_dni  
+INNER JOIN historia_clinica ON historia_clinica.id_ordenes = resultados.id_ordenes 
+LEFT JOIN secciones ON secciones.id_secciones = practicas.id_seccion 
+LEFT JOIN metodos ON metodos.idmetodos=analisis.idmetodos
+WHERE historia_clinica.idhistoria_clinica=$P{protocolo} and resultados.estado_imprime=1 and practicas.tipo_informe=4
+ORDER BY historia_clinica.idhistoria_clinica, secciones.prioridad, practicas.prioridad, analisis.prioridad, 
+practicas.determinacion_practica, titulos.nombre]]>
+    </queryString>
+    <field name="titulos" class="java.lang.String"/>
+    <field name="analisis" class="java.lang.String"/>
+    <field name="resultados" class="java.lang.String"/>
+    <field name="unidades" class="java.lang.String"/>
+    <field name="referencias" class="java.lang.String"/>
+    <field name="observacion" class="java.lang.String">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="metodo" class="java.lang.String"/>
+    <field name="practica" class="java.lang.String"/>
+    <group name="titulo">
+        <groupExpression><![CDATA[$F{practica}]]></groupExpression>
+        <groupHeader>
+            <band height="20">
+                <textField>
+                    <reportElement x="0" y="0" width="554" height="19" uuid="7a9e66af-1b69-4b7b-aa55-7e043035581c"/>
+                    <box>
+                        <topPen lineWidth="0.5"/>
+                        <leftPen lineWidth="0.5"/>
+                        <bottomPen lineWidth="0.5"/>
+                        <rightPen lineWidth="0.5"/>
+                    </box>
+                    <textElement textAlignment="Center" verticalAlignment="Middle">
+                        <font size="9" isBold="true" isUnderline="false"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA["INFORME DE MICROBIOLOGIA - "+$F{practica}]]></textFieldExpression>
+                </textField>
+            </band>
+        </groupHeader>
+        <groupFooter>
+            <band height="15">
+                <staticText>
+                    <reportElement x="6" y="0" width="28" height="13" uuid="9b6b65c1-3407-4b7d-9a1e-477e8f649007"/>
+                    <textElement verticalAlignment="Middle">
+                        <font size="9" isBold="true"/>
+                    </textElement>
+                    <text><![CDATA[Obs.:]]></text>
+                </staticText>
+                <textField isBlankWhenNull="true">
+                    <reportElement x="34" y="0" width="520" height="13" isPrintWhenDetailOverflows="true"
+                                   uuid="00e7c436-0872-47fe-93a2-96c807d2ca77"/>
+                    <textElement verticalAlignment="Top">
+                        <font size="9"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA[$F{observacion}]]></textFieldExpression>
+                </textField>
+            </band>
+        </groupFooter>
+    </group>
+    <group name="Analisis" keepTogether="true">
+        <groupExpression><![CDATA[$F{titulos}]]></groupExpression>
+        <groupHeader>
+            <band height="18">
+                <textField>
+                    <reportElement x="6" y="5" width="119" height="13" uuid="eb2b3f13-793f-4c3a-a7eb-75fc1671b307"/>
+                    <textElement>
+                        <font isBold="true" isUnderline="false"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA[$F{titulos}]]></textFieldExpression>
+                </textField>
+            </band>
+        </groupHeader>
+        <groupFooter>
+            <band height="3">
+                <line>
+                    <reportElement x="0" y="0" width="554" height="1" uuid="13fd5560-0e20-49e5-8384-1ed008658cfd"/>
+                </line>
+            </band>
+        </groupFooter>
+    </group>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <detail>
+        <band height="15">
+            <textField>
+                <reportElement x="6" y="0" width="549" height="13" uuid="df0eab0f-c0b8-4994-8543-a59c3768de75"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font size="9" isBold="false"/>
+                    <paragraph leftIndent="20"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{analisis}+ " "+$F{resultados}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+</jasperReport>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20"
+              topMargin="20" bottomMargin="20" uuid="865df6a0-23af-417b-9c94-b1cdfb8e65ba">
+    <property name="ireport.zoom" value="1.0"/>
+    <property name="ireport.x" value="0"/>
+    <property name="ireport.y" value="0"/>
+    <parameter name="protocolo" class="java.lang.String">
+        <defaultValueExpression><![CDATA[]]></defaultValueExpression>
+    </parameter>
+    <parameter name="id_historia_clinica" class="java.lang.String">
+        <defaultValueExpression><![CDATA[]]></defaultValueExpression>
+    </parameter>
+    <queryString>
+        <![CDATA[SELECT titulos.nombre as titulos, analisis.nombre as analisis, resultados.resultado as resultados, analisis.unidad as unidades,analisis.valoresreferencia as referencias, resultados.observacion as observacion, metodos.Nombre as metodo,practicas.determinacion_practica as practica,analisis.id_analisis FROM resultados
+INNER JOIN practicas ON practicas.id_practicas = resultados.id_practicas 
+INNER JOIN analisis ON analisis.id_analisis = resultados.id_analisis 
+LEFT JOIN titulos ON titulos.id_titulo = analisis.id_titulo 
+INNER JOIN pacientes ON pacientes.id_pacientes = resultados.id_pacientes 
+INNER JOIN personas ON personas.dni = pacientes.personas_dni  
+INNER JOIN historia_clinica ON historia_clinica.id_ordenes = resultados.id_ordenes 
+LEFT JOIN secciones ON secciones.id_secciones = practicas.id_seccion 
+LEFT JOIN metodos ON metodos.idmetodos=analisis.idmetodos
+WHERE historia_clinica.idhistoria_clinica=$P{id_historia_clinica} and resultados.estado_imprime=1 and practicas.tipo_informe=6 and analisis.estado=1
+ORDER BY historia_clinica.idhistoria_clinica, secciones.prioridad, practicas.prioridad, analisis.prioridad, 
+practicas.determinacion_practica, titulos.nombre]]>
+    </queryString>
+    <field name="titulos" class="java.lang.String"/>
+    <field name="analisis" class="java.lang.String"/>
+    <field name="resultados" class="java.lang.String"/>
+    <field name="unidades" class="java.lang.String"/>
+    <field name="referencias" class="java.lang.String"/>
+    <field name="observacion" class="java.lang.String">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="metodo" class="java.lang.String"/>
+    <field name="practica" class="java.lang.String"/>
+    <field name="id_analisis" class="java.lang.Integer">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <title>
+        <band height="102" splitType="Stretch"/>
+    </title>
+    <pageHeader>
+        <band height="35" splitType="Stretch"/>
+    </pageHeader>
+    <columnHeader>
+        <band height="61" splitType="Stretch">
+            <staticText>
+                <reportElement x="13" y="2" width="100" height="20" uuid="718285e7-1a27-4632-8cd4-7447716075f2"/>
+                <text><![CDATA[analisis]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="191" y="2" width="100" height="20" uuid="f039b94b-6ce6-48cb-b483-5348cbf934df"/>
+                <text><![CDATA[analisis]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="125" splitType="Stretch">
+            <textField>
+                <reportElement x="13" y="12" width="100" height="20" uuid="9e565ecf-619c-43d3-85ff-2281edbbcf44"/>
+                <textFieldExpression>
+                    <![CDATA[$F{id_analisis} == 193 ? $F{analisis} : "No posee valor"]]></textFieldExpression>
+            </textField>
+        </band>
+        <band height="50">
+            <textField>
+                <reportElement x="170" y="0" width="100" height="20" uuid="82a56a2f-7bd6-426c-9eaf-d9b339d2adce"/>
+                <textFieldExpression>
+                    <![CDATA[$F{id_analisis} == 194 ? $F{analisis} : "No posee valor"]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    <columnFooter>
+        <band height="45" splitType="Stretch"/>
+    </columnFooter>
+    <pageFooter>
+        <band height="54" splitType="Stretch"/>
+    </pageFooter>
+    <summary>
+        <band height="42" splitType="Stretch"/>
+    </summary>
+</jasperReport>

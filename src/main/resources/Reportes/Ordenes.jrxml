@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20"
+              topMargin="9" bottomMargin="20" uuid="e041c7c9-d3b3-403a-987b-bfa16f3b4d27">
+    <property name="ireport.zoom" value="1.8150000000000046"/>
+    <property name="ireport.x" value="0"/>
+    <property name="ireport.y" value="0"/>
+    <parameter name="matricula" class="java.lang.String"/>
+    <parameter name="periodo" class="java.lang.String"/>
+    <parameter name="obra_social" class="java.lang.String"/>
+    <parameter name="num_obra_social" class="java.lang.String"/>
+    <parameter name="fecha" class="java.lang.String"/>
+    <parameter name="laboratorio" class="java.lang.String"/>
+    <parameter name="domicilio_lab" class="java.lang.String"/>
+    <parameter name="localidad" class="java.lang.String"/>
+    <parameter name="pacientes" class="java.lang.String"/>
+    <parameter name="practicas" class="java.lang.String"/>
+    <parameter name="total_letras_pesos" class="java.lang.String"/>
+    <parameter name="total" class="java.lang.String"/>
+    <parameter name="total_letras_centavos" class="java.lang.String"/>
+    <parameter name="foto" class="java.lang.Object"/>
+    <parameter name="nombre" class="java.lang.String"/>
+    <parameter name="direccion" class="java.lang.String"/>
+    <parameter name="telefono" class="java.lang.String"/>
+    <parameter name="mail" class="java.lang.String"/>
+    <field name="numero_afiliado" class="java.lang.String"/>
+    <field name="nombre_afiliado" class="java.lang.String"/>
+    <field name="orden" class="java.lang.String"/>
+    <field name="codigo_analisis" class="java.lang.String"/>
+    <field name="analisis" class="java.lang.String"/>
+    <field name="importe" class="java.lang.String"/>
+    <field name="codigo_fac" class="java.lang.String"/>
+    <field name="fecha" class="java.lang.String"/>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <title>
+        <band/>
+    </title>
+    <pageHeader>
+        <band height="102">
+            <staticText>
+                <reportElement x="10" y="89" width="63" height="10" uuid="f9b68fd5-1a78-4905-a677-e2bb8d3edfd1"/>
+                <textElement textAlignment="Left">
+                    <font fontName="Verdana" size="8" isBold="true"/>
+                </textElement>
+                <text><![CDATA[N° de Afiliado]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="73" y="89" width="122" height="10" uuid="80f3d267-05fb-4bb2-ba32-10e6bd6858d7"/>
+                <textElement textAlignment="Center">
+                    <font fontName="Verdana" size="8" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Nombre Afiliado]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="195" y="89" width="45" height="10" uuid="987bb10f-ae42-470c-b279-208db74241ad"/>
+                <textElement textAlignment="Center">
+                    <font fontName="Verdana" size="8" isBold="true"/>
+                </textElement>
+                <text><![CDATA[N° Orden]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="240" y="89" width="38" height="10" uuid="a70558b2-92fd-493b-bf9e-1f667b8bd914"/>
+                <textElement textAlignment="Center">
+                    <font fontName="Verdana" size="8" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Codigo]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="370" y="89" width="129" height="10" uuid="90f8cc25-eb58-4600-98df-fd6bdc00ca95"/>
+                <textElement textAlignment="Center">
+                    <font fontName="Verdana" size="8" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Analisis]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="501" y="89" width="48" height="10" uuid="b4aa0396-d0f6-4ce6-bc77-2e2908e2e285"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Verdana" size="8" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Importe]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="9" y="73" width="52" height="10" uuid="5da1d715-6e0c-4e86-b85a-87f466290305"/>
+                <textElement>
+                    <font fontName="Verdana" size="8"/>
+                </textElement>
+                <text><![CDATA[Domicilio:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="392" y="53" width="91" height="20" uuid="5da1d715-6e0c-4e86-b85a-87f466290305"/>
+                <textElement>
+                    <font fontName="Verdana" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Obra Social N°:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="9" y="53" width="20" height="11" uuid="5da1d715-6e0c-4e86-b85a-87f466290305"/>
+                <textElement>
+                    <font fontName="Verdana" size="8"/>
+                </textElement>
+                <text><![CDATA[a:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="306" y="74" width="64" height="10" uuid="5da1d715-6e0c-4e86-b85a-87f466290305"/>
+                <textElement>
+                    <font fontName="Verdana" size="8"/>
+                </textElement>
+                <text><![CDATA[Localidad:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="9" y="63" width="52" height="10" uuid="5da1d715-6e0c-4e86-b85a-87f466290305"/>
+                <textElement>
+                    <font fontName="Verdana" size="8"/>
+                </textElement>
+                <text><![CDATA[Laboratorio:]]></text>
+            </staticText>
+            <textField pattern="">
+                <reportElement x="9" y="42" width="539" height="11" uuid="24e24fe1-c069-4177-aaab-ff39b15c0021"/>
+                <textElement>
+                    <font fontName="Verdana" size="8"/>
+                </textElement>
+                <textFieldExpression>
+                    <![CDATA["Resumen por servicios de Laboratorio prestados durante el periodo de:   "+  $P{periodo}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="27" y="53" width="366" height="11" uuid="3f90ca45-0911-45d9-8a2d-b37e5424918d"/>
+                <textElement>
+                    <font fontName="Verdana" size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{obra_social}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="483" y="53" width="56" height="20" uuid="62ef6189-40d8-4e06-8aea-8ab27ccf520c"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Verdana" size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{num_obra_social}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="61" y="63" width="422" height="10" uuid="187674c5-ef39-4650-ae8f-25335b7641be"/>
+                <textElement>
+                    <font fontName="Verdana" size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{laboratorio}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="61" y="73" width="246" height="10" uuid="2ef4f4e9-e348-4d0b-a0af-ad5d24680480"/>
+                <textElement>
+                    <font fontName="Verdana" size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{domicilio_lab}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="370" y="74" width="169" height="10" uuid="c3c21000-1f78-43b8-90ce-331f426886a1"/>
+                <textElement>
+                    <font fontName="Verdana" size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{localidad}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="440" y="15" width="61" height="13" uuid="5da1d715-6e0c-4e86-b85a-87f466290305"/>
+                <textElement>
+                    <font fontName="Verdana" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Matrícula:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="499" y="15" width="36" height="13" uuid="654f04ab-a64b-4283-842a-5e42e96a026e"/>
+                <textElement>
+                    <font fontName="Verdana" size="10" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{matricula}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="440" y="27" width="61" height="11" uuid="e4edae72-f1c0-4cd9-b6bd-e185ecd4adec"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Verdana" size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+            </textField>
+            <textField evaluationTime="Report">
+                <reportElement x="499" y="27" width="36" height="12" uuid="8156aafc-78a4-4305-b724-b42879ae5fa2"/>
+                <textElement>
+                    <font fontName="Verdana" size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="286" y="3" width="249" height="13" uuid="fc65cdd5-199d-4324-b77f-db202b767b8e"/>
+                <textElement>
+                    <font fontName="Verdana" size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA["San Miguel de Tucumán,  "+$P{fecha}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="278" y="89" width="45" height="10" uuid="a70558b2-92fd-493b-bf9e-1f667b8bd914"/>
+                <textElement textAlignment="Center">
+                    <font fontName="Verdana" size="8" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Cod. Fac.]]></text>
+            </staticText>
+            <image>
+                <reportElement x="25" y="4" width="56" height="24" uuid="c504cefc-005a-4ff3-ab4a-e2f46b7cdf40"/>
+                <imageExpression><![CDATA[$P{foto}]]></imageExpression>
+            </image>
+            <textField>
+                <reportElement x="8" y="28" width="73" height="10" uuid="13fe9b87-f087-4f6f-bfba-7b5bb88ae51e"/>
+                <textElement>
+                    <font size="6"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{nombre}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="81" y="6" width="100" height="10" uuid="f348b1d1-168c-43dc-9a26-e9f4c0f1aa16"/>
+                <textElement>
+                    <font size="6"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{direccion}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="81" y="17" width="100" height="10" uuid="6636ff1f-c051-4492-ad59-8d9b7a989f90"/>
+                <textElement>
+                    <font size="6"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{telefono}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="81" y="28" width="100" height="10" uuid="5ae3abda-c29c-4bee-9a7f-dab692ab3130"/>
+                <textElement>
+                    <font size="6"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{mail}]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement x="4" y="86" width="551" height="1" uuid="386f457d-aab0-4861-8b81-5e4f097a8b63"/>
+                <graphicElement>
+                    <pen lineStyle="Double"/>
+                </graphicElement>
+            </line>
+            <line>
+                <reportElement x="2" y="39" width="551" height="1" uuid="6ff15d68-e653-41f3-a6d5-887f0ab1e5d1"/>
+                <graphicElement>
+                    <pen lineStyle="Double"/>
+                </graphicElement>
+            </line>
+            <line>
+                <reportElement x="4" y="100" width="551" height="1" uuid="cc24d949-8bf0-47e5-85a9-d61f29c7a82a"/>
+                <graphicElement>
+                    <pen lineWidth="1.5" lineStyle="Solid"/>
+                </graphicElement>
+            </line>
+            <staticText>
+                <reportElement x="323" y="89" width="47" height="10" uuid="add8df53-0d42-472a-b72b-0a61bcb63b7f"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Verdana" size="8" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Fecha]]></text>
+            </staticText>
+        </band>
+    </pageHeader>
+    <detail>
+        <band height="10" splitType="Stretch">
+            <textField>
+                <reportElement x="71" y="0" width="122" height="9" uuid="54012c1e-bc77-46fe-ae05-e7b5e3bdba63"/>
+                <textElement textAlignment="Center">
+                    <font size="7"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{nombre_afiliado}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="195" y="0" width="45" height="9" uuid="6d6e20ca-9e41-45e9-b34d-536389af0a90"/>
+                <textElement textAlignment="Center">
+                    <font size="7"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{orden}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="370" y="0" width="129" height="9" uuid="119dcc8b-931f-410f-84d2-694834fc836b"/>
+                <textElement textAlignment="Left">
+                    <font size="7"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{analisis}]]></textFieldExpression>
+            </textField>
+            <textField pattern="#,##0.00">
+                <reportElement x="499" y="0" width="48" height="9" uuid="1099d384-c00d-4f20-b5a1-0ae01cfe8c51"/>
+                <textElement textAlignment="Right">
+                    <font size="7"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{importe}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="9" y="0" width="62" height="9" uuid="8809eea7-da92-4057-96fc-6d7e7e75653f"/>
+                <textElement textAlignment="Center">
+                    <font size="7"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{numero_afiliado}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="278" y="0" width="45" height="9" uuid="b456337b-6b11-4aff-807a-7062ca112de4"/>
+                <textElement textAlignment="Center">
+                    <font size="7"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{codigo_fac}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="240" y="0" width="38" height="9" uuid="7c307776-8a01-43d3-b950-3d7f68f869f7"/>
+                <textElement textAlignment="Center">
+                    <font size="7"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{codigo_analisis}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="323" y="0" width="47" height="9" uuid="9d041bd9-5edf-4b51-866e-9844951ee3d6"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="7"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    <lastPageFooter>
+        <band height="55">
+            <rectangle radius="10">
+                <reportElement x="1" y="2" width="555" height="50" uuid="f27ec9ec-415e-4c4c-82d9-c1f4ad07b2eb"/>
+                <graphicElement>
+                    <pen lineStyle="Double"/>
+                </graphicElement>
+            </rectangle>
+            <staticText>
+                <reportElement x="12" y="39" width="119" height="13" uuid="5da1d715-6e0c-4e86-b85a-87f466290305"/>
+                <textElement>
+                    <font fontName="Verdana" size="9" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Total de Practicas:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="12" y="4" width="30" height="11" uuid="5da1d715-6e0c-4e86-b85a-87f466290305"/>
+                <textElement>
+                    <font fontName="Verdana" size="9" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Son:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="447" y="10" width="30" height="13" uuid="5da1d715-6e0c-4e86-b85a-87f466290305"/>
+                <textElement>
+                    <font fontName="Verdana" size="9" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Total:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="12" y="28" width="119" height="12" uuid="5da1d715-6e0c-4e86-b85a-87f466290305"/>
+                <textElement>
+                    <font fontName="Verdana" size="9" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Total de Ordenes:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="130" y="28" width="117" height="12" uuid="91bf33a8-f8a3-4b6d-a77b-441ba6259330"/>
+                <textElement>
+                    <font fontName="Verdana" size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{pacientes}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="130" y="39" width="117" height="13" uuid="0d1f1081-4409-4e4e-b8e0-2dd936c25176"/>
+                <textElement>
+                    <font fontName="Verdana" size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{practicas}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="12" y="16" width="30" height="12" uuid="5da1d715-6e0c-4e86-b85a-87f466290305"/>
+                <textElement>
+                    <font fontName="Verdana" size="9" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Con:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="42" y="4" width="400" height="11" uuid="831d613b-f6c8-4837-8952-3881d8146614"/>
+                <textElement>
+                    <font fontName="Verdana" size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{total_letras_pesos}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="42" y="16" width="400" height="12" uuid="33dd393d-b9cc-4e4b-a777-c95c03a3fade"/>
+                <textElement>
+                    <font fontName="Verdana" size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{total_letras_centavos}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="477" y="10" width="8" height="13" uuid="1a929973-162d-4dfe-af6d-ef9606e39c2f"/>
+                <textElement>
+                    <font fontName="Verdana" size="9"/>
+                </textElement>
+                <text><![CDATA[$]]></text>
+            </staticText>
+            <textField pattern="#,##0.00">
+                <reportElement x="484" y="10" width="71" height="13" uuid="424e91da-aa72-44c1-9187-ae9e373c6206"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Verdana" size="10" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{total}]]></textFieldExpression>
+            </textField>
+            <componentElement>
+                <reportElement x="283" y="25" width="271" height="14" uuid="191513af-c427-4c05-8ab8-1863b4bdd639"/>
+                <jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components"
+                             xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd"
+                             type="Code128" drawText="false" checksumRequired="false">
+                    <jr:codeExpression>
+                        <![CDATA[$P{matricula}+$P{periodo}+$P{num_obra_social}+$P{pacientes}+$P{practicas}+$P{total}]]></jr:codeExpression>
+                </jr:barbecue>
+            </componentElement>
+            <textField>
+                <reportElement x="306" y="39" width="241" height="13" uuid="36bf0163-9491-49b9-8b05-e6e52d286858"/>
+                <textElement>
+                    <font size="6"/>
+                </textElement>
+                <textFieldExpression>
+                    <![CDATA[$P{matricula}+$P{num_obra_social}+$P{pacientes}+$P{practicas}+$P{total}]]></textFieldExpression>
+            </textField>
+        </band>
+    </lastPageFooter>
+</jasperReport>

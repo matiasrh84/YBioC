@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="report name" pageWidth="421" pageHeight="595" columnWidth="405" leftMargin="8" rightMargin="8"
+              topMargin="8" bottomMargin="8" uuid="43d7348b-3cac-4822-b2b8-c03ceda9ed4c">
+    <property name="ireport.zoom" value="1.4641000000000008"/>
+    <property name="ireport.x" value="0"/>
+    <property name="ireport.y" value="0"/>
+    <parameter name="id_orden" class="java.lang.String"/>
+    <parameter name="laboratorio" class="java.lang.String"/>
+    <parameter name="paciente" class="java.lang.String"/>
+    <parameter name="fecha_realizacion" class="java.lang.String"/>
+    <parameter name="fercha_entrega" class="java.lang.String"/>
+    <parameter name="seña" class="java.lang.String"/>
+    <field name="seccion" class="java.lang.String"/>
+    <field name="titulos" class="java.lang.String"/>
+    <field name="nombre_analisis1" class="java.lang.String"/>
+    <field name="nombre_analisis2" class="java.lang.String"/>
+    <field name="nombre_analisis3" class="java.lang.String"/>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <pageHeader>
+        <band height="17" splitType="Stretch">
+            <textField>
+                <reportElement uuid="d1acf5e5-b27e-4d0c-aee8-23e5a7b8e875" x="121" y="1" width="88" height="14"/>
+                <textElement/>
+                <textFieldExpression><![CDATA[$P{id_orden}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement uuid="30f51f69-79bc-4fae-b130-51899c865425" x="11" y="1" width="100" height="14"/>
+                <textElement/>
+                <textFieldExpression><![CDATA[$P{paciente}]]></textFieldExpression>
+            </textField>
+            <componentElement>
+                <reportElement uuid="7f03c44e-6112-4c72-a9ca-0ccc14d0d07b" x="242" y="0" width="156" height="16"/>
+                <jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components"
+                             xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd"
+                             type="3of9" drawText="false" checksumRequired="false">
+                    <jr:codeExpression><![CDATA[$P{id_orden}]]></jr:codeExpression>
+                </jr:barbecue>
+            </componentElement>
+        </band>
+    </pageHeader>
+    <detail>
+        <band height="17" splitType="Stretch">
+            <textField>
+                <reportElement uuid="07fa43bf-4e91-4a9d-94da-55dedadcb8b0" x="138" y="3" width="100" height="14"/>
+                <textElement/>
+                <textFieldExpression><![CDATA[$F{nombre_analisis2}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement uuid="fbbe6a8c-d95c-4fa3-9e76-37a06cfe98e6" x="11" y="3" width="99" height="14"/>
+                <textElement/>
+                <textFieldExpression><![CDATA[$F{nombre_analisis1}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement uuid="229ab849-3398-4baa-ae7f-e55127d91530" x="278" y="3" width="97" height="14"/>
+                <textElement/>
+                <textFieldExpression><![CDATA[$F{nombre_analisis3}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+</jasperReport>

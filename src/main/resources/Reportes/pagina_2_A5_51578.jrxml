@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="report name" pageWidth="595" pageHeight="421" orientation="Landscape" columnWidth="555"
+              leftMargin="20" rightMargin="20" topMargin="14" bottomMargin="7"
+              uuid="c2e8197a-6522-427e-86e5-f99d6e441241">
+    <property name="ireport.zoom" value="2.5937424601000094"/>
+    <property name="ireport.x" value="0"/>
+    <property name="ireport.y" value="0"/>
+    <parameter name="laboratorio" class="java.lang.String"/>
+    <parameter name="paciente" class="java.lang.String"/>
+    <parameter name="protocolo" class="java.lang.String"/>
+    <parameter name="medico" class="java.lang.String"/>
+    <parameter name="especialidad" class="java.lang.String"/>
+    <parameter name="motivo" class="java.lang.String"/>
+    <parameter name="lugar" class="java.lang.String"/>
+    <parameter name="fecha" class="java.lang.String"/>
+    <parameter name="hora" class="java.lang.String"/>
+    <parameter name="logo" class="java.lang.Object"/>
+    <parameter name="observacion2" class="java.lang.String"/>
+    <parameter name="dni" class="java.lang.String"/>
+    <parameter name="id_historia_clinica" class="java.lang.String"/>
+    <parameter name="margen" class="java.lang.String"/>
+    <queryString>
+        <![CDATA[SELECT titulos.nombre as titulos, analisis.nombre as analisis, resultados.resultado as resultados, analisis.unidad as unidades,analisis.valoresreferencia as referencias, resultados.observacion as observacion, metodos.Nombre as metodo,practicas.determinacion_practica as practica FROM resultados
+INNER JOIN practicas ON practicas.id_practicas = resultados.id_practicas 
+INNER JOIN analisis ON analisis.id_analisis = resultados.id_analisis 
+LEFT JOIN titulos ON titulos.id_titulo = analisis.id_titulo 
+INNER JOIN pacientes ON pacientes.id_pacientes = resultados.id_pacientes 
+INNER JOIN personas ON personas.dni = pacientes.personas_dni  
+INNER JOIN historia_clinica ON historia_clinica.id_ordenes = resultados.id_ordenes 
+LEFT JOIN secciones ON secciones.id_secciones = practicas.id_seccion 
+LEFT JOIN metodos ON metodos.idmetodos=analisis.idmetodos
+WHERE historia_clinica.idhistoria_clinica=$P{id_historia_clinica} and resultados.estado_imprime=1 and practicas.tipo_informe=4
+ORDER BY historia_clinica.idhistoria_clinica, secciones.prioridad, practicas.prioridad, analisis.prioridad, 
+practicas.determinacion_practica, titulos.nombre]]>
+    </queryString>
+    <field name="titulos" class="java.lang.String"/>
+    <field name="analisis" class="java.lang.String"/>
+    <field name="resultados" class="java.lang.String"/>
+    <field name="unidades" class="java.lang.String"/>
+    <field name="referencias" class="java.lang.String"/>
+    <field name="observacion" class="java.lang.String">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="metodo" class="java.lang.String"/>
+    <field name="practica" class="java.lang.String"/>
+    <group name="titulo" isStartNewPage="true">
+        <groupExpression><![CDATA[$F{practica}]]></groupExpression>
+        <groupHeader>
+            <band height="21">
+                <textField>
+                    <reportElement x="6" y="3" width="548" height="14" uuid="7a9e66af-1b69-4b7b-aa55-7e043035581c"/>
+                    <box>
+                        <topPen lineWidth="0.0"/>
+                        <leftPen lineWidth="0.0"/>
+                        <bottomPen lineWidth="0.0"/>
+                        <rightPen lineWidth="0.0"/>
+                    </box>
+                    <textElement textAlignment="Left" verticalAlignment="Middle">
+                        <font size="10" isBold="true" isUnderline="true"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA[$F{practica}]]></textFieldExpression>
+                </textField>
+            </band>
+        </groupHeader>
+        <groupFooter>
+            <band height="15">
+                <textField isBlankWhenNull="true">
+                    <reportElement x="6" y="0" width="548" height="13" isPrintWhenDetailOverflows="true"
+                                   uuid="00e7c436-0872-47fe-93a2-96c807d2ca77"/>
+                    <textElement verticalAlignment="Top">
+                        <font size="9"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA[$F{observacion}]]></textFieldExpression>
+                </textField>
+            </band>
+        </groupFooter>
+    </group>
+    <group name="Analisis" keepTogether="true">
+        <groupExpression><![CDATA[$F{titulos}]]></groupExpression>
+        <groupHeader>
+            <band height="16">
+                <textField isBlankWhenNull="true">
+                    <reportElement x="6" y="2" width="548" height="13" isRemoveLineWhenBlank="true"
+                                   uuid="eb2b3f13-793f-4c3a-a7eb-75fc1671b307"/>
+                    <textElement>
+                        <font size="9" isBold="true" isUnderline="true"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA[$F{titulos}]]></textFieldExpression>
+                </textField>
+            </band>
+        </groupHeader>
+        <groupFooter>
+            <band height="3"/>
+        </groupFooter>
+    </group>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <pageHeader>
+        <band height="97">
+            <textField>
+                <reportElement positionType="Float" x="0" y="55" width="553" height="15"
+                               uuid="057d34c5-0fed-4e58-882d-f7c97119ccb7"/>
+                <textElement>
+                    <font fontName="Calibri"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{observacion2}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement positionType="Float" x="277" y="72" width="78" height="11" isRemoveLineWhenBlank="true"
+                               isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"
+                               uuid="fc1e4d30-e82d-4b06-9ab6-614853af8da1"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Médico Solicitante:]]></text>
+            </staticText>
+            <line>
+                <reportElement positionType="Float" x="0" y="95" width="555" height="1" isRemoveLineWhenBlank="true"
+                               isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"
+                               uuid="706bb238-d2e3-4113-a4d2-a736c081ea39"/>
+                <graphicElement>
+                    <pen lineWidth="3.0" lineStyle="Double"/>
+                </graphicElement>
+            </line>
+            <textField>
+                <reportElement positionType="Float" x="487" y="83" width="66" height="11" isRemoveLineWhenBlank="true"
+                               isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"
+                               uuid="5d4b17ec-9a94-4ccd-818d-5893d196a764"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{protocolo}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement positionType="Float" x="355" y="72" width="198" height="11" isRemoveLineWhenBlank="true"
+                               isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"
+                               uuid="17fa663f-b419-4b87-974a-3c9a35945af5"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{medico}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement positionType="Float" x="351" y="83" width="55" height="11" isRemoveLineWhenBlank="true"
+                               isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"
+                               uuid="e0ba97b3-ae4c-4b9e-bd92-8ca2b9e60caa"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement positionType="Float" x="4" y="83" width="46" height="11" isRemoveLineWhenBlank="true"
+                               isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"
+                               uuid="5d7bf557-d614-4b43-a132-8fa4ac7f5f45"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="false"/>
+                </textElement>
+                <text><![CDATA[DNI:]]></text>
+            </staticText>
+            <textField>
+                <reportElement positionType="Float" x="50" y="72" width="195" height="11" isRemoveLineWhenBlank="true"
+                               isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"
+                               uuid="ce147371-689b-4e0a-b2e2-c11aa8d4101a"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{paciente}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement positionType="Float" x="431" y="83" width="56" height="11" isRemoveLineWhenBlank="true"
+                               isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"
+                               uuid="a9f8d290-36e8-45f4-a3a5-59edea6e1507"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Protocolo N°:]]></text>
+            </staticText>
+            <line>
+                <reportElement positionType="Float" x="0" y="70" width="555" height="1" isRemoveLineWhenBlank="true"
+                               isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"
+                               uuid="b927dbb6-f4bf-46a7-8fe0-90ea32f07d8e"/>
+                <graphicElement>
+                    <pen lineWidth="3.0" lineStyle="Double"/>
+                </graphicElement>
+            </line>
+            <staticText>
+                <reportElement positionType="Float" x="276" y="83" width="75" height="11" isRemoveLineWhenBlank="true"
+                               isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"
+                               uuid="7cf444c3-e913-4ac9-b7e6-e487babec649"/>
+                <textElement>
+                    <font fontName="Arial" size="9"/>
+                </textElement>
+                <text><![CDATA[Fecha de ingreso:]]></text>
+            </staticText>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true">
+                <reportElement x="1" y="0" width="10" height="55" isRemoveLineWhenBlank="true"
+                               isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF"
+                               uuid="b367255f-a3cf-4753-85c3-8e3b7f2aa558"/>
+                <textFieldExpression><![CDATA[$P{margen}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement positionType="Float" x="50" y="83" width="100" height="11" isRemoveLineWhenBlank="true"
+                               isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"
+                               uuid="f47ae8a7-53b8-4f78-a329-6dca2dec7c57"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{dni}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement positionType="Float" x="4" y="72" width="46" height="11" isRemoveLineWhenBlank="true"
+                               isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"
+                               uuid="ebc95be9-8b0e-4b30-b74c-d339484d66d1"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Paciente:]]></text>
+            </staticText>
+        </band>
+    </pageHeader>
+    <detail>
+        <band height="15">
+            <textField>
+                <reportElement x="6" y="0" width="211" height="15" uuid="1a40a1c6-105f-4fa5-9426-27f4916d008b"/>
+                <textElement verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{analisis}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true">
+                <reportElement x="218" y="0" width="337" height="15" isRemoveLineWhenBlank="true"
+                               isPrintWhenDetailOverflows="true" uuid="d64a872c-c1ab-479b-a1b6-65cbf2cebf4c"/>
+                <textElement verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{resultados}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+</jasperReport>

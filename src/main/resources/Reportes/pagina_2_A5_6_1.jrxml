@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="report name" pageWidth="595" pageHeight="421" orientation="Landscape" columnWidth="555"
+              leftMargin="20" rightMargin="20" topMargin="13" bottomMargin="7"
+              uuid="c2e8197a-6522-427e-86e5-f99d6e441241">
+    <property name="ireport.zoom" value="1.2100000000000009"/>
+    <property name="ireport.x" value="0"/>
+    <property name="ireport.y" value="0"/>
+    <style name="table">
+        <box>
+            <topPen lineWidth="1.0" lineColor="#FFFFFF"/>
+            <bottomPen lineWidth="1.0" lineColor="#FFFFFF"/>
+        </box>
+    </style>
+    <style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+        <box>
+            <topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+            <bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+        </box>
+    </style>
+    <style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+        <box>
+            <topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+            <bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+        </box>
+    </style>
+    <style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+        <box>
+            <topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+            <bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+        </box>
+    </style>
+    <style name="table 1">
+        <box>
+            <topPen lineWidth="1.0" lineColor="#FFFFFF"/>
+            <bottomPen lineWidth="1.0" lineColor="#FFFFFF"/>
+        </box>
+    </style>
+    <style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+        <box>
+            <topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+            <bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+        </box>
+    </style>
+    <style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+        <box>
+            <topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+            <bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+        </box>
+    </style>
+    <style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+        <box>
+            <topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+            <bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+        </box>
+    </style>
+    <subDataset name="Table Dataset 1" uuid="0313b6a6-d717-456b-b1e4-e1bbbfa09a22"/>
+    <subDataset name="Table Dataset 2" uuid="78f2855b-dadf-4fe0-88c2-227d074e067b"/>
+    <parameter name="laboratorio" class="java.lang.String"/>
+    <parameter name="paciente" class="java.lang.String"/>
+    <parameter name="protocolo" class="java.lang.String"/>
+    <parameter name="medico" class="java.lang.String"/>
+    <parameter name="especialidad" class="java.lang.String"/>
+    <parameter name="motivo" class="java.lang.String"/>
+    <parameter name="lugar" class="java.lang.String"/>
+    <parameter name="fecha" class="java.lang.String"/>
+    <parameter name="hora" class="java.lang.String"/>
+    <parameter name="logo" class="java.lang.Object"/>
+    <field name="practica" class="java.lang.String"/>
+    <field name="analisis" class="java.lang.String"/>
+    <field name="resultados" class="java.lang.String"/>
+    <field name="valor" class="java.lang.String"/>
+    <field name="valor_1" class="java.lang.String"/>
+    <field name="proteina" class="java.lang.String"/>
+    <field name="item1" class="java.lang.String"/>
+    <field name="item2" class="java.lang.String"/>
+    <field name="item3" class="java.lang.String"/>
+    <field name="item4" class="java.lang.String"/>
+    <field name="observacion" class="java.lang.String"/>
+    <group name="practica">
+        <groupExpression><![CDATA[$F{practica}]]></groupExpression>
+        <groupHeader>
+            <band height="26">
+                <textField>
+                    <reportElement uuid="5ced0581-0317-4e30-a3c7-f03739835038" x="4" y="5" width="539" height="20"/>
+                    <textElement textAlignment="Center" verticalAlignment="Top">
+                        <font isBold="true" isUnderline="false"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA[$F{practica}]]></textFieldExpression>
+                </textField>
+                <line>
+                    <reportElement uuid="b52a39c9-4ab9-469f-8644-8afb7c0bdddd" x="6" y="24" width="540" height="1"/>
+                </line>
+            </band>
+        </groupHeader>
+    </group>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <pageHeader>
+        <band height="66">
+            <rectangle radius="10">
+                <reportElement uuid="a863b960-eeda-4dec-afd3-eca4fe8cd86d" x="2" y="10" width="551" height="53"/>
+            </rectangle>
+            <textField>
+                <reportElement uuid="b4900d58-e9d3-4f1d-9ff8-0a016fc6dd9c" x="63" y="31" width="195" height="13"/>
+                <textElement>
+                    <font fontName="Arial" size="10" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{paciente}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement uuid="3657a49b-9194-4632-bc45-1d8b958564d6" x="83" y="13" width="36" height="13"/>
+                <textElement>
+                    <font fontName="Arial" size="10" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{protocolo}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement uuid="9fcd68b7-43e7-4da0-901c-3bdddbf112a2" x="55" y="47" width="203" height="13"/>
+                <textElement>
+                    <font fontName="Arial" size="10" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{motivo}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement uuid="b20069d5-f1b7-4c04-9249-7a4f3d8c9f07" x="271" y="46" width="25" height="13"/>
+                <textElement>
+                    <font fontName="SansSerif" size="10" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Esp.:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement uuid="b20069d5-f1b7-4c04-9249-7a4f3d8c9f07" x="16" y="12" width="67" height="13"/>
+                <textElement>
+                    <font fontName="SansSerif" size="10" isBold="false"/>
+                </textElement>
+                <text><![CDATA[N° Protocolo:]]></text>
+            </staticText>
+            <image>
+                <reportElement uuid="c504cefc-005a-4ff3-ab4a-e2f46b7cdf40" x="471" y="12" width="75" height="48"/>
+                <imageExpression><![CDATA[$P{logo}]]></imageExpression>
+            </image>
+            <textField>
+                <reportElement uuid="80de9388-b5e8-4497-8b3a-f6efe277bde2" x="314" y="31" width="157" height="13"/>
+                <textElement>
+                    <font fontName="Arial" size="10" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{medico}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement uuid="b20069d5-f1b7-4c04-9249-7a4f3d8c9f07" x="17" y="46" width="38" height="13"/>
+                <textElement>
+                    <font fontName="SansSerif" size="10" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Motivo:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement uuid="b20069d5-f1b7-4c04-9249-7a4f3d8c9f07" x="270" y="30" width="44" height="13"/>
+                <textElement>
+                    <font fontName="SansSerif" size="10" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Medico:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement uuid="b20069d5-f1b7-4c04-9249-7a4f3d8c9f07" x="17" y="30" width="46" height="13"/>
+                <textElement>
+                    <font fontName="SansSerif" size="10" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Paciente:]]></text>
+            </staticText>
+            <textField>
+                <reportElement uuid="1ce89714-ee7e-4000-a3a6-130037e3e512" x="120" y="12" width="351" height="13"/>
+                <textElement textAlignment="Center">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{laboratorio}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement uuid="d5e25664-a210-4315-8d28-6c8f9098fb7f" x="296" y="47" width="175" height="13"/>
+                <textElement>
+                    <font fontName="Arial" size="10" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{especialidad}]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageHeader>
+    <detail>
+        <band height="196">
+            <textField>
+                <reportElement uuid="918d0da6-8c65-406e-a5b6-dfb8f414d99b" x="159" y="34" width="389" height="46"/>
+                <textElement>
+                    <font fontName="Arial" size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{analisis}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement uuid="1b5b73a4-4008-4eab-9bf4-65989ade69f7" x="159" y="81" width="389" height="46"/>
+                <textElement textAlignment="Left">
+                    <font fontName="Arial" size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{resultados}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement uuid="1dbcdf40-d962-46de-8c0f-7dabc5b8e9e3" x="159" y="128" width="389" height="39"/>
+                <textElement textAlignment="Left">
+                    <font fontName="Arial" size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement uuid="871a192e-9e23-4adf-acfc-dd81872965c1" x="159" y="6" width="294" height="13"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{proteina}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement uuid="b20069d5-f1b7-4c04-9249-7a4f3d8c9f07" x="453" y="6" width="45" height="13"/>
+                <textElement>
+                    <font fontName="Arial" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Muestra:]]></text>
+            </staticText>
+            <textField>
+                <reportElement uuid="428701cc-e074-4d9c-8963-667bde72145c" x="498" y="6" width="50" height="13"/>
+                <textElement textAlignment="Left">
+                    <font fontName="Arial" size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{valor_1}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement uuid="54ffc291-ef1b-4e48-b088-70e511f73d64" x="3" y="6" width="156" height="13"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{item1}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement uuid="c4f64fd9-d48c-4187-bd0d-3c52d9568fe4" x="3" y="34" width="156" height="14"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{item2}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement uuid="dcd1079f-31c3-4f76-a6af-f3dad609cff9" x="3" y="81" width="156" height="13"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{item3}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement uuid="f8a02db8-7d54-4fa5-a0ca-295e7232244b" x="3" y="128" width="156" height="14"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{item4}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement uuid="4badf778-bc59-4fa1-9716-47fd1433e5f5" x="6" y="168" width="542" height="26"/>
+                <textElement>
+                    <font fontName="Arial"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{observacion}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+</jasperReport>

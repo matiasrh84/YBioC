@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="report name" pageWidth="595" pageHeight="421" orientation="Landscape" columnWidth="555"
+              leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20"
+              uuid="c2e8197a-6522-427e-86e5-f99d6e441241">
+    <property name="ireport.zoom" value="1.3310000000000004"/>
+    <property name="ireport.x" value="0"/>
+    <property name="ireport.y" value="0"/>
+    <parameter name="laboratorio" class="java.lang.String"/>
+    <parameter name="paciente" class="java.lang.String"/>
+    <parameter name="protocolo" class="java.lang.String"/>
+    <parameter name="medico" class="java.lang.String"/>
+    <parameter name="especialidad" class="java.lang.String"/>
+    <parameter name="motivo" class="java.lang.String"/>
+    <parameter name="lugar" class="java.lang.String"/>
+    <parameter name="fecha" class="java.lang.String"/>
+    <parameter name="hora" class="java.lang.String"/>
+    <parameter name="logo" class="java.lang.Object"/>
+    <parameter name="direccion" class="java.lang.String"/>
+    <parameter name="telefono" class="java.lang.String"/>
+    <parameter name="mail" class="java.lang.String"/>
+    <parameter name="observacion" class="java.lang.String"/>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <title>
+        <band height="377" splitType="Stretch">
+            <staticText>
+                <reportElement x="16" y="132" width="62" height="20" uuid="02d4f586-d64a-4ad4-b3c8-22f089e4c761"/>
+                <textElement>
+                    <font fontName="Verdana" size="11" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Paciente:]]></text>
+            </staticText>
+            <line>
+                <reportElement x="16" y="228" width="526" height="1" uuid="0f4d71f7-efba-4da1-8ff0-01d014986357"/>
+            </line>
+            <staticText>
+                <reportElement x="16" y="174" width="128" height="20" uuid="4792ac86-d1e6-4758-9719-b91ca324e5b1"/>
+                <textElement>
+                    <font fontName="Verdana" size="11" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Por indicación del Dr.:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="66" y="10" width="417" height="46" uuid="7a0becbb-52f3-4d9b-8b04-287a8b782095"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Arial" size="20" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{laboratorio}]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement x="16" y="91" width="526" height="1" uuid="026e9c23-e9e2-43bf-b1fb-76d3b522854a"/>
+                <graphicElement>
+                    <pen lineWidth="2.0"/>
+                </graphicElement>
+            </line>
+            <textField>
+                <reportElement x="470" y="302" width="77" height="15" uuid="1e6dc07c-7c74-4edc-a66c-f13c65c219b7"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Verdana" size="9" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="430" y="302" width="40" height="15" uuid="e948f23c-1889-4f8f-a524-e728f4a243d7"/>
+                <textElement>
+                    <font fontName="Verdana" size="11" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Fecha:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="16" y="56" width="526" height="35" uuid="bf2917df-7847-4aaa-add4-c3dc7679dc55"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Arial" size="11" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{observacion}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="10" y="304" width="302" height="13" uuid="425861c8-a770-45ce-843f-0bbacc22fc49"/>
+                <textElement textAlignment="Left">
+                    <font fontName="Verdana" size="9" isBold="false"/>
+                </textElement>
+                <textFieldExpression>
+                    <![CDATA[$P{direccion}+"  -  Tel. "+$P{telefono} +" -  Tucumán"]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="78" y="132" width="315" height="20" uuid="075e58e2-e40c-4f0f-bd48-3cf31a57a23e"/>
+                <textElement>
+                    <font fontName="Verdana" size="11" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{paciente}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="144" y="174" width="249" height="20" uuid="1c2826dc-8eef-476c-a56c-5746fade050a"/>
+                <textElement>
+                    <font fontName="Verdana" size="11" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{medico}]]></textFieldExpression>
+            </textField>
+        </band>
+    </title>
+</jasperReport>

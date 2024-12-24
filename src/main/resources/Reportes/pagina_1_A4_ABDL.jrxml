@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="report name" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20"
+              topMargin="20" bottomMargin="20" uuid="c2e8197a-6522-427e-86e5-f99d6e441241">
+    <property name="ireport.zoom" value="1.0"/>
+    <property name="ireport.x" value="0"/>
+    <property name="ireport.y" value="309"/>
+    <parameter name="laboratorio" class="java.lang.String"/>
+    <parameter name="paciente" class="java.lang.String"/>
+    <parameter name="protocolo" class="java.lang.String"/>
+    <parameter name="medico" class="java.lang.String"/>
+    <parameter name="especialidad" class="java.lang.String"/>
+    <parameter name="motivo" class="java.lang.String"/>
+    <parameter name="lugar" class="java.lang.String"/>
+    <parameter name="fecha" class="java.lang.String"/>
+    <parameter name="hora" class="java.lang.String"/>
+    <parameter name="logo" class="java.lang.Object"/>
+    <parameter name="direccion" class="java.lang.String"/>
+    <parameter name="telefono" class="java.lang.String"/>
+    <parameter name="mail" class="java.lang.String"/>
+    <parameter name="observacion" class="java.lang.String"/>
+    <parameter name="id_historia_clinica" class="java.lang.String"/>
+    <queryString>
+        <![CDATA[SELECT personas.apellido +" "+ personas.nombre as paciente, ordenes.fecha, medicos.nombre +" "+ medicos.apellido as medico
+FROM ordenes INNER JOIN pacientes ON pacientes.id_Pacientes = ordenes.id_Pacientes 
+INNER JOIN personas ON personas.dni = pacientes.personas_dni 
+INNER JOIN historia_clinica ON historia_clinica.id_ordenes = ordenes.id_ordenes 
+INNER JOIN medicos ON medicos.id_medicos = ordenes.id_medicos 
+WHERE ordenes.estado_orden=0 and historia_clinica.idhistoria_clinica=$P{id_historia_clinica}
+GROUP BY historia_clinica.idhistoria_clinica ORDER BY historia_clinica.idhistoria_clinica]]>
+    </queryString>
+    <field name="paciente" class="java.lang.Double"/>
+    <field name="fecha" class="java.lang.String">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="medico" class="java.lang.Double"/>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <title>
+        <band height="800" splitType="Stretch">
+            <textField>
+                <reportElement x="160" y="721" width="265" height="20" uuid="b4900d58-e9d3-4f1d-9ff8-0a016fc6dd9c"/>
+                <textElement>
+                    <font fontName="Tahoma" size="11" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{paciente}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="107" y="721" width="53" height="20" uuid="b20069d5-f1b7-4c04-9249-7a4f3d8c9f07"/>
+                <textElement>
+                    <font fontName="Tahoma" size="11" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Paciente:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="107" y="741" width="53" height="20" uuid="b20069d5-f1b7-4c04-9249-7a4f3d8c9f07"/>
+                <textElement>
+                    <font fontName="Tahoma" size="11" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Medico:]]></text>
+            </staticText>
+            <textField isBlankWhenNull="true">
+                <reportElement x="160" y="741" width="265" height="20" uuid="80de9388-b5e8-4497-8b3a-f6efe277bde2"/>
+                <textElement>
+                    <font fontName="Tahoma" size="11" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{medico}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="160" y="761" width="100" height="20" uuid="166ee2cf-ffef-498a-a6b2-deb3c43c2679"/>
+                <textElement>
+                    <font fontName="Tahoma" size="11" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="107" y="761" width="53" height="20" uuid="b20069d5-f1b7-4c04-9249-7a4f3d8c9f07"/>
+                <textElement>
+                    <font fontName="Tahoma" size="11" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Fecha:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="260" y="761" width="165" height="20" uuid="4b92e090-da83-4fed-afd3-d7a781e5cc55"/>
+                <textElement>
+                    <font fontName="Tahoma" size="11" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{hora}]]></textFieldExpression>
+            </textField>
+        </band>
+    </title>
+</jasperReport>

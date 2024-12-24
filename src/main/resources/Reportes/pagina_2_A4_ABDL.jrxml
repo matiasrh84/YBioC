@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20"
+              topMargin="20" bottomMargin="20" uuid="f952e808-86f4-4e30-8a8a-c8e92b526964">
+    <property name="ireport.zoom" value="1.77156100000001"/>
+    <property name="ireport.x" value="0"/>
+    <property name="ireport.y" value="429"/>
+    <parameter name="laboratorio" class="java.lang.String"/>
+    <parameter name="paciente" class="java.lang.String"/>
+    <parameter name="protocolo" class="java.lang.String"/>
+    <parameter name="medico" class="java.lang.String"/>
+    <parameter name="especialidad" class="java.lang.String"/>
+    <parameter name="motivo" class="java.lang.String"/>
+    <parameter name="lugar" class="java.lang.String"/>
+    <parameter name="fecha" class="java.lang.String"/>
+    <parameter name="hora" class="java.lang.String"/>
+    <parameter name="logo" class="java.lang.Object"/>
+    <parameter name="observacion2" class="java.lang.String"/>
+    <parameter name="dni" class="java.lang.String"/>
+    <parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+        <defaultValueExpression><![CDATA["\\resources\\Reportes\\"]]></defaultValueExpression>
+    </parameter>
+    <parameter name="id_historia_clinica" class="java.lang.String">
+        <defaultValueExpression><![CDATA[]]></defaultValueExpression>
+    </parameter>
+    <queryString>
+        <![CDATA[SELECT distinct(historia_clinica.idhistoria_clinica), personas.apellido, personas.nombre, pacientes.fecha_nacimiento, pacientes.telefono, pacientes.celular, ordenes.fecha, ordenes.observaciones, ordenes.tipo_orden, ordenes.servicio, historia_clinica.descripcion, pacientes.personas_dni, ordenes.id_obrasocial,hora, pacientes.mail
+FROM ordenes INNER JOIN pacientes ON pacientes.id_Pacientes = ordenes.id_Pacientes 
+INNER JOIN personas ON personas.dni = pacientes.personas_dni 
+INNER JOIN historia_clinica ON historia_clinica.id_ordenes = ordenes.id_ordenes 
+WHERE ordenes.estado_orden=0 and historia_clinica.idhistoria_clinica=$P{id_historia_clinica}
+GROUP BY historia_clinica.idhistoria_clinica ORDER BY historia_clinica.idhistoria_clinica]]>
+    </queryString>
+    <field name="idhistoria_clinica" class="java.lang.Long">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="apellido" class="java.lang.String">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="nombre" class="java.lang.String">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="fecha_nacimiento" class="java.sql.Date">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="telefono" class="java.lang.String">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="celular" class="java.lang.String">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="fecha" class="java.lang.String">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="observaciones" class="java.lang.String">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="tipo_orden" class="java.lang.String">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="servicio" class="java.lang.String">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="descripcion" class="java.lang.String">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="personas_dni" class="java.lang.Integer">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="id_obrasocial" class="java.lang.Integer">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="hora" class="java.lang.String">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="mail" class="java.lang.String">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <group name="Hemograma" isStartNewPage="true" keepTogether="true">
+        <groupExpression><![CDATA[$P{SUBREPORT_DIR}]]></groupExpression>
+        <groupHeader>
+            <band height="8">
+                <subreport>
+                    <reportElement x="-16" y="2" width="585" height="5" isRemoveLineWhenBlank="true"
+                                   isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"
+                                   printWhenGroupChanges="Hemograma" uuid="4ca63998-af8a-4fc3-83c1-8fbc30f334b5"/>
+                    <subreportParameter name="laboratorio"/>
+                    <subreportParameter name="paciente"/>
+                    <subreportParameter name="protocolo">
+                        <subreportParameterExpression><![CDATA[$P{protocolo}]]></subreportParameterExpression>
+                    </subreportParameter>
+                    <subreportParameter name="medico"/>
+                    <subreportParameter name="especialidad"/>
+                    <subreportParameter name="motivo"/>
+                    <subreportParameter name="lugar"/>
+                    <subreportParameter name="fecha"/>
+                    <subreportParameter name="hora"/>
+                    <subreportParameter name="logo"/>
+                    <subreportParameter name="observacion2"/>
+                    <subreportParameter name="dni"/>
+                    <connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+                    <subreportExpression>
+                        <![CDATA["C:\\COBIAR\\Reportes\\pagina_2_A4_0ABDL.jasper"]]></subreportExpression>
+                </subreport>
+            </band>
+        </groupHeader>
+    </group>
+    <group name="Clinicos" keepTogether="true">
+        <groupExpression><![CDATA[$P{SUBREPORT_DIR}]]></groupExpression>
+        <groupHeader>
+            <band height="26">
+                <subreport>
+                    <reportElement isPrintRepeatedValues="false" x="-16" y="2" width="585" height="24"
+                                   isRemoveLineWhenBlank="true" printWhenGroupChanges="Clinicos"
+                                   uuid="d01f86f6-7e62-4005-b646-2d267b317b29"/>
+                    <subreportParameter name="laboratorio"/>
+                    <subreportParameter name="paciente"/>
+                    <subreportParameter name="protocolo">
+                        <subreportParameterExpression><![CDATA[$P{protocolo}]]></subreportParameterExpression>
+                    </subreportParameter>
+                    <subreportParameter name="medico"/>
+                    <subreportParameter name="especialidad"/>
+                    <subreportParameter name="motivo"/>
+                    <subreportParameter name="lugar"/>
+                    <subreportParameter name="fecha"/>
+                    <subreportParameter name="hora"/>
+                    <subreportParameter name="logo"/>
+                    <subreportParameter name="observacion2"/>
+                    <subreportParameter name="dni"/>
+                    <connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+                    <subreportExpression>
+                        <![CDATA["C:\\COBIAR\\Reportes\\pagina_2_A4_1ABDL.jasper"]]></subreportExpression>
+                </subreport>
+            </band>
+        </groupHeader>
+    </group>
+    <group name="Orina" isStartNewColumn="true" isStartNewPage="true" keepTogether="true">
+        <groupExpression><![CDATA[$P{SUBREPORT_DIR}]]></groupExpression>
+        <groupHeader>
+            <band height="300">
+                <subreport>
+                    <reportElement isPrintRepeatedValues="false" x="-16" y="4" width="585" height="296"
+                                   isRemoveLineWhenBlank="true" printWhenGroupChanges="Orina"
+                                   uuid="a2e8e925-87ee-4ea4-99c1-286cc56ed1cc"/>
+                    <subreportParameter name="laboratorio"/>
+                    <subreportParameter name="paciente"/>
+                    <subreportParameter name="protocolo">
+                        <subreportParameterExpression><![CDATA[$P{protocolo}]]></subreportParameterExpression>
+                    </subreportParameter>
+                    <subreportParameter name="medico"/>
+                    <subreportParameter name="especialidad"/>
+                    <subreportParameter name="motivo"/>
+                    <subreportParameter name="lugar"/>
+                    <subreportParameter name="fecha"/>
+                    <subreportParameter name="hora"/>
+                    <subreportParameter name="logo"/>
+                    <subreportParameter name="observacion2"/>
+                    <subreportParameter name="dni"/>
+                    <connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+                    <subreportExpression>
+                        <![CDATA["C:\\COBIAR\\Reportes\\pagina_2_A4_2ABDL.jasper"]]></subreportExpression>
+                </subreport>
+            </band>
+        </groupHeader>
+    </group>
+    <group name="Cultivo" isStartNewPage="true" keepTogether="true">
+        <groupExpression><![CDATA[$P{SUBREPORT_DIR}]]></groupExpression>
+        <groupHeader>
+            <band height="100">
+                <subreport>
+                    <reportElement isPrintRepeatedValues="false" x="-16" y="5" width="585" height="90"
+                                   isRemoveLineWhenBlank="true" printWhenGroupChanges="Cultivo"
+                                   uuid="c1b5fa7e-b0d8-464b-a580-d0363c3191e7"/>
+                    <subreportParameter name="laboratorio"/>
+                    <subreportParameter name="paciente"/>
+                    <subreportParameter name="protocolo">
+                        <subreportParameterExpression><![CDATA[$P{protocolo}]]></subreportParameterExpression>
+                    </subreportParameter>
+                    <subreportParameter name="medico"/>
+                    <subreportParameter name="especialidad"/>
+                    <subreportParameter name="motivo"/>
+                    <subreportParameter name="lugar"/>
+                    <subreportParameter name="fecha"/>
+                    <subreportParameter name="hora"/>
+                    <subreportParameter name="logo"/>
+                    <subreportParameter name="observacion2"/>
+                    <subreportParameter name="dni"/>
+                    <connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+                    <subreportExpression>
+                        <![CDATA["C:\\COBIAR\\Reportes\\pagina_2_A4_3ABDL.jasper"]]></subreportExpression>
+                </subreport>
+            </band>
+        </groupHeader>
+    </group>
+    <group name="Cultivo2">
+        <groupExpression><![CDATA[$P{SUBREPORT_DIR}]]></groupExpression>
+        <groupHeader>
+            <band height="100">
+                <subreport>
+                    <reportElement x="-16" y="5" width="585" height="90" isRemoveLineWhenBlank="true"
+                                   isPrintWhenDetailOverflows="true" uuid="3afdf19f-9644-454f-a37d-34dce764ebca"/>
+                    <subreportParameter name="laboratorio"/>
+                    <subreportParameter name="paciente"/>
+                    <subreportParameter name="protocolo">
+                        <subreportParameterExpression><![CDATA[$P{protocolo}]]></subreportParameterExpression>
+                    </subreportParameter>
+                    <subreportParameter name="medico"/>
+                    <subreportParameter name="especialidad"/>
+                    <subreportParameter name="motivo"/>
+                    <subreportParameter name="lugar"/>
+                    <subreportParameter name="fecha"/>
+                    <subreportParameter name="hora"/>
+                    <subreportParameter name="logo"/>
+                    <subreportParameter name="observacion2"/>
+                    <subreportParameter name="dni"/>
+                    <connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+                    <subreportExpression>
+                        <![CDATA["C:\\COBIAR\\Reportes\\pagina_2_A4_4ABDL.jasper"]]></subreportExpression>
+                </subreport>
+            </band>
+        </groupHeader>
+    </group>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <pageHeader>
+        <band height="113" splitType="Stretch">
+            <textField isBlankWhenNull="true">
+                <reportElement x="352" y="75" width="204" height="11" uuid="8266c53e-b17d-4ec2-acaa-05383ff3540d"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{medico}]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement x="0" y="99" width="556" height="1" uuid="914d6f4a-abcb-4f3b-b547-269ea183c9a3"/>
+                <graphicElement>
+                    <pen lineWidth="1.25" lineStyle="Solid"/>
+                </graphicElement>
+            </line>
+            <textField isBlankWhenNull="true">
+                <reportElement x="51" y="86" width="100" height="11" uuid="78a1d1f9-ae5a-47e2-af12-84bf715ebba5"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{dni}]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement x="0" y="70" width="556" height="1" uuid="375f9186-23bb-4cd8-982a-643298cd339a"/>
+                <graphicElement>
+                    <pen lineWidth="3.0" lineStyle="Double"/>
+                </graphicElement>
+            </line>
+            <textField isBlankWhenNull="true">
+                <reportElement x="5" y="55" width="551" height="15" uuid="8295f951-9027-4e24-ae55-edf1a2cf653f"/>
+                <textElement>
+                    <font fontName="Calibri"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{observacion2}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="51" y="75" width="195" height="11" uuid="89c357d3-cd4c-4679-9e86-96fcee9cd592"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{paciente}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="267" y="75" width="85" height="11" uuid="4b4c0ec8-c84a-4115-8cc8-92b73fa03fe9"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Arial" size="9" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Médico Solicitante:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="5" y="74" width="46" height="11" uuid="fcc4e827-ff2a-4dc7-8fab-c73b81327f9b"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Paciente:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="5" y="86" width="46" height="11" uuid="a196f53d-f532-4512-8683-d652a9a048fe"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="false"/>
+                </textElement>
+                <text><![CDATA[DNI:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="488" y="86" width="68" height="11" uuid="c3331378-287c-439f-b236-7f00b6b5d010"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{protocolo}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="352" y="86" width="80" height="11" uuid="e745d29a-6f89-4e48-acbd-4b32051f1ac4"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="432" y="86" width="56" height="11" uuid="2e529dfd-4b83-4831-9574-262a21cf43dc"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Protocolo N°:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="277" y="86" width="75" height="11" uuid="c45686a0-b06c-47c8-9235-1163ee0a457e"/>
+                <textElement>
+                    <font fontName="Arial" size="9"/>
+                </textElement>
+                <text><![CDATA[Fecha de ingreso:]]></text>
+            </staticText>
+            <image>
+                <reportElement x="51" y="0" width="277" height="50" uuid="de769069-9d68-4be2-ae9a-974b962dd8e7"/>
+                <imageExpression><![CDATA["C:\\COBIAR\\Untitled-4-1.png"]]></imageExpression>
+            </image>
+            <line>
+                <reportElement x="26" y="15" width="1" height="21" uuid="44bf62b8-56d3-4424-a232-a3a9b6d6fc39"/>
+            </line>
+            <line>
+                <reportElement x="526" y="15" width="1" height="21" uuid="2c509a24-360a-4320-94b9-5e3c61b148d8"/>
+            </line>
+            <staticText>
+                <reportElement x="5" y="100" width="288" height="11" uuid="4659eee6-42da-4719-a12b-e403475639d3"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Determinación]]></text>
+            </staticText>
+            <line>
+                <reportElement x="0" y="112" width="555" height="1" uuid="a14ca88c-18c4-4949-9528-88d7e5fee3aa"/>
+                <graphicElement>
+                    <pen lineWidth="1.25" lineStyle="Solid"/>
+                </graphicElement>
+            </line>
+            <staticText>
+                <reportElement x="358" y="101" width="136" height="11" uuid="49a37926-ea2b-461c-8bf4-8660549db2c2"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Valor de Referencia]]></text>
+            </staticText>
+        </band>
+    </pageHeader>
+    <detail>
+        <band splitType="Stretch"/>
+        <band/>
+        <band/>
+        <band/>
+    </detail>
+    <pageFooter>
+        <band height="22" splitType="Stretch">
+            <rectangle>
+                <reportElement x="1" y="2" width="554" height="17" uuid="499f01b3-f9a9-47d9-ab1f-ec78ef458447"/>
+            </rectangle>
+            <textField>
+                <reportElement x="41" y="5" width="273" height="13" uuid="66b6042d-fb71-4fa1-9079-07f338dd42d1"/>
+                <textElement>
+                    <font fontName="Arial" size="10" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{lugar}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="11" y="4" width="30" height="13" uuid="f8f83f14-a068-4fe8-a032-4357f2f49f98"/>
+                <textElement>
+                    <font fontName="SansSerif" size="10" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Lugar:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="455" y="2" width="100" height="16" uuid="250da6dc-3f29-4746-b5de-f49dcb37bf12"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{telefono}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="410" y="2" width="45" height="16" uuid="af2ce3a2-8736-4e4c-8285-376b01ba05fb"/>
+                <textElement>
+                    <font fontName="SansSerif" size="10" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Telefono:]]></text>
+            </staticText>
+        </band>
+    </pageFooter>
+</jasperReport>

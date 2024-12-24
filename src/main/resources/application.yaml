@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: ybioq
+  main:
+    web-application-type: none
+  # Configuración de la base de datos local (MariaDB)
+  local:
+    datasource:
+      driverClassName: org.mariadb.jdbc.Driver
+      jdbc-url: jdbc:mariadb://localhost:3306/localBioq
+      username: root
+      password: root
+      jpa:
+        hibernate:
+          ddl-auto: update
+        show-sql: true
+  # Configuración de la base de datos remota (MariaDB)
+  remote:
+    datasource:
+      driverClassName: org.mariadb.jdbc.Driver
+      jdbc-url: jdbc:mariadb://db.cobituc.info:3306/colegiobioquimicos
+      username: usFacturacion
+      password: "&DA7i66s%2yem4"
+      jpa:
+        hibernate:
+          ddl-auto: update
+        show-sql: true

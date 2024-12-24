@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="report name" pageWidth="421" pageHeight="595" columnWidth="405" leftMargin="8" rightMargin="8"
+              topMargin="8" bottomMargin="8" uuid="43d7348b-3cac-4822-b2b8-c03ceda9ed4c">
+    <property name="ireport.zoom" value="1.9487171000000016"/>
+    <property name="ireport.x" value="0"/>
+    <property name="ireport.y" value="0"/>
+    <parameter name="id_orden" class="java.lang.String"/>
+    <parameter name="laboratorio" class="java.lang.String"/>
+    <parameter name="paciente" class="java.lang.String"/>
+    <parameter name="fecha_entrega" class="java.lang.String"/>
+    <parameter name="seña" class="java.lang.String"/>
+    <parameter name="fecha" class="java.lang.String"/>
+    <parameter name="hora" class="java.lang.String"/>
+    <parameter name="edad" class="java.lang.String"/>
+    <parameter name="sexo" class="java.lang.String"/>
+    <parameter name="dni" class="java.lang.String"/>
+    <parameter name="tipo" class="java.lang.String"/>
+    <field name="seccion" class="java.lang.String"/>
+    <field name="titulos" class="java.lang.String"/>
+    <field name="nombre_analisis1" class="java.lang.String"/>
+    <field name="nombre_analisis2" class="java.lang.String"/>
+    <field name="nombre_analisis3" class="java.lang.String"/>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <title>
+        <band height="84" splitType="Stretch">
+            <line>
+                <reportElement x="-10" y="1" width="427" height="1" uuid="11089b99-c955-4037-a20e-2b307a89c572"/>
+                <graphicElement>
+                    <pen lineStyle="Dashed" lineColor="#999999"/>
+                </graphicElement>
+            </line>
+            <textField>
+                <reportElement x="0" y="25" width="222" height="16" uuid="f1d3894f-4291-4fc0-8b95-16aecd2ff2f3"/>
+                <textElement>
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{paciente}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="190" y="6" width="119" height="16" uuid="7b169e3c-f590-4368-8be9-dc5e94083df5"/>
+                <textElement textAlignment="Center">
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{id_orden}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="291" y="44" width="114" height="18" uuid="5d9fc2fa-0ad1-4e0a-85e4-eee7748b9cc9"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="9" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{fecha_entrega}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="0" y="44" width="194" height="18" uuid="13a337c3-51f1-4901-8543-28fed7ae5ddf"/>
+                <textElement>
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Seña:  $" +$P{seña}]]></textFieldExpression>
+            </textField>
+            <componentElement>
+                <reportElement x="310" y="6" width="93" height="16" uuid="7f03c44e-6112-4c72-a9ca-0ccc14d0d07b"/>
+                <jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components"
+                             xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd"
+                             type="3of9" drawText="false" checksumRequired="false">
+                    <jr:codeExpression><![CDATA[$P{id_orden}]]></jr:codeExpression>
+                </jr:barbecue>
+            </componentElement>
+            <staticText>
+                <reportElement x="199" y="45" width="90" height="17" uuid="4f2382da-673d-4fe7-95e9-6e3ee8becb91"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="9" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Fecha de Entrega:]]></text>
+            </staticText>
+            <line>
+                <reportElement x="-10" y="81" width="427" height="1" uuid="e36bc98d-c216-4b3c-973f-d5aca46ab6ff"/>
+                <graphicElement>
+                    <pen lineStyle="Dashed" lineColor="#999999"/>
+                </graphicElement>
+            </line>
+            <textField>
+                <reportElement x="0" y="6" width="99" height="16" uuid="77ddb156-aa22-422d-bf08-feaeefb063e9"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="9" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Fecha: "+$P{fecha}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="120" y="6" width="70" height="16" uuid="40153d56-ebac-440b-b6e3-6c957c34069f"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Hora:" +$P{hora}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="313" y="25" width="48" height="16" uuid="b63a9ab2-644a-4d25-9349-78b4bbe819aa"/>
+                <textElement>
+                    <font size="9" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Edad: "+$P{edad}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="363" y="25" width="42" height="16" uuid="cff9d737-9e99-424c-ade6-bb1830381d74"/>
+                <textElement>
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Sexo: "+$P{sexo}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="222" y="25" width="91" height="16" uuid="02c5cba6-bf31-4a0d-a82b-311666423636"/>
+                <textFieldExpression><![CDATA["DNI: "+$P{dni}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true">
+                <reportElement x="0" y="62" width="405" height="18" isPrintInFirstWholeBand="true"
+                               isPrintWhenDetailOverflows="true" uuid="47e3e3ab-a46c-43fa-8cf9-1e42ef00aa93"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="9" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{tipo}]]></textFieldExpression>
+            </textField>
+        </band>
+    </title>
+    <detail>
+        <band height="17" splitType="Stretch">
+            <textField isBlankWhenNull="true">
+                <reportElement x="138" y="2" width="100" height="14" isRemoveLineWhenBlank="true"
+                               uuid="07fa43bf-4e91-4a9d-94da-55dedadcb8b0"/>
+                <textFieldExpression><![CDATA[$F{nombre_analisis2}]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="true">
+                <reportElement x="11" y="2" width="99" height="14" isRemoveLineWhenBlank="true"
+                               uuid="fbbe6a8c-d95c-4fa3-9e76-37a06cfe98e6"/>
+                <textFieldExpression><![CDATA[$F{nombre_analisis1}]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="true">
+                <reportElement x="278" y="2" width="97" height="14" isRemoveLineWhenBlank="true"
+                               uuid="229ab849-3398-4baa-ae7f-e55127d91530"/>
+                <textFieldExpression><![CDATA[$F{nombre_analisis3}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+</jasperReport>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="report name" pageWidth="595" pageHeight="421" orientation="Landscape" columnWidth="555"
+              leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20"
+              uuid="c2e8197a-6522-427e-86e5-f99d6e441241">
+    <property name="ireport.zoom" value="1.3310000000000004"/>
+    <property name="ireport.x" value="0"/>
+    <property name="ireport.y" value="0"/>
+    <parameter name="laboratorio" class="java.lang.String"/>
+    <parameter name="paciente" class="java.lang.String"/>
+    <parameter name="protocolo" class="java.lang.String"/>
+    <parameter name="medico" class="java.lang.String"/>
+    <parameter name="especialidad" class="java.lang.String"/>
+    <parameter name="motivo" class="java.lang.String"/>
+    <parameter name="lugar" class="java.lang.String"/>
+    <parameter name="fecha" class="java.lang.String"/>
+    <parameter name="hora" class="java.lang.String"/>
+    <parameter name="logo" class="java.lang.Object"/>
+    <parameter name="direccion" class="java.lang.String"/>
+    <parameter name="telefono" class="java.lang.String"/>
+    <parameter name="mail" class="java.lang.String"/>
+    <parameter name="observacion" class="java.lang.String"/>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <title>
+        <band height="318" splitType="Stretch">
+            <textField>
+                <reportElement x="61" y="4" width="417" height="46" uuid="1ce89714-ee7e-4000-a3a6-130037e3e512"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Arial" size="20" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{laboratorio}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="73" y="180" width="464" height="20" uuid="b4900d58-e9d3-4f1d-9ff8-0a016fc6dd9c"/>
+                <textElement>
+                    <font fontName="Verdana" size="11" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{paciente}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="11" y="180" width="62" height="20" uuid="b20069d5-f1b7-4c04-9249-7a4f3d8c9f07"/>
+                <textElement>
+                    <font fontName="Verdana" size="11" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Paciente:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="11" y="214" width="139" height="20" uuid="b20069d5-f1b7-4c04-9249-7a4f3d8c9f07"/>
+                <textElement>
+                    <font fontName="Verdana" size="11" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Por indicación del Dr.:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="150" y="214" width="387" height="20" uuid="80de9388-b5e8-4497-8b3a-f6efe277bde2"/>
+                <textElement>
+                    <font fontName="Verdana" size="11" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{medico}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="11" y="50" width="526" height="35" uuid="c6bbcf76-6875-4722-bcc8-17289ab15a83"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Arial" size="11" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{observacion}]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement x="11" y="160" width="526" height="1" uuid="6a99d052-9b6d-44b5-8ab0-e7fb95cdfa20"/>
+                <graphicElement>
+                    <pen lineWidth="2.0"/>
+                </graphicElement>
+            </line>
+            <line>
+                <reportElement x="11" y="254" width="526" height="1" uuid="6a99d052-9b6d-44b5-8ab0-e7fb95cdfa20"/>
+            </line>
+            <line>
+                <reportElement x="11" y="85" width="526" height="1" uuid="6a99d052-9b6d-44b5-8ab0-e7fb95cdfa20"/>
+                <graphicElement>
+                    <pen lineWidth="2.0"/>
+                </graphicElement>
+            </line>
+            <staticText>
+                <reportElement x="44" y="87" width="176" height="73" uuid="b25da2a0-55ef-49e8-a694-4995aba7c015"/>
+                <textElement textAlignment="Center">
+                    <font isItalic="true"/>
+                </textElement>
+                <text><![CDATA[Monica Rolandi
+Bioquímica 
+Ex Becaria del H. de Clinicas   
+Jose de San Martín (Bs. As.) 
+Bactereología]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="302" y="87" width="176" height="73" uuid="b25da2a0-55ef-49e8-a694-4995aba7c015"/>
+                <textElement textAlignment="Center">
+                    <font isItalic="true"/>
+                </textElement>
+                <text><![CDATA[Susana B. Yane
+Bioquímica 
+Ex Becaria del H. de Clinicas   
+Jose de San Martín (Bs. As.) 
+Endocrinología]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="5" y="298" width="302" height="13" uuid="97a31357-f824-45f6-b024-9c4682d27792"/>
+                <textElement textAlignment="Left">
+                    <font fontName="Verdana" size="9" isBold="false"/>
+                </textElement>
+                <textFieldExpression>
+                    <![CDATA[$P{direccion}+"  -  Tel. "+$P{telefono} +" -  Tucumán"]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="465" y="296" width="77" height="15" uuid="99ce1baf-9452-41d0-93e9-b5c3e9acaf2b"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Verdana" size="9" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="425" y="296" width="40" height="15" uuid="b20069d5-f1b7-4c04-9249-7a4f3d8c9f07"/>
+                <textElement>
+                    <font fontName="Verdana" size="11" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Fecha:]]></text>
+            </staticText>
+        </band>
+    </title>
+    <pageFooter>
+        <band height="50" splitType="Stretch"/>
+    </pageFooter>
+</jasperReport>
