@@ -1,6 +1,6 @@
 package com.ybc.ybioq.config;
 
-import com.ybc.ybioq.view.Login_nuevo;
+import com.ybc.ybioq.view.Login;
 import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
@@ -63,7 +63,7 @@ public class HiloInicio extends Thread {
             i++;
             pausa(5);
         }
-        new Login_nuevo().setVisible(true);
+        new Login().setVisible(true);
     }
 
 

@@ -11,6 +11,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "pacientes_tienen_obrasociales", schema = "bioquimicos")
 public class PacienteTieneObraSocial {
+
     @EmbeddedId
     private PacienteTieneObraSocialId id;
 
@@ -28,5 +29,4 @@ public class PacienteTieneObraSocial {
 
     @Column(name = "numero_afiliado", length = 20)
     private String numeroAfiliado;
-
 }

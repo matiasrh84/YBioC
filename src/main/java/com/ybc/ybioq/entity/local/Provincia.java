@@ -13,6 +13,7 @@ import org.hibernate.annotations.ColumnDefault;
 @Entity
 @Table(name = "provincia", schema = "bioquimicos")
 public class Provincia {
+
     @Id
     @ColumnDefault("0")
     @Column(name = "id_provincia", nullable = false)
@@ -20,5 +21,4 @@ public class Provincia {
 
     @Column(name = "nombre_provincia", nullable = false, length = 20)
     private String nombreProvincia;
-
 }

@@ -12,11 +12,11 @@ import lombok.Setter;
 @Entity
 @Table(name = "metodos", schema = "bioquimicos")
 public class Metodo {
+
     @Id
     @Column(name = "idMetodos", nullable = false)
     private Integer id;
 
     @Column(name = "Nombre")
     private String nombre;
-
 }

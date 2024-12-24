@@ -6,13 +6,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "medicos", schema = "bioquimicos")
 public class Medico {
+
     @Id
     @Column(name = "id_medicos", nullable = false)
     private Integer id;
@@ -35,8 +35,6 @@ public class Medico {
     @Column(name = "observaciones")
     private String observaciones;
 
-    @ColumnDefault("1")
     @Column(name = "estado", nullable = false)
     private Integer estado;
-
 }

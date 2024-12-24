@@ -1,6 +1,6 @@
 package com.ybc.ybioq.config;
 
-import com.ybc.ybioq.view.Inicio_nuevo;
+import com.ybc.ybioq.view.Inicio;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class SwingConfig {
 
     @Bean
-    public Inicio_nuevo inicioNuevo() {
-        return new Inicio_nuevo();
+    public Inicio inicioNuevo() {
+        return new Inicio();
     }
 }

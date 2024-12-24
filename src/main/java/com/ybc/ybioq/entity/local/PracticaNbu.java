@@ -3,7 +3,6 @@ package com.ybc.ybioq.entity.local;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -14,6 +13,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "practicas_nbu", schema = "bioquimicos")
 public class PracticaNbu {
+
     @Id
     @Column(name = "id_practicasnbu", nullable = false)
     private Integer id;
@@ -28,12 +28,9 @@ public class PracticaNbu {
     @JoinColumn(name = "id_nbu", nullable = false)
     private Nbu idNbu;
 
-    @ColumnDefault("0.00")
     @Column(name = "unidadbioquimica_practica", nullable = false, precision = 10, scale = 2)
     private BigDecimal unidadbioquimicaPractica;
 
-    @ColumnDefault("''")
     @Column(name = "fercuencia_practica", length = 10)
     private String fercuenciaPractica;
-
 }

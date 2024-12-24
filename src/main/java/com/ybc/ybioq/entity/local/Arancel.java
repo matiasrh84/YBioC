@@ -12,8 +12,8 @@ import lombok.Setter;
 @Entity
 @Table(name = "aranceles", schema = "bioquimicos")
 public class Arancel {
+
     @Id
     @Column(name = "id", nullable = false)
     private Integer id;
-
 }

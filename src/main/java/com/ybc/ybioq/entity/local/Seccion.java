@@ -12,6 +12,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "secciones", schema = "bioquimicos")
 public class Seccion {
+
     @Id
     @Column(name = "id_secciones", nullable = false)
     private Integer id;
@@ -24,5 +25,4 @@ public class Seccion {
 
     @Column(name = "estado")
     private Integer estado;
-
 }

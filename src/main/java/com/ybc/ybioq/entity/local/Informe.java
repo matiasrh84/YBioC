@@ -14,6 +14,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "informes", schema = "bioquimicos")
 public class Informe {
+
     @Id
     @Column(name = "id_informes", nullable = false)
     private Integer id;
@@ -26,5 +27,4 @@ public class Informe {
 
     @Column(name = "idhistoria_clinica", nullable = false)
     private Integer idhistoriaClinica;
-
 }

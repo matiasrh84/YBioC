@@ -12,7 +12,9 @@ import java.util.Objects;
 @Setter
 @Embeddable
 public class PacienteTieneObraSocialId implements java.io.Serializable {
+
     private static final long serialVersionUID = -5375647456019327026L;
+
     @Column(name = "id_Pacientes", nullable = false)
     private Integer idPacientes;
 
@@ -32,5 +34,4 @@ public class PacienteTieneObraSocialId implements java.io.Serializable {
     public int hashCode() {
         return Objects.hash(idObrasocial, idPacientes);
     }
-
 }

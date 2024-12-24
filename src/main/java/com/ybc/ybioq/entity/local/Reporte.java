@@ -6,20 +6,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "reportes", schema = "bioquimicos")
 public class Reporte {
+
     @Id
     @Column(name = "id_reportes", nullable = false)
     private Integer id;
 
-    @ColumnDefault("''")
-    @Column(name = "`diseño`", nullable = false, length = 20)
-    private String diseño;
+    @Column(name = "tipo", nullable = false, length = 20)
+    private String tipo;
 
     @Column(name = "logo")
     private byte[] logo;
@@ -168,7 +167,6 @@ public class Reporte {
     @Column(name = "hora_vertical3")
     private Integer horaVertical3;
 
-    @ColumnDefault("''")
     @Column(name = "horientacion", length = 20)
     private String horientacion;
 
@@ -192,5 +190,4 @@ public class Reporte {
 
     @Column(name = "observacion2")
     private String observacion2;
-
 }

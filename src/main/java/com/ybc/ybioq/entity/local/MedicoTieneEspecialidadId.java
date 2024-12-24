@@ -5,7 +5,6 @@ import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.Hibernate;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.util.Objects;
 
@@ -18,7 +17,6 @@ public class MedicoTieneEspecialidadId implements java.io.Serializable {
     @Column(name = "id_medicos", nullable = false)
     private Integer idMedicos;
 
-    @ColumnDefault("0")
     @Column(name = "id_especialidades", nullable = false)
     private Integer idEspecialidades;
 
@@ -35,5 +33,4 @@ public class MedicoTieneEspecialidadId implements java.io.Serializable {
     public int hashCode() {
         return Objects.hash(idMedicos, idEspecialidades);
     }
-
 }

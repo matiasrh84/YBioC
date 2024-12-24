@@ -12,11 +12,11 @@ import lombok.Setter;
 @Entity
 @Table(name = "unidades", schema = "bioquimicos")
 public class Unidad {
+
     @Id
     @Column(name = "id_unidades", nullable = false)
     private Integer id;
 
     @Column(name = "nombre_uni", length = 45)
     private String nombreUni;
-
 }

@@ -3,7 +3,6 @@ package com.ybc.ybioq.entity.local;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -14,6 +13,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "ordenes", schema = "bioquimicos")
 public class Orden {
+
     @Id
     @Column(name = "id_ordenes", nullable = false)
     private Integer id;
@@ -76,7 +76,6 @@ public class Orden {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @ColumnDefault("0")
     @JoinColumn(name = "id_obrasocial", nullable = false)
     private ObraSocial idObrasocial;
 
@@ -86,15 +85,12 @@ public class Orden {
     @Column(name = "nombre_recien_nacido", length = 100)
     private String nombreRecienNacido;
 
-    @ColumnDefault("0")
     @Column(name = "estado_enviado", nullable = false)
     private Integer estadoEnviado;
 
-    @ColumnDefault("''")
     @Column(name = "hora", length = 10)
     private String hora;
 
-    @Column(name = "`seña`")
-    private Float seña;
-
+    @Column(name = "anticipo")
+    private Float anticipo;
 }

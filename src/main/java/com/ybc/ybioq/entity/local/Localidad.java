@@ -11,6 +11,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "localidad", schema = "bioquimicos")
 public class Localidad {
+
     @Id
     @Column(name = "id_localidad", nullable = false)
     private Integer id;
@@ -22,5 +23,4 @@ public class Localidad {
 
     @Column(name = "nombre_localidad", nullable = false, length = 45)
     private String nombreLocalidad;
-
 }

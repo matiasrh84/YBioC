@@ -3,7 +3,6 @@ package com.ybc.ybioq.entity.local;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -12,6 +11,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "obrasocial_tiene_practicas_nbu", schema = "bioquimicos")
 public class ObraSocialTienePracticaNbu {
+
     @EmbeddedId
     private ObraSocialTienePracticaNbuId id;
 
@@ -21,11 +21,9 @@ public class ObraSocialTienePracticaNbu {
     @JoinColumn(name = "id_obrasocial", nullable = false)
     private ObraSocial idObrasocial;
 
-    @ColumnDefault("000000")
     @Column(name = "codigo_fac_practicas_obrasocial")
     private Integer codigoFacPracticasObrasocial;
 
-    @ColumnDefault("0.00")
     @Column(name = "unidadbioquimica")
     private Double unidadbioquimica;
 
@@ -43,8 +41,6 @@ public class ObraSocialTienePracticaNbu {
     @JoinColumn(name = "id_Usuarios")
     private Usuario idUsuarios;
 
-    @ColumnDefault("1")
     @Column(name = "estado")
     private Integer estado;
-
 }

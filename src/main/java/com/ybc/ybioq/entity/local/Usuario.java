@@ -6,13 +6,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "usuarios", schema = "bioquimicos")
 public class Usuario {
+
     @Id
     @Column(name = "id_Usuarios", nullable = false)
     private Integer id;
@@ -26,23 +26,18 @@ public class Usuario {
     @Column(name = "usuario", length = 15)
     private String usuario;
 
-    @Column(name = "`contraseña`", length = 15)
-    private String contraseña;
+    @Column(name = "clave", length = 15)
+    private String clave;
 
-    @ColumnDefault("0")
     @Column(name = "datos", nullable = false)
     private Integer datos;
 
-    @ColumnDefault("0")
     @Column(name = "cbt", nullable = false)
     private Integer cbt;
 
-    @ColumnDefault("0")
     @Column(name = "informes", nullable = false)
     private Integer informes;
 
-    @ColumnDefault("0")
     @Column(name = "facturacion", nullable = false)
     private Integer facturacion;
-
 }

@@ -12,6 +12,7 @@ import java.util.Objects;
 @Setter
 @Embeddable
 public class OrdenTienePracticaId implements java.io.Serializable {
+
     private static final long serialVersionUID = 4300559632188232136L;
     @Column(name = "id_practicas", nullable = false)
     private Integer idPracticas;
@@ -32,5 +33,4 @@ public class OrdenTienePracticaId implements java.io.Serializable {
     public int hashCode() {
         return Objects.hash(idOrdenes, idPracticas);
     }
-
 }

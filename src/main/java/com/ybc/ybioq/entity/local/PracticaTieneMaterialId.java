@@ -13,7 +13,9 @@ import java.util.Objects;
 @Setter
 @Embeddable
 public class PracticaTieneMaterialId implements java.io.Serializable {
+
     private static final long serialVersionUID = 6149723643185917412L;
+
     @Column(name = "id_materiales", nullable = false)
     private Integer idMateriales;
 
@@ -34,5 +36,4 @@ public class PracticaTieneMaterialId implements java.io.Serializable {
     public int hashCode() {
         return Objects.hash(idMateriales, idPracticas);
     }
-
 }

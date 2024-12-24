@@ -3,7 +3,6 @@ package com.ybc.ybioq.entity.local;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Setter
@@ -21,7 +20,6 @@ public class MedicoTieneEspecialidad {
 
     @MapsId("idEspecialidades")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @ColumnDefault("0")
     @JoinColumn(name = "id_especialidades", nullable = false)
     private Especialidad idEspecialidades;
 

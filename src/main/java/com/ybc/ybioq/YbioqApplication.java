@@ -1,6 +1,6 @@
 package com.ybc.ybioq;
 
-import com.ybc.ybioq.view.Inicio_nuevo;
+import com.ybc.ybioq.view.Inicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -16,10 +16,10 @@ public class YbioqApplication {
 
     public static void main(String[] args) {
 
-        context = new SpringApplicationBuilder(Inicio_nuevo.class).headless(false).run(args);
+        context = new SpringApplicationBuilder(Inicio.class).headless(false).run(args);
 
         SwingUtilities.invokeLater(() -> {
-            Inicio_nuevo inicio = context.getBean(Inicio_nuevo.class);
+            Inicio inicio = context.getBean(Inicio.class);
             inicio.setVisible(true);
         });
     }

@@ -6,13 +6,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "laboratorios", schema = "bioquimicos")
 public class Laboratorio {
+
     @Id
     @Column(name = "id_laboratorios", nullable = false)
     private Integer id;
@@ -32,11 +32,9 @@ public class Laboratorio {
     @Column(name = "lugar", length = 100)
     private String lugar;
 
-    @ColumnDefault("''")
     @Column(name = "cuit", nullable = false, length = 20)
     private String cuit;
 
-    @ColumnDefault("0")
     @Column(name = "matricula", nullable = false)
     private Integer matricula;
 
@@ -46,23 +44,18 @@ public class Laboratorio {
     @Column(name = "dni")
     private Integer dni;
 
-    @ColumnDefault("''")
     @Column(name = "usuario", nullable = false, length = 11)
     private String usuario;
 
-    @ColumnDefault("''")
-    @Column(name = "`contraseña`", nullable = false, length = 20)
-    private String contraseña;
+    @Column(name = "clave", nullable = false, length = 20)
+    private String clave;
 
     @Column(name = "mail_direccion")
     private String mailDireccion;
 
-    @ColumnDefault("''")
-    @Column(name = "`mail_contraseña`")
-    private String mailContraseña;
+    @Column(name = "mail_clave")
+    private String mailClave;
 
-    @ColumnDefault("0")
     @Column(name = "id_colegiado")
     private Integer idColegiado;
-
 }
