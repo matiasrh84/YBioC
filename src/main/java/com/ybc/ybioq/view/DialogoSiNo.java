@@ -1,22 +1,24 @@
 package com.ybc.ybioq.view;
 
+import lombok.Getter;
+
 import static com.ybc.ybioq.config.Escape.funcionescape;
 
-public class Dialogo extends javax.swing.JDialog {
+public class DialogoSiNo extends javax.swing.JDialog {
 
     private int x;
     private int y;
+    @Getter
+    private boolean respuestaPositiva = false;
 
 
-    public Dialogo(java.awt.Frame parent, boolean modal) {
+    public DialogoSiNo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
         funcionescape(this);
         setResizable(false);
-        //lblTitulo.setText(tituloDialogo);
-        //lblCuerpo.setText(mensajeDialogo);
-        btnAceptar.requestFocus();
+        btnNo.requestFocus();
 
     }
 
@@ -28,11 +30,12 @@ public class Dialogo extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         rSButtonIconOne1 = new RSMaterialComponent.RSButtonIconOne();
         jPanel3 = new javax.swing.JPanel();
-        btnAceptar = new RSMaterialComponent.RSButtonMaterialIconOne();
+        btnSi = new RSMaterialComponent.RSButtonMaterialIconOne();
         jPanel4 = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         lblCuerpo = new javax.swing.JLabel();
+        btnNo = new RSMaterialComponent.RSButtonMaterialIconOne();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -70,7 +73,7 @@ public class Dialogo extends javax.swing.JDialog {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(169, Short.MAX_VALUE)
+                .addContainerGap(151, Short.MAX_VALUE)
                 .addComponent(rSButtonIconOne1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -84,17 +87,17 @@ public class Dialogo extends javax.swing.JDialog {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        btnAceptar.setBackground(new java.awt.Color(0, 90, 132));
-        btnAceptar.setText("Aceptar");
-        btnAceptar.setBackgroundHover(new java.awt.Color(204, 204, 204));
-        btnAceptar.setForegroundIcon(new java.awt.Color(0, 90, 132));
-        btnAceptar.setForegroundIconHover(new java.awt.Color(0, 90, 132));
-        btnAceptar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnAceptar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CHECK);
-        btnAceptar.setRound(20);
-        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+        btnSi.setBackground(new java.awt.Color(0, 90, 132));
+        btnSi.setText("Si");
+        btnSi.setBackgroundHover(new java.awt.Color(204, 204, 204));
+        btnSi.setForegroundIcon(new java.awt.Color(0, 90, 132));
+        btnSi.setForegroundIconHover(new java.awt.Color(0, 90, 132));
+        btnSi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnSi.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CHECK);
+        btnSi.setRound(20);
+        btnSi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAceptarActionPerformed(evt);
+                btnSiActionPerformed(evt);
             }
         });
 
@@ -103,15 +106,15 @@ public class Dialogo extends javax.swing.JDialog {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(272, Short.MAX_VALUE)
-                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap()
+                .addComponent(btnSi, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(140, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE)
+                .addComponent(btnSi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -120,7 +123,7 @@ public class Dialogo extends javax.swing.JDialog {
         lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(0, 90, 132));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("Título");
+        lblTitulo.setText("Titulo");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -158,23 +161,37 @@ public class Dialogo extends javax.swing.JDialog {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblCuerpo, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(lblCuerpo, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE))
         );
+
+        btnNo.setBackground(new java.awt.Color(0, 90, 132));
+        btnNo.setText("No");
+        btnNo.setBackgroundHover(new java.awt.Color(204, 204, 204));
+        btnNo.setForegroundIcon(new java.awt.Color(0, 90, 132));
+        btnNo.setForegroundIconHover(new java.awt.Color(0, 90, 132));
+        btnNo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnNo.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CHECK);
+        btnNo.setRound(20);
+        btnNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addComponent(btnNo, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,7 +202,11 @@ public class Dialogo extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -203,15 +224,13 @@ public class Dialogo extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rSButtonIconOne1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne1ActionPerformed
-
         dispose();
     }//GEN-LAST:event_rSButtonIconOne1ActionPerformed
 
-    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-
+    private void btnNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNoActionPerformed
+        respuestaPositiva = false;
         dispose();
-
-    }//GEN-LAST:event_btnAceptarActionPerformed
+    }//GEN-LAST:event_btnNoActionPerformed
 
     private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
 
@@ -226,8 +245,14 @@ public class Dialogo extends javax.swing.JDialog {
 
     }//GEN-LAST:event_jPanel2MouseDragged
 
+    private void btnSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiActionPerformed
+        respuestaPositiva = true;
+        dispose();
+    }//GEN-LAST:event_btnSiActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private RSMaterialComponent.RSButtonMaterialIconOne btnAceptar;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnNo;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnSi;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

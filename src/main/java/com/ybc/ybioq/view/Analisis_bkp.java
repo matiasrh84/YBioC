@@ -5,12 +5,12 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 
 import static com.ybc.ybioq.config.Escape.funcionescape;
 
-public class Analisis extends javax.swing.JDialog {
+public class Analisis_bkp extends javax.swing.JDialog {
 
     private int x;
     private int y;
 
-    public Analisis(java.awt.Frame parent, boolean modal) {
+    public Analisis_bkp(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
@@ -1096,19 +1096,15 @@ public class Analisis extends javax.swing.JDialog {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
     private void rSButtonIconOne1ActionPerformed(java.awt.event.ActionEvent evt) {
-
         dispose();
-
     }
 
     private void txtPracticaActionPerformed(java.awt.event.ActionEvent evt) {
-
         lblPractica.setText(txtPractica.getText());
         txtPractica.setText(null);
-
     }
 
     private void btnUtilitarios1ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1116,11 +1112,9 @@ public class Analisis extends javax.swing.JDialog {
     }
 
     private void btnGeneralActionPerformed(java.awt.event.ActionEvent evt) {
-
         panelGeneral.setVisible(true);
         panelAnalisis.setVisible(false);
         panelPrevisualizar.setVisible(false);
-
     }
 
     private void panelPrincipalMousePressed(java.awt.event.MouseEvent evt) {
@@ -1283,5 +1277,5 @@ public class Analisis extends javax.swing.JDialog {
     private RSMaterialComponent.RSTextFieldMaterial txtNombreInforme;
     private RSMaterialComponent.RSTextFieldMaterial txtPractica;
     private RSMaterialComponent.RSTextFieldMaterial txtTitulo;
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration                   
 }

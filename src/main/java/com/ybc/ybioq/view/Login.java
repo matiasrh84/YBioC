@@ -1,7 +1,10 @@
 package com.ybc.ybioq.view;
 
 
+import com.ybc.ybioq.config.ActualizadorDescarga;
+import com.ybc.ybioq.config.ActualizadorUI;
 import com.ybc.ybioq.controller.LoginController;
+import com.ybc.ybioq.service.ActualizadorService;
 import org.springframework.context.ApplicationContext;
 
 import javax.swing.*;
@@ -227,7 +230,12 @@ public class Login extends javax.swing.JFrame {
             String clave = new String(txtClave.getPassword());
             loginController.autenticar(usuario, clave);
             this.dispose();
-            new Principal(context).setVisible(true);
+            ActualizadorService actualizadorService = new ActualizadorService();
+            ActualizadorDescarga actualizadorDescarga = new ActualizadorDescarga();
+            ActualizadorUI actualizadorUI = new ActualizadorUI(actualizadorService, actualizadorDescarga);
+
+            actualizadorUI.verificarYNotificarActualizacion();
+            new Principal_bkp(context).setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }

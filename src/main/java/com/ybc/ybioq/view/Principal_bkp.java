@@ -18,7 +18,7 @@ import java.util.GregorianCalendar;
 
 import static com.ybc.ybioq.utils.Constantes.*;
 
-public class Principal extends javax.swing.JFrame {
+public class Principal_bkp extends javax.swing.JFrame {
 
 
     private int x;
@@ -44,7 +44,7 @@ public class Principal extends javax.swing.JFrame {
     //String ip = "";
 
 
-    public Principal(ApplicationContext context) {
+    public Principal_bkp(ApplicationContext context) {
         this.context = context;
 
         initComponents();
@@ -3161,7 +3161,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {
         PersonaController personaController = context.getBean(PersonaController.class);
-        new BuscarPersona(null, true, personaController).setVisible(true);
+        new BuscarPersona_bkp(null, true, personaController).setVisible(true);
         txtDNI.requestFocus();
     }
 
@@ -3236,7 +3236,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     private void btnAnalisisActionPerformed(java.awt.event.ActionEvent evt) {
-        new Analisis(this, true).setVisible(true);
+        new Analisis_bkp(this, true).setVisible(true);
     }
 
     private void btnDescargarDDJJActionPerformed(java.awt.event.ActionEvent evt) {

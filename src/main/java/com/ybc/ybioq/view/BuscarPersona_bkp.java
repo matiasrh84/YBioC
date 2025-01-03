@@ -8,11 +8,11 @@ import java.util.List;
 
 import static com.ybc.ybioq.config.Escape.funcionescape;
 
-public class BuscarPersona extends javax.swing.JDialog {
+public class BuscarPersona_bkp extends javax.swing.JDialog {
 
     private PersonaController personaController;
 
-    public BuscarPersona(java.awt.Frame parent, boolean modal, PersonaController personaController) {
+    public BuscarPersona_bkp(java.awt.Frame parent, boolean modal, PersonaController personaController) {
         super(parent, modal);
         this.personaController = personaController;
         initComponents();
