@@ -1,28 +1,26 @@
 package com.ybc.ybioq.view;
 
 import com.ybc.ybioq.controller.MedicoController;
+import lombok.extern.log4j.Log4j2;
 
 import java.sql.SQLException;
 
 import static com.ybc.ybioq.config.Escape.funcionescape;
 
+@Log4j2
 public class AgregarMedico extends javax.swing.JDialog {
 
-    private MedicoController medicoController;
+    private final MedicoController medicoController;
     private int x;
     private int y;
-    private int idMedico = 0;
 
-    public AgregarMedico(java.awt.Frame parent, boolean modal) {
+    public AgregarMedico(java.awt.Frame parent, boolean modal, MedicoController medicoController) {
         super(parent, modal);
+        this.medicoController = medicoController;
         initComponents();
         setLocationRelativeTo(null);
         funcionescape(this);
         setResizable(false);
-    }
-
-    void cargarid() throws SQLException {
-        idMedico = medicoController.obtenerMaxId();
     }
 
     @SuppressWarnings("unchecked")
@@ -246,102 +244,53 @@ public class AgregarMedico extends javax.swing.JDialog {
 
 
     private void rSButtonIconOne1ActionPerformed(java.awt.event.ActionEvent evt) {
-
         dispose();
     }
 
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
-
         x = evt.getX();
         y = evt.getY();
-
     }//GEN-LAST:event_jPanel1MousePressed
 
     private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
-
         this.setLocation(this.getLocation().x + evt.getX() - x, this.getLocation().y + evt.getY() - y);
-
     }//GEN-LAST:event_jPanel1MouseDragged
 
     private void txtApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidoActionPerformed
-
         txtNombre.requestFocus();
-
     }//GEN-LAST:event_txtApellidoActionPerformed
 
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
-
         txtMatricula.requestFocus();
-
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void txtMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatriculaActionPerformed
-
         btnAgregar.requestFocus();
-
     }//GEN-LAST:event_txtMatriculaActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-//
-//        evt.getActionCommand();
-//
-//        Connection cn = mysql.Conectar();
-//        String nombre, apellido, matricula;
-//        nombre = txtNombre.getText();
-//        apellido = txtApellido.getText();
-//        matricula = txtMatricula.getText();
-//        int control = 0;
-//        if (!"".equals(nombre) && !"".equals(apellido) && !"".equals(matricula)) {
-//            try ( Statement st = cn.createStatement();) {
-//                String sql = "SELECT matricula FROM medicos where estado=1";
-//                ResultSet rs = st.executeQuery(sql);
-//                int contador = 0;
-//                while (rs.next()) {
-//                    contador++;
-//                }
-//                rs.beforeFirst();
-//                if (contador != 0) {
-//                    while (rs.next()) {
-//                        if (matricula.equals(rs.getString("matricula"))) {
-//                            JOptionPane.showMessageDialog(null, "La matricula ya existe");
-//                            txtMatricula.requestFocus();
-//                            txtMatricula.selectAll();
-//                            control = 1;
-//                            break;
-//                        }
-//                    }
-//                }
-//                rs.beforeFirst();
-//            } catch (SQLException ex) {
-//                JOptionPane.showMessageDialog(null, ex);
-//                JOptionPane.showMessageDialog(null, "Error en la base de datos...");
-//            }
-//            if (control == 0) {
-//
-//                try ( PreparedStatement pst = cn.prepareStatement("INSERT INTO medicos (nombre, apellido, matricula) VALUES (?,?,?)")) {
-//
-//                    pst.setString(1, nombre);
-//                    pst.setString(2, apellido);
-//                    pst.setString(3, matricula);
-//                    cargarid();
-//                } catch (SQLException ex) {
-//                    Logger.getLogger(AgregarMedico_nuevo.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                try ( PreparedStatement pst1 = cn.prepareStatement("INSERT INTO medicos_tienen_especialidades  (id_medicos, id_especialidades,matricula) VALUES (?,?,?)")) {
-//
-//                    pst1.setInt(1, id_medico);
-//                    pst1.setInt(2, 1);
-//                    pst1.setString(3, matricula);
-//                    int m = pst1.executeUpdate();
-//                    medico = matricula + "-" + apellido + " " + nombre;
-//                } catch (SQLException ex) {
-//                    Logger.getLogger(AgregarMedico_nuevo.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                dispose();
-//            }
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Debe completar los campos obligatorios");
-//        }
+
+        String nombre = txtNombre.getText();
+        String apellido = txtApellido.getText();
+        int matricula = Integer.parseInt(txtMatricula.getText());
+
+        if (!nombre.isEmpty() && !apellido.isEmpty() && matricula != 0) {
+            try {
+                medicoController.addMedico(nombre, apellido, matricula);
+                dispose();
+            } catch (SQLException ex) {
+                Dialogo dialogo = new Dialogo(null, true);
+                dialogo.lblTitulo.setText("Error");
+                dialogo.lblCuerpo.setText(ex.getMessage());
+                dialogo.setVisible(true);
+                log.error(ex.getMessage());
+            }
+        } else {
+            Dialogo dialogo = new Dialogo(null, true);
+            dialogo.lblTitulo.setText("Atención");
+            dialogo.lblCuerpo.setText("Debe completar los campos obligatorios");
+            dialogo.setVisible(true);
+        }
 
     }//GEN-LAST:event_btnAgregarActionPerformed
 
@@ -358,5 +307,5 @@ public class AgregarMedico extends javax.swing.JDialog {
     private RSMaterialComponent.RSTextFieldMaterial txtApellido;
     private RSMaterialComponent.RSTextFieldMaterial txtMatricula;
     private RSMaterialComponent.RSTextFieldMaterial txtNombre;
-    // End of variables declaration//GEN-END:variables
+// End of variables declaration//GEN-END:variables
 }

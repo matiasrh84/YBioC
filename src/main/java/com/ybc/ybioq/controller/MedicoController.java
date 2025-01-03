@@ -6,6 +6,7 @@ import com.ybc.ybioq.service.MedicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Controller
@@ -26,7 +27,7 @@ public class MedicoController {
         return medicoService.guardarMedico(medico);
     }
 
-    public int obtenerMaxId() {
-        return medicoService.obtenerMaxId();
+    public Medico addMedico(String nombre, String apellido, int matricula) throws SQLException {
+        return medicoService.addMedico(nombre, apellido, matricula);
     }
 }

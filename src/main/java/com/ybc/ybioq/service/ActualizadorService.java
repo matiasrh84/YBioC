@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 public class ActualizadorService {
 
     private static final String ACTUALIZACION_URL = "https://matiasrh84.github.io/actualizador/actualizacion.json";
-    private static final String VERSION_ACTUAL = "1.0.0";
+    private static final String VERSION_ACTUAL = "1.1.0";
 
     public Actualizacion verificarActualizacion() {
         RestTemplate restTemplate = new RestTemplate();
