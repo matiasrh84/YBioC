@@ -1,18 +1,58 @@
 package com.ybc.ybioq.view;
 
 
+import com.ybc.ybioq.config.TableCellAlignmentHelper;
+import com.ybc.ybioq.controller.ObraSocialController;
+import com.ybc.ybioq.entity.local.ObraSocial;
+
+import javax.swing.table.DefaultTableModel;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
 import static com.ybc.ybioq.config.Escape.funcionescape;
 
 public class AgregarOS extends javax.swing.JDialog {
 
     private int x;
     private int y;
+    DefaultTableModel model;
+    TableCellAlignmentHelper alignmentHelper = new TableCellAlignmentHelper();
+    private final ObraSocialController obraSocialController;
 
-    public AgregarOS(java.awt.Frame parent, boolean modal) {
+    public AgregarOS(java.awt.Frame parent, boolean modal, ObraSocialController obraSocialController) {
         super(parent, modal);
+        this.obraSocialController = obraSocialController;
         initComponents();
         setLocationRelativeTo(null);
         funcionescape(this);
+        cargarTabla();
+        btnModificar.setEnabled(false);
+    }
+
+    public void cargarTabla() {
+        List<ObraSocial> obraSocialList = obraSocialController.getAllObraSocial();
+        String[] Titulo = {"Codigo", "Razón Social"};
+        String[] registros = new String[2];
+
+        model = new DefaultTableModel(null, Titulo) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        for (ObraSocial obraSocial : obraSocialList) {
+            registros[0] = obraSocial.getIntCodigoObraSocial();
+            registros[1] = obraSocial.getNombreObraSocial();
+            model.addRow(registros);
+        }
+        tablaObrasSociales.setModel(model);
+        tablaObrasSociales.setAutoCreateRowSorter(true);
+        tablaObrasSociales.getColumnModel().getColumn(0).setMaxWidth(60);
+        tablaObrasSociales.getColumnModel().getColumn(0).setMinWidth(60);
+        tablaObrasSociales.getColumnModel().getColumn(0).setPreferredWidth(60);
+        alignmentHelper.alinearColumnas(tablaObrasSociales.getColumnModel(), new int[]{0}, new int[]{}, new int[]{1});
     }
 
     @SuppressWarnings("unchecked")
@@ -32,7 +72,7 @@ public class AgregarOS extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         txtRazonSocial = new RSMaterialComponent.RSTextFieldMaterial();
         txtCodigoOs = new RSMaterialComponent.RSTextFieldMaterial();
-        txtCodigoOs1 = new RSMaterialComponent.RSTextFieldMaterial();
+        txtCuit = new RSMaterialComponent.RSTextFieldMaterial();
         cboNBU = new RSMaterialComponent.RSComboBox();
         txtCodigoFacturacion = new RSMaterialComponent.RSTextFieldMaterial();
         txtDireccion = new RSMaterialComponent.RSTextFieldMaterial();
@@ -108,18 +148,28 @@ public class AgregarOS extends javax.swing.JDialog {
         txtRazonSocial.setPhColor(new java.awt.Color(0, 90, 132));
         txtRazonSocial.setPlaceholder("Razón Social");
         txtRazonSocial.setSelectionColor(new java.awt.Color(0, 90, 132));
+        txtRazonSocial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRazonSocialActionPerformed(evt);
+            }
+        });
 
         txtCodigoOs.setForeground(new java.awt.Color(0, 90, 132));
         txtCodigoOs.setColorMaterial(new java.awt.Color(0, 90, 132));
         txtCodigoOs.setPhColor(new java.awt.Color(0, 90, 132));
         txtCodigoOs.setPlaceholder("Código OS");
         txtCodigoOs.setSelectionColor(new java.awt.Color(0, 90, 132));
+        txtCodigoOs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCodigoOsActionPerformed(evt);
+            }
+        });
 
-        txtCodigoOs1.setForeground(new java.awt.Color(0, 90, 132));
-        txtCodigoOs1.setColorMaterial(new java.awt.Color(0, 90, 132));
-        txtCodigoOs1.setPhColor(new java.awt.Color(0, 90, 132));
-        txtCodigoOs1.setPlaceholder("CUIT");
-        txtCodigoOs1.setSelectionColor(new java.awt.Color(0, 90, 132));
+        txtCuit.setForeground(new java.awt.Color(0, 90, 132));
+        txtCuit.setColorMaterial(new java.awt.Color(0, 90, 132));
+        txtCuit.setPhColor(new java.awt.Color(0, 90, 132));
+        txtCuit.setPlaceholder("CUIT");
+        txtCuit.setSelectionColor(new java.awt.Color(0, 90, 132));
 
         cboNBU.setForeground(new java.awt.Color(0, 90, 132));
         cboNBU.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"NBU"}));
@@ -135,7 +185,7 @@ public class AgregarOS extends javax.swing.JDialog {
         txtCodigoFacturacion.setForeground(new java.awt.Color(0, 90, 132));
         txtCodigoFacturacion.setColorMaterial(new java.awt.Color(0, 90, 132));
         txtCodigoFacturacion.setPhColor(new java.awt.Color(0, 90, 132));
-        txtCodigoFacturacion.setPlaceholder("Codigo deFacturación");
+        txtCodigoFacturacion.setPlaceholder("Codigo facturación");
         txtCodigoFacturacion.setSelectionColor(new java.awt.Color(0, 90, 132));
 
         txtDireccion.setForeground(new java.awt.Color(0, 90, 132));
@@ -223,47 +273,51 @@ public class AgregarOS extends javax.swing.JDialog {
                         .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                                .addComponent(txtRazonSocial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(txtCodigoOs, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(21, 21, 21))
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addComponent(dcFechaAlta, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(txtCodigoOs1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(cboNBU, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(txtCodigoFacturacion, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                                                .addContainerGap())
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(txtLocalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(txtCodigoPostal, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addContainerGap())
                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                                 .addComponent(txtProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(18, 18, 18)
                                                 .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(18, 18, 18)
                                                 .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                                                .addComponent(txtUnidadArancel, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(18, 18, 18)
-                                                                .addComponent(txtContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
-                                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                                                .addComponent(txtPaginaWeb, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(18, 18, 18)
-                                                                .addComponent(txtReferente, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                .addGap(18, 18, 18)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(txtTelefonoReferente, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                                                        .addComponent(txtPorcentajeAfiliado, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                                                .addComponent(dcFechaAlta, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(txtCuit, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(cboNBU, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(txtRazonSocial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                                                .addComponent(txtCodigoFacturacion, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                                                                .addContainerGap())
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                                                .addComponent(txtCodigoOs, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(21, 21, 21))))
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                                                .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(txtLocalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(txtCodigoPostal, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                                                                .addComponent(txtUnidadArancel, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addGap(18, 18, 18)
+                                                                                .addComponent(txtContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                                                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                                                                .addComponent(txtPaginaWeb, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addGap(18, 18, 18)
+                                                                                .addComponent(txtReferente, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                                .addGap(18, 18, 18)
+                                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addComponent(txtTelefonoReferente, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                                                                        .addComponent(txtPorcentajeAfiliado, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))))
                                                 .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
@@ -276,7 +330,7 @@ public class AgregarOS extends javax.swing.JDialog {
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                .addComponent(txtCodigoOs1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(txtCuit, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(cboNBU, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                                                 .addComponent(txtCodigoFacturacion, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(jPanel2Layout.createSequentialGroup()
@@ -309,20 +363,26 @@ public class AgregarOS extends javax.swing.JDialog {
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
-        tablaObrasSociales.setForeground(new java.awt.Color(255, 255, 255));
+        tablaObrasSociales.setForeground(new java.awt.Color(0, 90, 132));
         tablaObrasSociales.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{
-
+                        {null},
+                        {null}
                 },
                 new String[]{
-
+                        "titulo"
                 }
         ));
         tablaObrasSociales.setBackgoundHead(new java.awt.Color(0, 90, 132));
         tablaObrasSociales.setBackgoundHover(new java.awt.Color(0, 90, 132));
+        tablaObrasSociales.setBorderHead(null);
+        tablaObrasSociales.setBorderRows(null);
         tablaObrasSociales.setColorBorderHead(new java.awt.Color(255, 255, 255));
         tablaObrasSociales.setColorBorderRows(new java.awt.Color(255, 255, 255));
+        tablaObrasSociales.setColorPrimaryText(new java.awt.Color(0, 90, 132));
+        tablaObrasSociales.setColorSecundaryText(new java.awt.Color(0, 90, 132));
         tablaObrasSociales.setGridColor(new java.awt.Color(204, 204, 204));
+        tablaObrasSociales.setSelectionBackground(new java.awt.Color(0, 90, 132));
         jScrollPane1.setViewportView(tablaObrasSociales);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -331,7 +391,7 @@ public class AgregarOS extends javax.swing.JDialog {
                 jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -396,8 +456,8 @@ public class AgregarOS extends javax.swing.JDialog {
                                 .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
+                                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -663,7 +723,7 @@ public class AgregarOS extends javax.swing.JDialog {
         jPanel7Layout.setHorizontalGroup(
                 jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addContainerGap()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel25)
                                         .addComponent(jLabel26, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -704,8 +764,7 @@ public class AgregarOS extends javax.swing.JDialog {
                                                                 .addGap(18, 18, 18)
                                                                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                                         .addComponent(rsDiscrimina, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-                                                                        .addComponent(rsSelectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))))))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                                        .addComponent(rsSelectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)))))))
         );
         jPanel7Layout.setVerticalGroup(
                 jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -767,7 +826,7 @@ public class AgregarOS extends javax.swing.JDialog {
         );
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Tipo IVA", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 13), new java.awt.Color(0, 90, 132))); // NOI18N
+        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Tipo IVA", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 90, 132))); // NOI18N
         jPanel8.setForeground(new java.awt.Color(0, 90, 132));
 
         cboTipoIVA.setForeground(new java.awt.Color(0, 90, 132));
@@ -799,7 +858,7 @@ public class AgregarOS extends javax.swing.JDialog {
         );
 
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Tipo de facturación", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 13), new java.awt.Color(0, 90, 132))); // NOI18N
+        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Tipo de facturación", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 90, 132))); // NOI18N
         jPanel9.setForeground(new java.awt.Color(0, 90, 132));
 
         cboTipoIVA1.setForeground(new java.awt.Color(0, 90, 132));
@@ -843,17 +902,18 @@ public class AgregarOS extends javax.swing.JDialog {
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(jPanel3Layout.createSequentialGroup()
-                                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                         .addGroup(jPanel3Layout.createSequentialGroup()
-                                                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addGap(26, 26, 26))
-                                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                                                                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                        .addGap(18, 18, 18)
-                                                                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(5, 5, 5))
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                        .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addGap(8, 8, 8)))
+                                                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -894,29 +954,118 @@ public class AgregarOS extends javax.swing.JDialog {
 
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
-
         dispose();
-
     }//GEN-LAST:event_btnCerrarActionPerformed
 
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
-
         x = evt.getX();
         y = evt.getY();
-
     }//GEN-LAST:event_jPanel1MousePressed
 
     private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
-
         this.setLocation(this.getLocation().x + evt.getX() - x, this.getLocation().y + evt.getY() - y);
-
     }//GEN-LAST:event_jPanel1MouseDragged
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-
         dispose();
-
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void txtRazonSocialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRazonSocialActionPerformed
+        txtCodigoOs.requestFocus();
+    }//GEN-LAST:event_txtRazonSocialActionPerformed
+
+    private void txtCodigoOsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoOsActionPerformed
+        String codigo = txtCodigoOs.getText();
+        String razonSocial = txtRazonSocial.getText();
+        Optional<ObraSocial> optionalObraSocial = obraSocialController.getObraSocialByCodigoAndNombre(codigo, razonSocial);
+
+        if (optionalObraSocial.isPresent()) {
+            ObraSocial obraSocial = optionalObraSocial.get();
+            btnModificar.setEnabled(true);
+            txtRazonSocial.setText(obraSocial.getNombreObraSocial());
+            txtCodigoOs.setText(obraSocial.getCodigoObraSocial());
+
+            //convertir el localdate en date
+            LocalDate fechaDeAlta = obraSocial.getFechaDeAltaObraSocial();
+            if(fechaDeAlta != null) {
+                Date date = Date.from(fechaDeAlta.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                dcFechaAlta.setDate(date);
+            }
+
+            txtCuit.setText(obraSocial.getCuitObraSocial());
+            txtCodigoFacturacion.setText(obraSocial.getCodigoFacturacionObraSocial());
+            txtDireccion.setText(obraSocial.getDireccionObraSocial());
+            txtLocalidad.setText(obraSocial.getLocalidadObraSocial());
+            txtCodigoPostal.setText(obraSocial.getCodigoPostalObraSocial());
+            txtProvincia.setText(obraSocial.getProvinciaObraSocial());
+            txtTelefono.setText(obraSocial.getTelefonoObraSocial());
+            txtEmail.setText(obraSocial.getMail1ObraSocial());
+            txtPaginaWeb.setText(obraSocial.getHttpObraSocial());
+            txtReferente.setText(obraSocial.getNombreReferenteObraSocial());
+            txtTelefonoReferente.setText(obraSocial.getCelularReferenteObrasocial());
+            txtUnidadArancel.setText(obraSocial.getImporteUnidadDeArancelObraSocial().toString());
+            txtContrato.setText(obraSocial.getNResolucionIngresoObraSocial());
+            txtPorcentajeAfiliado.setText(obraSocial.getPorcentajeAfiliadoObraSocial());
+
+            if (obraSocial.getFacturaAltaComplejidad().equals("SI")) {
+                rsSiAltaComplejidad.setSelected(true);
+            } else {
+                rsNoAltaComplejidad.setSelected(true);
+            }
+
+            if (obraSocial.getFacturaNoNomenclados().equals("SI")) {
+                rsSiFacturaNoNomenclados.setSelected(true);
+            } else {
+                rsNoFacturaNoNomenclados.setSelected(true);
+            }
+
+            if (obraSocial.getFacturaPor().equals("CUPON")) {
+                rsCupon.setSelected(true);
+            } else {
+                rsPacienteCompleto.setSelected(true);
+            }
+
+            if (obraSocial.getFacturaPorPaciente().equals("SI")) {
+                rsSiFacturaPorPaciente.setSelected(true);
+            } else {
+                rsNoFacturaPorPaciente.setSelected(true);
+            }
+
+            if (obraSocial.getImprimeDobleInforme().equals("NUNCA")) {
+                rsNunca.setSelected(true);
+            } else if (obraSocial.getImprimeDobleInforme().equals("SIEMPRE")) {
+                rsSiempre.setSelected(true);
+            } else {
+                rsSelectivo.setSelected(true);
+            }
+
+            if (obraSocial.getD998().equals("INCLUYE")) {
+                rsIncluye.setSelected(true);
+            } else if (obraSocial.getD998().equals("NO INCLUYE")) {
+                rsNoIncluye.setSelected(true);
+            } else {
+                rsDiscrimina.setSelected(true);
+            }
+
+            if (obraSocial.getSubtotalPorPaciente().equals("SI")) {
+                rsSiSubtotal.setSelected(true);
+            } else {
+                rsNoSubtotal.setSelected(true);
+            }
+
+            if (obraSocial.getTieneCategorizacion().equals("SI")) {
+                rsSiCategorizacion.setSelected(true);
+            } else {
+                rsNoCategorizacion.setSelected(true);
+            }
+
+            if (obraSocial.getTipoDeFacturacion().equals("DIRECTA")) {
+                rsDirecta.setSelected(true);
+            } else {
+                rsColegio.setSelected(true);
+            }
+        }
+    }//GEN-LAST:event_txtCodigoOsActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private RSMaterialComponent.RSButtonMaterialIconOne btnAgregar;
@@ -980,9 +1129,9 @@ public class AgregarOS extends javax.swing.JDialog {
     private RSMaterialComponent.RSTableMetroCustom tablaObrasSociales;
     private RSMaterialComponent.RSTextFieldMaterial txtCodigoFacturacion;
     private RSMaterialComponent.RSTextFieldMaterial txtCodigoOs;
-    private RSMaterialComponent.RSTextFieldMaterial txtCodigoOs1;
     private RSMaterialComponent.RSTextFieldMaterial txtCodigoPostal;
     private RSMaterialComponent.RSTextFieldMaterial txtContrato;
+    private RSMaterialComponent.RSTextFieldMaterial txtCuit;
     private RSMaterialComponent.RSTextFieldMaterial txtDireccion;
     private RSMaterialComponent.RSTextFieldMaterial txtEmail;
     private RSMaterialComponent.RSTextFieldMaterial txtLocalidad;

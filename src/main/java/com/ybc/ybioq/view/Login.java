@@ -235,7 +235,7 @@ public class Login extends javax.swing.JFrame {
             ActualizadorUI actualizadorUI = new ActualizadorUI(actualizadorService, actualizadorDescarga);
 
             actualizadorUI.verificarYNotificarActualizacion();
-            new Principal_bkp(context).setVisible(true);
+            new Principal(context).setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }

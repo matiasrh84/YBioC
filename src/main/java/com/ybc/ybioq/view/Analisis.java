@@ -517,7 +517,6 @@ public class Analisis extends javax.swing.JDialog {
         tablaPioridadPractica.setColorBorderHead(new java.awt.Color(255, 255, 255));
         tablaPioridadPractica.setColorBorderRows(new java.awt.Color(255, 255, 255));
         tablaPioridadPractica.setColorPrimaryText(new java.awt.Color(0, 90, 132));
-        tablaPioridadPractica.setColorSecondary(new java.awt.Color(255, 255, 255));
         tablaPioridadPractica.setColorSecundaryText(new java.awt.Color(0, 90, 132));
         tablaPioridadPractica.setGridColor(new java.awt.Color(255, 255, 255));
         tablaPioridadPractica.setSelectionBackground(new java.awt.Color(0, 90, 132));

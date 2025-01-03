@@ -19,124 +19,124 @@ public class ObraSocial {
     private Integer id;
 
     @Column(name = "Int_codigo_obrasocial", length = 50)
-    private String intCodigoObrasocial;
+    private String intCodigoObraSocial;
 
     @Column(name = "celularreferente_obrasocial", length = 45)
-    private String celularreferenteObrasocial;
+    private String celularReferenteObrasocial;
 
     @Column(name = "importeunidaddearancel_obrasocial")
-    private Double importeunidaddearancelObrasocial;
+    private Double importeUnidadDeArancelObraSocial;
 
     @Column(name = "razonsocial_obrasocial", length = 45)
-    private String razonsocialObrasocial;
+    private String razonSocialObraSocial;
 
     @Column(name = "importeunidaddegasto_obrasocial", length = 45)
-    private String importeunidaddegastoObrasocial;
+    private String importeUnidadDeGastoObraSocial;
 
     @Column(name = "codigofacturacion_obrasocial", length = 45)
-    private String codigofacturacionObrasocial;
+    private String codigoFacturacionObraSocial;
 
     @Column(name = "codigofacliq_obrasocial", length = 45)
-    private String codigofacliqObrasocial;
+    private String codigoFacLiqObraSocial;
 
     @Column(name = "codigo_obrasocial", length = 45)
-    private String codigoObrasocial;
+    private String codigoObraSocial;
 
     @Column(name = "codigopostal_obrasocial", length = 45)
-    private String codigopostalObrasocial;
+    private String codigoPostalObraSocial;
 
     @Column(name = "cuit_obrasocial", length = 45)
-    private String cuitObrasocial;
+    private String cuitObraSocial;
 
     @Column(name = "direccion_obrasocial", length = 45)
-    private String direccionObrasocial;
+    private String direccionObraSocial;
 
     @Column(name = "facturaaltacomplejidad", length = 2)
-    private String facturaaltacomplejidad;
+    private String facturaAltaComplejidad;
 
     @Column(name = "facturanonomenclados", length = 2)
-    private String facturanonomenclados;
+    private String facturaNoNomenclados;
 
     @Column(name = "facturapor", length = 45)
-    private String facturapor;
+    private String facturaPor;
 
     @Column(name = "facturaporpaciente", length = 2)
-    private String facturaporpaciente;
+    private String facturaPorPaciente;
 
     @Column(name = "fax_obrasocial", length = 45)
-    private String faxObrasocial;
+    private String faxObraSocial;
 
     @Column(name = "fechadealta_obrasocial")
-    private LocalDate fechadealtaObrasocial;
+    private LocalDate fechaDeAltaObraSocial;
 
     @Column(name = "fechadebaja_obrasocial")
-    private LocalDate fechadebajaObrasocial;
+    private LocalDate fechaDeBajaObraSocial;
 
     @Column(name = "http_obrasocial", length = 45)
-    private String httpObrasocial;
+    private String httpObraSocial;
 
     @Column(name = "imprimedobleinforme", length = 45)
-    private String imprimedobleinforme;
+    private String imprimeDobleInforme;
 
     @Column(name = "d998", length = 45)
     private String d998;
 
     @Column(name = "localidad_obrasocial", length = 45)
-    private String localidadObrasocial;
+    private String localidadObraSocial;
 
     @Column(name = "mail1_obrasocial", length = 45)
-    private String mail1Obrasocial;
+    private String mail1ObraSocial;
 
     @Column(name = "mail2_obrasocial", length = 45)
-    private String mail2Obrasocial;
+    private String mail2ObraSocial;
 
     @Column(name = "mail3_obrasocial", length = 45)
-    private String mail3Obrasocial;
+    private String mail3ObraSocial;
 
     @Column(name = "nombrereferente_obrasocial", length = 45)
-    private String nombrereferenteObrasocial;
+    private String nombreReferenteObraSocial;
 
     @Column(name = "nombre_obrasocial", length = 45)
-    private String nombreObrasocial;
+    private String nombreObraSocial;
 
     @Column(name = "nresolucioningreso_obrasocial", length = 45)
-    private String nresolucioningresoObrasocial;
+    private String nResolucionIngresoObraSocial;
 
     @Column(name = "ntablaaranceles_obrasocial", length = 45)
-    private String ntablaarancelesObrasocial;
+    private String nTablaArancelesObraSocial;
 
     @Column(name = "porcentajeafiliado_obrasocial", length = 45)
-    private String porcentajeafiliadoObrasocial;
+    private String porcentajeAfiliadoObraSocial;
 
     @Column(name = "porcentajedescuento_obrasocial", length = 45)
-    private String porcentajedescuentoObrasocial;
+    private String porcentajeDescuentoObraSocial;
 
     @Column(name = "provincia_obrasocial", length = 45)
-    private String provinciaObrasocial;
+    private String provinciaObraSocial;
 
     @Column(name = "subtotalporpaciente", length = 2)
-    private String subtotalporpaciente;
+    private String subtotalPorPaciente;
 
     @Column(name = "telefono_obrasocial", length = 45)
-    private String telefonoObrasocial;
+    private String telefonoObraSocial;
 
     @Column(name = "tienecategorizacion", length = 2)
-    private String tienecategorizacion;
+    private String tieneCategorizacion;
 
     @Column(name = "tipodefacturacion", length = 45)
-    private String tipodefacturacion;
+    private String tipoDeFacturacion;
 
     @Column(name = "tipodefacturaciondirectaocolegio", length = 45)
-    private String tipodefacturaciondirectaocolegio;
+    private String tipoDeFacturacionDirectaOColegio;
 
     @Column(name = "tipoiva", length = 45)
-    private String tipoiva;
+    private String tipoIva;
 
     @Column(name = "periodo_nbu", length = 4)
     private String periodoNbu;
 
     @Column(name = "estado_obrasocial")
-    private Integer estadoObrasocial;
+    private Integer estadoObraSocial;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

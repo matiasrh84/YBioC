@@ -2,6 +2,7 @@ package com.ybc.ybioq.view;
 
 import com.mxrck.autocompleter.TextAutoCompleter;
 import com.ybc.ybioq.controller.MedicoController;
+import com.ybc.ybioq.controller.ObraSocialController;
 import com.ybc.ybioq.controller.PersonaController;
 import static com.ybc.ybioq.utils.Constantes.CLINICO;
 import static com.ybc.ybioq.utils.Constantes.EMBARAZADA;
@@ -34,7 +35,7 @@ public class Principal extends javax.swing.JFrame {
     int id_localidad = 2358;
     DefaultTableModel model, model3, modelPaciente, modelPracticas;
     DefaultTableCellRenderer alinearCentro, alinearDerecha, alinearIzquierda;
-    Principal_bkp.HiloBusquedaPacientes hiloPacientes;
+    Principal.HiloBusquedaPacientes hiloPacientes;
     String hora = "", hora2 = "", fechaonline = "";
 
     public static String medico = "";
@@ -1359,7 +1360,7 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(btnFacturacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnUtilitarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                 .addComponent(rSButtonMaterialIconOne5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -1658,7 +1659,6 @@ public class Principal extends javax.swing.JFrame {
         tablaPacientes.setColorBorderHead(new java.awt.Color(255, 255, 255));
         tablaPacientes.setColorBorderRows(new java.awt.Color(255, 255, 255));
         tablaPacientes.setColorPrimaryText(new java.awt.Color(0, 90, 132));
-        tablaPacientes.setColorSecondary(new java.awt.Color(255, 255, 255));
         tablaPacientes.setColorSecundaryText(new java.awt.Color(0, 90, 132));
         tablaPacientes.setComponentPopupMenu(popuMenu1);
         tablaPacientes.setGridColor(new java.awt.Color(255, 255, 255));
@@ -3226,7 +3226,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         PersonaController personaController = context.getBean(PersonaController.class);
-        new BuscarPersona_bkp(null, true, personaController).setVisible(true);
+        new BuscarPersona(null, true, personaController).setVisible(true);
         txtDNI.requestFocus();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -3326,7 +3326,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMedicosActionPerformed
 
     private void btnAnalisisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalisisActionPerformed
-        new Analisis_bkp(this, true).setVisible(true);
+        new Analisis(this, true).setVisible(true);
     }//GEN-LAST:event_btnAnalisisActionPerformed
 
     private void btnDescargarDDJJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargarDDJJActionPerformed
@@ -3366,7 +3366,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDescargasActionPerformed
 
     private void btnObrasSocialesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrasSocialesActionPerformed
-        new AgregarOS(this, true).setVisible(true);
+        ObraSocialController obraSocialController = context.getBean(ObraSocialController.class);
+        new AgregarOS(this, true, obraSocialController).setVisible(true);
     }//GEN-LAST:event_btnObrasSocialesActionPerformed
 
     private void btnActualizarBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarBDActionPerformed

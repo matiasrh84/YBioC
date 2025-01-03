@@ -152,9 +152,13 @@ public class BuscarPersona extends javax.swing.JDialog {
         ));
         tablaPersona.setBackgoundHead(new java.awt.Color(0, 90, 132));
         tablaPersona.setBackgoundHover(new java.awt.Color(0, 90, 132));
+        tablaPersona.setBorderHead(null);
+        tablaPersona.setBorderRows(null);
         tablaPersona.setColorBorderHead(new java.awt.Color(255, 255, 255));
         tablaPersona.setColorBorderRows(new java.awt.Color(255, 255, 255));
-        tablaPersona.setGridColor(new java.awt.Color(204, 204, 204));
+        tablaPersona.setColorPrimaryText(new java.awt.Color(0, 90, 132));
+        tablaPersona.setColorSecundaryText(new java.awt.Color(0, 90, 132));
+        tablaPersona.setGridColor(new java.awt.Color(153, 153, 153));
         jScrollPane1.setViewportView(tablaPersona);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);

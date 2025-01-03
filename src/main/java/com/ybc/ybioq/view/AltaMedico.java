@@ -122,9 +122,9 @@ public class AltaMedico extends javax.swing.JDialog {
 
         tablaMedicos.setModel(model);
         tablaMedicos.setAutoCreateRowSorter(true);
-        tablaMedicos.getColumnModel().getColumn(0).setMaxWidth(0);
-        tablaMedicos.getColumnModel().getColumn(0).setMinWidth(0);
-        tablaMedicos.getColumnModel().getColumn(0).setPreferredWidth(0);
+        tablaMedicos.getColumnModel().getColumn(0).setMaxWidth(20);
+        tablaMedicos.getColumnModel().getColumn(0).setMinWidth(20);
+        tablaMedicos.getColumnModel().getColumn(0).setPreferredWidth(20);
         alinear();
         tablaMedicos.getColumnModel().getColumn(0).setCellRenderer(alinearCentro);
         tablaMedicos.getColumnModel().getColumn(1).setCellRenderer(alinearIzquierda);
@@ -296,7 +296,6 @@ public class AltaMedico extends javax.swing.JDialog {
         tablaMedicos.setColorBorderHead(new java.awt.Color(255, 255, 255));
         tablaMedicos.setColorBorderRows(new java.awt.Color(255, 255, 255));
         tablaMedicos.setColorPrimaryText(new java.awt.Color(0, 90, 132));
-        tablaMedicos.setColorSecondary(new java.awt.Color(255, 255, 255));
         tablaMedicos.setColorSecundaryText(new java.awt.Color(0, 90, 132));
         tablaMedicos.setGridColor(new java.awt.Color(255, 255, 255));
         tablaMedicos.setSelectionBackground(new java.awt.Color(0, 90, 132));
