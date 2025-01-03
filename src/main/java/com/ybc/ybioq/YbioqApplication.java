@@ -11,15 +11,19 @@ import javax.swing.*;
 public class YbioqApplication {
 
     public static void main(String[] args) {
-        // Inicializa el contexto de Spring
-        ApplicationContext context = new SpringApplicationBuilder(YbioqApplication.class)
-                .headless(false)
-                .run(args);
-
-        // Lanza el JFrame de inicio
         SwingUtilities.invokeLater(() -> {
-            Inicio inicio = new Inicio(context); // Pasamos el contexto
+            Inicio inicio = new Inicio(); // Inicializa la ventana sin el contexto todavía
             inicio.setVisible(true);
+
+            // Cargar el contexto de Spring en un hilo separado
+            new Thread(() -> {
+                ApplicationContext context = new SpringApplicationBuilder(YbioqApplication.class)
+                        .headless(false)
+                        .run(args);
+
+                // Notifica al formulario que el contexto está listo
+                inicio.setContext(context);
+            }).start();
         });
     }
 }

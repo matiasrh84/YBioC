@@ -1,25 +1,63 @@
 package com.ybc.ybioq.view;
 
-import com.ybc.ybioq.config.HiloInicio;
 import org.springframework.context.ApplicationContext;
 
+import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public final class Inicio extends javax.swing.JFrame {
 
-    private final ApplicationContext context;
-    private HiloInicio hilo;
+    private ApplicationContext context;
 
-    public Inicio(ApplicationContext context) {
-        this.context = context;
+    public Inicio() {
+
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
         setLocationRelativeTo(null);
         setResizable(false);
         iniciarSplash();
-        hilo = new HiloInicio(progreso, context);
-        hilo.start();
-        hilo = null;
+        cargarProgreso();
+    }
+
+    public void setContext(ApplicationContext context) {
+        this.context = context;
+        if (context != null) {
+            // Cuando el contexto esté listo, cierra el splash y abre el siguiente formulario
+            this.dispose();
+            new Login(context).setVisible(true);
+        }
+    }
+
+    private void cargarProgreso() {
+        // SwingWorker para simular la carga del progreso
+        SwingWorker<Void, Integer> worker = new SwingWorker<>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                int progress = 0;
+                while (progress < 100) {
+                    Thread.sleep(50); // Simula una tarea
+                    progress += 1;
+                    publish(progress); // Actualiza el progreso
+                }
+                return null;
+            }
+
+            @Override
+            protected void process(List<Integer> chunks) {
+                for (int value : chunks) {
+                    progreso.setValue(value);
+                }
+            }
+
+            @Override
+            protected void done() {
+                if (context == null) {
+                    progreso.setString("Esperando contexto...");
+                }
+            }
+        };
+        worker.execute();
     }
 
     @SuppressWarnings("unchecked")
@@ -80,15 +118,6 @@ public final class Inicio extends javax.swing.JFrame {
 
         this.getjProgressBar1().setStringPainted(true);
     }
-
-//    public static void main(String[] args) {
-//
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new Inicio(context).setVisible(true);
-//            }
-//        });
-//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
