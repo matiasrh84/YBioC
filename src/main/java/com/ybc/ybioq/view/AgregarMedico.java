@@ -1,13 +1,17 @@
 package com.ybc.ybioq.view;
 
+import com.ybc.ybioq.controller.MedicoController;
+
 import java.sql.SQLException;
 
 import static com.ybc.ybioq.config.Escape.funcionescape;
 
 public class AgregarMedico extends javax.swing.JDialog {
 
+    private MedicoController medicoController;
     private int x;
     private int y;
+    private int idMedico = 0;
 
     public AgregarMedico(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -18,25 +22,7 @@ public class AgregarMedico extends javax.swing.JDialog {
     }
 
     void cargarid() throws SQLException {
-
-//        String sSQL;
-//        ConexionMySQLLocal mysql = new ConexionMySQLLocal();
-//        Connection cn = mysql.Conectar();
-//
-//        sSQL = "SELECT MAX(id_medicos) AS id_medicos FROM medicos";
-//
-//        try ( Statement st = cn.createStatement()) {
-//            ResultSet rs = st.executeQuery(sSQL);
-//            rs.last();
-//            if (rs.getInt("id_medicos") != 0) {
-//                id_medico = rs.getInt("id_medicos");
-//                id_especialidad = 1;
-//            } else {
-//                id_medico = 1;
-//            }
-//        } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(null, ex);
-//        }
+        idMedico = medicoController.obtenerMaxId();
     }
 
     @SuppressWarnings("unchecked")
@@ -69,33 +55,21 @@ public class AgregarMedico extends javax.swing.JDialog {
         txtApellido.setPhColor(new java.awt.Color(0, 90, 132));
         txtApellido.setPlaceholder("Apellido");
         txtApellido.setSelectionColor(new java.awt.Color(0, 90, 132));
-        txtApellido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtApellidoActionPerformed(evt);
-            }
-        });
+        txtApellido.addActionListener(this::txtApellidoActionPerformed);
 
         txtNombre.setForeground(new java.awt.Color(0, 90, 132));
         txtNombre.setColorMaterial(new java.awt.Color(0, 90, 132));
         txtNombre.setPhColor(new java.awt.Color(0, 90, 132));
         txtNombre.setPlaceholder("Nombre");
         txtNombre.setSelectionColor(new java.awt.Color(0, 90, 132));
-        txtNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreActionPerformed(evt);
-            }
-        });
+        txtNombre.addActionListener(this::txtNombreActionPerformed);
 
         txtMatricula.setForeground(new java.awt.Color(0, 90, 132));
         txtMatricula.setColorMaterial(new java.awt.Color(0, 90, 132));
         txtMatricula.setPhColor(new java.awt.Color(0, 90, 132));
         txtMatricula.setPlaceholder("Matrícula");
         txtMatricula.setSelectionColor(new java.awt.Color(0, 90, 132));
-        txtMatricula.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMatriculaActionPerformed(evt);
-            }
-        });
+        txtMatricula.addActionListener(this::txtMatriculaActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -131,11 +105,7 @@ public class AgregarMedico extends javax.swing.JDialog {
         btnAgregar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnAgregar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CHECK);
         btnAgregar.setRound(20);
-        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarActionPerformed(evt);
-            }
-        });
+        btnAgregar.addActionListener(this::btnAgregarActionPerformed);
 
         btnCancelar.setBackground(new java.awt.Color(0, 90, 132));
         btnCancelar.setText("Cancelar");
@@ -186,11 +156,7 @@ public class AgregarMedico extends javax.swing.JDialog {
         rSButtonIconOne1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
         rSButtonIconOne1.setRippleColor(new java.awt.Color(0, 90, 132));
         rSButtonIconOne1.setSizeIcon(20.0F);
-        rSButtonIconOne1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIconOne1ActionPerformed(evt);
-            }
-        });
+        rSButtonIconOne1.addActionListener(this::rSButtonIconOne1ActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -279,10 +245,10 @@ public class AgregarMedico extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
 
-    private void rSButtonIconOne1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne1ActionPerformed
+    private void rSButtonIconOne1ActionPerformed(java.awt.event.ActionEvent evt) {
 
         dispose();
-    }//GEN-LAST:event_rSButtonIconOne1ActionPerformed
+    }
 
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
 

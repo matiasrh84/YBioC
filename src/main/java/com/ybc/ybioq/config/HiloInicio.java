@@ -2,6 +2,7 @@ package com.ybc.ybioq.config;
 
 import com.ybc.ybioq.view.Login;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.context.ApplicationContext;
 
 import javax.swing.*;
 
@@ -10,11 +11,13 @@ public class HiloInicio extends Thread {
 
     JProgressBar progreso;
     public static String[] analisis = new String[50000];
+    private final ApplicationContext context;
 
 
-    public HiloInicio(JProgressBar progreso1) {
+    public HiloInicio(JProgressBar progreso1, ApplicationContext context) {
         super();
         this.progreso = progreso1;
+        this.context = context;
     }
 
     public void run() {
@@ -63,7 +66,7 @@ public class HiloInicio extends Thread {
             i++;
             pausa(5);
         }
-        new Login().setVisible(true);
+        new Login(context).setVisible(true);
     }
 
 

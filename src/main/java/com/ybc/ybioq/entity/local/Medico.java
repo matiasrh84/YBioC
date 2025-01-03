@@ -1,11 +1,10 @@
 package com.ybc.ybioq.entity.local;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -37,4 +36,7 @@ public class Medico {
 
     @Column(name = "estado", nullable = false)
     private Integer estado;
+
+    @OneToMany(mappedBy = "idMedicos", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<MedicoTieneEspecialidad> medicoTieneEspecialidades;
 }

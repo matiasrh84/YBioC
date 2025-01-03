@@ -1,6 +1,9 @@
 package com.ybc.ybioq.view;
 
 import com.mxrck.autocompleter.TextAutoCompleter;
+import com.ybc.ybioq.controller.MedicoController;
+import com.ybc.ybioq.controller.PersonaController;
+import org.springframework.context.ApplicationContext;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -9,27 +12,27 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import static com.ybc.ybioq.utils.Constantes.*;
+
 public class Principal extends javax.swing.JFrame {
+
 
     private int x;
     private int y;
 
-    public String[] descripcion = new String[100000];
+
     public static String direccion, lugar, fecha, fecha2, periodo;
-    int id_historia_clinica = 0, id_localidad = 2358, id_orden, total = 0;
+    int id_localidad = 2358;
     DefaultTableModel model, model3, modelPaciente, modelPracticas;
     DefaultTableCellRenderer alinearCentro, alinearDerecha, alinearIzquierda;
     HiloBusquedaPacientes hiloPacientes;
     String hora = "", hora2 = "", fechaonline = "";
 
     public static String medico = "";
-    public static int idobraimprime = 0;
 
     TextAutoCompleter textAutoAcompleter;
     TextAutoCompleter textAutoAcompletermatricula2;
@@ -37,11 +40,12 @@ public class Principal extends javax.swing.JFrame {
     TextAutoCompleter textAutoAcompletertipo;
 
     public static double totalParticular;
+    private final ApplicationContext context;
+    //String ip = "";
 
-    String ip = "";
 
-
-    public Principal() {
+    public Principal(ApplicationContext context) {
+        this.context = context;
 
         initComponents();
         setLocationRelativeTo(null);
@@ -55,15 +59,15 @@ public class Principal extends javax.swing.JFrame {
         textAutoAcompletermatricula2 = new TextAutoCompleter(txtMedico);
         textAutoAcompleter2 = new TextAutoCompleter(txtObraSocial);
         textAutoAcompletertipo = new TextAutoCompleter(txtMotivo);
-        textAutoAcompletertipo.addItem("Clínico.");
-        textAutoAcompletertipo.addItem("Embarazada.");
-        textAutoAcompletertipo.addItem("Prelaborales.");
-        textAutoAcompletertipo.addItem("Recíen Nacidos.");
-        textAutoAcompletertipo.addItem("Transplantes.");
-        textAutoAcompletertipo.addItem("Otros.");
-        textAutoAcompletertipo.addItem("Indistinto.");
-        textAutoAcompletertipo.addItem("VIH.");
-        textAutoAcompletertipo.addItem("S/D.");
+        textAutoAcompletertipo.addItem(CLINICO);
+        textAutoAcompletertipo.addItem(EMBARAZADA);
+        textAutoAcompletertipo.addItem(PRELABORALES);
+        textAutoAcompletertipo.addItem(RECIEN_NACIDOS);
+        textAutoAcompletertipo.addItem(TRANSPLANTES);
+        textAutoAcompletertipo.addItem(OTROS);
+        textAutoAcompletertipo.addItem(INDISTINTO);
+        textAutoAcompletertipo.addItem(VIH);
+        textAutoAcompletertipo.addItem(S_D);
         textAutoAcompletertipo.setMode(0);
         textAutoAcompletertipo.setCaseSensitive(false);
         btnPatologias.setEnabled(false);
@@ -84,7 +88,7 @@ public class Principal extends javax.swing.JFrame {
         //cargarhistoriaclinica();
         //cargarfechafacturacion();
         cargarhora();
-        cargarip();
+        //cargarip();
 
         txtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(KeyEvent evt) {
@@ -114,7 +118,7 @@ public class Principal extends javax.swing.JFrame {
 
         txtMedico.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(KeyEvent evt) {
-                Character c = evt.getKeyChar();
+                char c = evt.getKeyChar();
                 if (Character.isLetter(c)) {
                     evt.setKeyChar(Character.toUpperCase(c));
                 }
@@ -122,7 +126,7 @@ public class Principal extends javax.swing.JFrame {
         });
         txtMail.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(KeyEvent evt) {
-                Character c = evt.getKeyChar();
+                char c = evt.getKeyChar();
                 if (Character.isLetter(c)) {
                     evt.setKeyChar(Character.toLowerCase(c));
                 }
@@ -130,7 +134,7 @@ public class Principal extends javax.swing.JFrame {
         });
         txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(KeyEvent evt) {
-                Character c = evt.getKeyChar();
+                char c = evt.getKeyChar();
                 if (Character.isLetter(c)) {
                     evt.setKeyChar(Character.toUpperCase(c));
                 }
@@ -138,7 +142,7 @@ public class Principal extends javax.swing.JFrame {
         });
         lblPaciente.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(KeyEvent evt) {
-                Character c = evt.getKeyChar();
+                char c = evt.getKeyChar();
                 if (Character.isLetter(c)) {
                     evt.setKeyChar(Character.toUpperCase(c));
                 }
@@ -146,7 +150,7 @@ public class Principal extends javax.swing.JFrame {
         });
         txtObraSocial.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(KeyEvent evt) {
-                Character c = evt.getKeyChar();
+                char c = evt.getKeyChar();
                 if (Character.isLetter(c)) {
                     evt.setKeyChar(Character.toUpperCase(c));
                 }
@@ -155,7 +159,7 @@ public class Principal extends javax.swing.JFrame {
 
         lblNumeroProtocolo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(KeyEvent evt) {
-                Character c = evt.getKeyChar();
+                char c = evt.getKeyChar();
                 if (Character.isLetter(c)) {
                     evt.setKeyChar(Character.toUpperCase(c));
                 }
@@ -163,7 +167,7 @@ public class Principal extends javax.swing.JFrame {
         });
         txtRecienNacido.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(KeyEvent evt) {
-                Character c = evt.getKeyChar();
+                char c = evt.getKeyChar();
                 if (Character.isLetter(c)) {
                     evt.setKeyChar(Character.toUpperCase(c));
                 }
@@ -171,7 +175,7 @@ public class Principal extends javax.swing.JFrame {
         });
         txtMotivo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(KeyEvent evt) {
-                Character c = evt.getKeyChar();
+                char c = evt.getKeyChar();
                 if (Character.isLetter(c)) {
                     evt.setKeyChar(Character.toUpperCase(c));
                 }
@@ -190,14 +194,14 @@ public class Principal extends javax.swing.JFrame {
         alinearIzquierda.setHorizontalAlignment(SwingConstants.LEFT);
     }
 
-    void cargarip() {
-        try {
-            String thisIp = InetAddress.getLocalHost().getHostAddress();
-            String thisname = InetAddress.getLocalHost().getHostName();
-            ip = thisIp + "-" + thisname;
-        } catch (UnknownHostException e) {
-        }
-    }
+//    void cargarip() {
+//        try {
+//            String thisIp = InetAddress.getLocalHost().getHostAddress();
+//            String thisname = InetAddress.getLocalHost().getHostName();
+//            ip = thisIp + "-" + thisname;
+//        } catch (UnknownHostException e) {
+//        }
+//    }
 
     void cargarhora() {
         SimpleDateFormat formatoTiempo2 = new SimpleDateFormat("HHmmss");
@@ -959,14 +963,14 @@ public class Principal extends javax.swing.JFrame {
         popuMenu1 = new rojeru_san.complementos.PopuMenu();
         Resultados = new javax.swing.JMenuItem();
         Modifica = new javax.swing.JMenuItem();
-        Cargar = new javax.swing.JMenuItem();
+        JMenuItem cargar = new JMenuItem();
         panelBotones = new javax.swing.JPanel();
-        rSLabelIcon1 = new RSMaterialComponent.RSLabelIcon();
+        RSMaterialComponent.RSLabelIcon rSLabelIcon1 = new RSMaterialComponent.RSLabelIcon();
         btnCargarResultados = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnUtilitarios = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnFacturacion = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnCargarPaciente = new RSMaterialComponent.RSButtonMaterialIconOne();
-        rSButtonMaterialIconOne5 = new RSMaterialComponent.RSButtonMaterialIconOne();
+        RSMaterialComponent.RSButtonMaterialIconOne rSButtonMaterialIconOne5 = new RSMaterialComponent.RSButtonMaterialIconOne();
         rSButtonIconOne1 = new RSMaterialComponent.RSButtonIconOne();
         rSButtonIconOne2 = new RSMaterialComponent.RSButtonIconOne();
         btnCargarResultados1 = new RSMaterialComponent.RSButtonMaterialIconOne();
@@ -991,7 +995,7 @@ public class Principal extends javax.swing.JFrame {
         btnModificar = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnBorrar = new RSMaterialComponent.RSButtonMaterialIconOne();
         jPanel8 = new javax.swing.JPanel();
-        txtBuscar = new RSMaterialComponent.RSTextFieldMaterial();
+        RSMaterialComponent.RSTextFieldMaterial txtBuscar = new RSMaterialComponent.RSTextFieldMaterial();
         jScrollPane5 = new javax.swing.JScrollPane();
         tablaPacientes = new RSMaterialComponent.RSTableMetroCustom();
         dcFechaPacienteDesde = new newscomponents.RSDateChooser();
@@ -1019,7 +1023,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         txtMotivo = new RSMaterialComponent.RSTextFieldMaterial();
         chkCoseguro = new RSMaterialComponent.RSCheckBoxMaterial();
-        txtPrecioCoseguro = new RSMaterialComponent.RSTextFieldMaterial();
+        RSMaterialComponent.RSTextFieldMaterial txtPrecioCoseguro = new RSMaterialComponent.RSTextFieldMaterial();
         txtRecienNacido = new RSMaterialComponent.RSTextFieldMaterial();
         dcFechaOrden = new newscomponents.RSDateChooser();
         jPanel11 = new javax.swing.JPanel();
@@ -1060,11 +1064,11 @@ public class Principal extends javax.swing.JFrame {
         jPanel16 = new javax.swing.JPanel();
         jPanel18 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        tablaDetalle = new RSMaterialComponent.RSTableMetroCustom();
+        RSMaterialComponent.RSTableMetroCustom tablaDetalle = new RSMaterialComponent.RSTableMetroCustom();
         jPanel19 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaOrdenes = new RSMaterialComponent.RSTableMetroCustom();
-        txtBuscarOrden = new RSMaterialComponent.RSTextFieldIconTwo();
+        RSMaterialComponent.RSTextFieldIconTwo txtBuscarOrden = new RSMaterialComponent.RSTextFieldIconTwo();
         jPanel17 = new javax.swing.JPanel();
         progresoOrdenes = new JProgressBar();
         jLabel16 = new javax.swing.JLabel();
@@ -1119,15 +1123,15 @@ public class Principal extends javax.swing.JFrame {
         });
         popuMenu1.add(Modifica);
 
-        Cargar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        Cargar.setForeground(new Color(0, 90, 132));
-        Cargar.setText("Cargar paciente");
-        Cargar.addActionListener(new java.awt.event.ActionListener() {
+        cargar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        cargar.setForeground(new Color(0, 90, 132));
+        cargar.setText("Cargar paciente");
+        cargar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CargarActionPerformed(evt);
             }
         });
-        popuMenu1.add(Cargar);
+        popuMenu1.add(cargar);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -1424,7 +1428,7 @@ public class Principal extends javax.swing.JFrame {
         txtObraSocial.setForeground(new Color(0, 90, 132));
         txtObraSocial.setColorMaterial(new Color(0, 90, 132));
         txtObraSocial.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        txtObraSocial.setNextFocusableComponent(txtNumeroAfiliado);
+        txtNumeroAfiliado.requestFocus();
         txtObraSocial.setPhColor(new Color(0, 90, 132));
         txtObraSocial.setPlaceholder("Obra Social");
         txtObraSocial.setSelectionColor(new Color(0, 90, 132));
@@ -1485,7 +1489,7 @@ public class Principal extends javax.swing.JFrame {
         btnPatologias.setForegroundIconHover(new Color(0, 90, 132));
         btnPatologias.setHorizontalAlignment(SwingConstants.CENTER);
         btnPatologias.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.BUG_REPORT);
-        btnPatologias.setLabel("Patologías");
+        btnPatologias.setText("Patologías");
         btnPatologias.setPreferredSize(new java.awt.Dimension(130, 40));
         btnPatologias.setRound(20);
         btnPatologias.addActionListener(new java.awt.event.ActionListener() {
@@ -1499,7 +1503,7 @@ public class Principal extends javax.swing.JFrame {
         btnSinDNI.setForegroundIconHover(new Color(0, 90, 132));
         btnSinDNI.setHorizontalAlignment(SwingConstants.CENTER);
         btnSinDNI.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.TAB_UNSELECTED);
-        btnSinDNI.setLabel("Sin DNI");
+        btnSinDNI.setText("Sin DNI");
         btnSinDNI.setPreferredSize(new java.awt.Dimension(130, 40));
         btnSinDNI.setRound(20);
         btnSinDNI.addActionListener(new java.awt.event.ActionListener() {
@@ -1527,7 +1531,7 @@ public class Principal extends javax.swing.JFrame {
         btnBorrar.setForegroundIconHover(new Color(0, 90, 132));
         btnBorrar.setHorizontalAlignment(SwingConstants.CENTER);
         btnBorrar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
-        btnBorrar.setLabel("Borrar");
+        btnBorrar.setText("Borrar");
         btnBorrar.setPreferredSize(new java.awt.Dimension(130, 40));
         btnBorrar.setRound(20);
         btnBorrar.addActionListener(new java.awt.event.ActionListener() {
@@ -2334,7 +2338,7 @@ public class Principal extends javax.swing.JFrame {
         btnAnticipos.setForegroundIconHover(new Color(0, 90, 132));
         btnAnticipos.setHorizontalAlignment(SwingConstants.CENTER);
         btnAnticipos.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MONETIZATION_ON);
-        btnAnticipos.setLabel("anticipo");
+        btnAnticipos.setText("anticipo");
         btnAnticipos.setPreferredSize(new java.awt.Dimension(130, 40));
         btnAnticipos.setRound(20);
         btnAnticipos.addActionListener(new java.awt.event.ActionListener() {
@@ -3120,55 +3124,44 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>
 
     private void btnCargarPacienteActionPerformed(java.awt.event.ActionEvent evt) {
-
         panelCargarPaciente.setVisible(true);
         panelCargarOrden.setVisible(false);
         panelFacturacion.setVisible(false);
         panelUtilidades.setVisible(false);
-
     }
 
     private void btnCargarResultadosActionPerformed(java.awt.event.ActionEvent evt) {
-
-
     }
 
     private void btnFacturacionActionPerformed(java.awt.event.ActionEvent evt) {
-
         panelCargarPaciente.setVisible(false);
         panelCargarOrden.setVisible(false);
         panelFacturacion.setVisible(true);
         panelUtilidades.setVisible(false);
-
     }
 
     private void btnUtilitariosActionPerformed(java.awt.event.ActionEvent evt) {
-
         panelCargarPaciente.setVisible(false);
         panelCargarOrden.setVisible(false);
         panelFacturacion.setVisible(false);
         panelUtilidades.setVisible(true);
-
     }
 
     private void rSButtonMaterialIconOne5ActionPerformed(java.awt.event.ActionEvent evt) {
-
         System.exit(0);
-
     }
 
     private void btnCargarConsultaActionPerformed(java.awt.event.ActionEvent evt) {
-
         panelCargarPaciente.setVisible(false);
         panelCargarOrden.setVisible(true);
         panelFacturacion.setVisible(false);
         panelUtilidades.setVisible(false);
         txtMedico.requestFocus();
-
     }
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {
-        new BuscarPersona(null, true).setVisible(true);
+        PersonaController personaController = context.getBean(PersonaController.class);
+        new BuscarPersona(null, true, personaController).setVisible(true);
         txtDNI.requestFocus();
     }
 
@@ -3238,7 +3231,8 @@ public class Principal extends javax.swing.JFrame {
     }
 
     private void btnMedicosActionPerformed(java.awt.event.ActionEvent evt) {
-        new AltaMedico(this, true).setVisible(true);
+        MedicoController medicoController = context.getBean(MedicoController.class);
+        new AltaMedico(this, true, medicoController).setVisible(true);
     }
 
     private void btnAnalisisActionPerformed(java.awt.event.ActionEvent evt) {
@@ -3456,7 +3450,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void txtMotivoKeyPressed(KeyEvent evt) {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (txtMotivo.getText().equals("Recién Nacidos") || txtMotivo.getText().equals("VIH")) {
+            if (txtMotivo.getText().equals("Recién Nacidos") || txtMotivo.getText().equals(VIH)) {
                 txtRecienNacido.setEnabled(true);
                 if (txtMotivo.getText().equals("Recién Nacidos")) {
                     txtRecienNacido.setPlaceholder("Nombre RN:");
@@ -3474,7 +3468,6 @@ public class Principal extends javax.swing.JFrame {
     private void btnCargarResultados1ActionPerformed(java.awt.event.ActionEvent evt) {
     }
 
-    private javax.swing.JMenuItem Cargar;
     private javax.swing.JMenuItem Modifica;
     private javax.swing.JMenuItem Resultados;
     private RSMaterialComponent.RSButtonMaterialIconOne btnActualizarBD;
@@ -3586,15 +3579,10 @@ public class Principal extends javax.swing.JFrame {
     private JProgressBar progresoOrdenes;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne1;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne2;
-    private RSMaterialComponent.RSButtonMaterialIconOne rSButtonMaterialIconOne5;
-    private RSMaterialComponent.RSLabelIcon rSLabelIcon1;
-    private RSMaterialComponent.RSTableMetroCustom tablaDetalle;
     private RSMaterialComponent.RSTableMetroCustom tablaOrdenes;
     private RSMaterialComponent.RSTableMetroCustom tablaPacientes;
     private RSMaterialComponent.RSTableMetroCustom tablaPracticas;
     private RSMaterialComponent.RSTextFieldMaterial txtApellido;
-    private RSMaterialComponent.RSTextFieldMaterial txtBuscar;
-    private RSMaterialComponent.RSTextFieldIconTwo txtBuscarOrden;
     private RSMaterialComponent.RSTextFieldIconTwo txtBuscarPractica;
     private RSMaterialComponent.RSTextFieldMaterial txtCama;
     private RSMaterialComponent.RSTextFieldMaterial txtCelular;
@@ -3608,7 +3596,6 @@ public class Principal extends javax.swing.JFrame {
     private RSMaterialComponent.RSTextFieldMaterial txtNumeroAfiliado;
     private RSMaterialComponent.RSTextFieldMaterial txtNumeroOrden;
     private RSMaterialComponent.RSTextFieldMaterial txtObraSocial;
-    private RSMaterialComponent.RSTextFieldMaterial txtPrecioCoseguro;
     private RSMaterialComponent.RSTextFieldMaterial txtRecienNacido;
     private RSMaterialComponent.RSTextFieldMaterial txtTelefono;
 }

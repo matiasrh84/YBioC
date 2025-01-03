@@ -270,7 +270,7 @@ public class Usuarios extends javax.swing.JDialog {
         chkDatos.setColorCheck(new java.awt.Color(0, 90, 132));
         chkDatos.setColorUnCheck(new java.awt.Color(0, 90, 132));
         chkDatos.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        chkDatos.setLabel("Datos");
+        chkDatos.setText("Datos");
         chkDatos.setRippleColor(new java.awt.Color(0, 90, 132));
 
         chkCBT.setForeground(new java.awt.Color(0, 90, 132));

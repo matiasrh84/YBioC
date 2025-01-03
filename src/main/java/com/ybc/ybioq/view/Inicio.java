@@ -1,20 +1,23 @@
 package com.ybc.ybioq.view;
 
 import com.ybc.ybioq.config.HiloInicio;
+import org.springframework.context.ApplicationContext;
 
 import java.awt.*;
 
 public final class Inicio extends javax.swing.JFrame {
 
-    HiloInicio hilo;
+    private final ApplicationContext context;
+    private HiloInicio hilo;
 
-    public Inicio() {
+    public Inicio(ApplicationContext context) {
+        this.context = context;
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
         setLocationRelativeTo(null);
         setResizable(false);
         iniciarSplash();
-        hilo = new HiloInicio(progreso);
+        hilo = new HiloInicio(progreso, context);
         hilo.start();
         hilo = null;
     }
@@ -78,14 +81,14 @@ public final class Inicio extends javax.swing.JFrame {
         this.getjProgressBar1().setStringPainted(true);
     }
 
-    public static void main(String[] args) {
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Inicio().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String[] args) {
+//
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new Inicio(context).setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

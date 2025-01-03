@@ -11,7 +11,7 @@
     <groupId>com.ybc</groupId>
     <artifactId>ybioq</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>ybioq</name>
+    <name>YBioC</name>
     <description>Gestor de ordenes y resultados bioquimicos</description>
     <url/>
     <licenses>
@@ -70,6 +70,10 @@
             <artifactId>AutoCompleter</artifactId>
             <version>2.0.1</version>
             <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
     </dependencies>
 

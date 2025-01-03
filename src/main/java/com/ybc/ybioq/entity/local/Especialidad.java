@@ -17,8 +17,8 @@ public class Especialidad {
     @Column(name = "id_especialidades", nullable = false)
     private Integer id;
 
-    @Column(name = "nombre_esp", length = 45)
-    private String nombreEsp;
+    @Column(name = "nombre", length = 45)
+    private String nombre;
 
     @Column(name = "estado", nullable = false)
     private Integer estado;

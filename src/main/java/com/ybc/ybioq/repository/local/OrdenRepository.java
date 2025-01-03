@@ -1,9 +1,10 @@
 package com.ybc.ybioq.repository.local;
 
-import com.ybc.ybioq.entity.local.Informe;
+
+import com.ybc.ybioq.entity.local.Orden;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface InformeRepository extends JpaRepository<Informe, Integer> {
+public interface OrdenRepository extends JpaRepository<Orden, Integer> {
 }

@@ -1,5 +1,10 @@
 package com.ybc.ybioq.view;
 
+import com.ybc.ybioq.controller.MedicoController;
+import com.ybc.ybioq.entity.local.Especialidad;
+import com.ybc.ybioq.entity.local.Medico;
+import com.ybc.ybioq.entity.local.MedicoTieneEspecialidad;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -7,6 +12,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.ybc.ybioq.config.Escape.funcionescape;
 
@@ -16,11 +24,13 @@ public class AltaMedico extends javax.swing.JDialog {
     int y;
     DefaultTableModel model;
     DefaultTableCellRenderer alinearCentro, alinearDerecha, alinearIzquierda;
-    public int idespecialidad[] = new int[100];
+    private final MedicoController medicoController;
+
     public int bmodificar = 0;
 
-    public AltaMedico(java.awt.Frame parent, boolean modal) {
+    public AltaMedico(java.awt.Frame parent, boolean modal, MedicoController medicoController) {
         super(parent, modal);
+        this.medicoController = medicoController;
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
@@ -31,17 +41,31 @@ public class AltaMedico extends javax.swing.JDialog {
         dobleclick();
     }
 
+    private Map<String, Integer> mapaEspecialidades = new HashMap<>();
+
+    public void cargarComboBoxEspecialidades(JComboBox<String> cboEspecialidad, List<Especialidad> especialidades) {
+        cboEspecialidad.removeAllItems();
+        mapaEspecialidades.clear();
+
+        for (Especialidad especialidad : especialidades) {
+            String nombre = especialidad.getNombre();
+            Integer id = especialidad.getId();
+
+            cboEspecialidad.addItem(nombre);
+            mapaEspecialidades.put(nombre, id);
+        }
+    }
+
+    public Integer obtenerIdSeleccionado(JComboBox<String> cboEspecialidad) {
+        String nombreSeleccionado = (String) cboEspecialidad.getSelectedItem();
+        return mapaEspecialidades.get(nombreSeleccionado);
+    }
+
     void cargarcombo() {
-//        cboEspecialidad.removeAllItems();
-//        cboEspecialidad.addItem("...");
-//        int i = 0;
-//        String sql = "SELECT id_especialidades, nombre_esp FROM especialidades order by nombre_esp ";
-//
-//        while (rs.next()) {
-//            cboEspecialidad.addItem(rs.getString("nombre_esp"));
-//            idespecialidad[i] = rs.getInt("id_especialidades");
-//            i++;
-//        }
+
+        cboEspecialidad.removeAllItems();
+        List<Especialidad> especialidades = medicoController.listarEspecialidades();
+        cargarComboBoxEspecialidades(cboEspecialidad, especialidades);
     }
 
     void dobleclick() {
@@ -68,47 +92,47 @@ public class AltaMedico extends javax.swing.JDialog {
     }
 
     void cargartabla(String valor) {
-//        String[] Titulo = {"id_medicos", "Apellido", "Nombre", "Matricula", "Especialidad", "Obs", "Estado"};
-//        String[] Registros = new String[7];
-//        String sql = "SELECT id_medicos, nombre, apellido, medicos.matricula, medicos.observaciones, nombre_esp, medicos.estado FROM medicos INNER JOIN medicos_tienen_especialidades USING (id_medicos) INNER JOIN especialidades USING (id_especialidades) WHERE concat(apellido,'', nombre,'',medicos.matricula) LIKE '%" + valor + "%'";
-//
-//        int i = 0;
-//        model = new DefaultTableModel(null, Titulo) {
-//            ////Celdas no editables////////
-//            public boolean isCellEditable(int row, int column) {
-//                return false;
-//            }
-//        };
-//        while (rs.next()) {
-//            Registros[0] = rs.getString("id_medicos");
-//            Registros[1] = rs.getString("apellido");
-//            Registros[2] = rs.getString("nombre");
-//            Registros[3] = rs.getString("medicos.matricula");
-//            Registros[4] = rs.getString("nombre_esp");
-//            if (rs.getString("medicos.observaciones") != null) {
-//                Registros[5] = rs.getString("medicos.observaciones");
-//            }
-//            if (rs.getString("medicos.estado").equals("1")) {
-//                Registros[6] = "OK";
-//            } else {
-//                Registros[6] = "BAJA";
-//            }
-//
-//            model.addRow(Registros);
-//        }
-//        tablaMedicos.setModel(model);
-//        tablaMedicos.setAutoCreateRowSorter(true);
-//        tablaMedicos.getColumnModel().getColumn(0).setMaxWidth(0);
-//        tablaMedicos.getColumnModel().getColumn(0).setMinWidth(0);
-//        tablaMedicos.getColumnModel().getColumn(0).setPreferredWidth(0);
-//        alinear();
-//        tablaMedicos.getColumnModel().getColumn(0).setCellRenderer(alinearCentro);
-//        tablaMedicos.getColumnModel().getColumn(1).setCellRenderer(alinearIzquierda);
-//        tablaMedicos.getColumnModel().getColumn(2).setCellRenderer(alinearIzquierda);
-//        tablaMedicos.getColumnModel().getColumn(3).setCellRenderer(alinearCentro);
-//        tablaMedicos.getColumnModel().getColumn(4).setCellRenderer(alinearCentro);
-//        tablaMedicos.getColumnModel().getColumn(5).setCellRenderer(alinearCentro);
-//        tablaMedicos.getColumnModel().getColumn(6).setCellRenderer(alinearCentro);
+        String[] Titulo = {"Matricula", "Apellido", "Nombre", "Especialidad", "Obs", "Estado"};
+        String[] registros = new String[6];
+
+        model = new DefaultTableModel(null, Titulo) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        List<Medico> medicos = medicoController.listarMedicos();
+
+        for (Medico medico : medicos) {
+            registros[0] = medico.getMatricula().toString();
+            registros[1] = medico.getApellido();
+            registros[2] = medico.getNombre();
+            StringBuilder especialidades = new StringBuilder();
+            for (MedicoTieneEspecialidad mte : medico.getMedicoTieneEspecialidades()) {
+                if (especialidades.length() > 0) {
+                    especialidades.append(", ");
+                }
+                especialidades.append(mte.getIdEspecialidades().getNombre());
+            }
+            registros[3] = especialidades.toString();
+            registros[4] = medico.getObservaciones() != null ? medico.getObservaciones() : "";
+            registros[5] = medico.getEstado() == 1 ? "Activo" : "Inactivo";
+            model.addRow(registros);
+        }
+
+        tablaMedicos.setModel(model);
+        tablaMedicos.setAutoCreateRowSorter(true);
+        tablaMedicos.getColumnModel().getColumn(0).setMaxWidth(0);
+        tablaMedicos.getColumnModel().getColumn(0).setMinWidth(0);
+        tablaMedicos.getColumnModel().getColumn(0).setPreferredWidth(0);
+        alinear();
+        tablaMedicos.getColumnModel().getColumn(0).setCellRenderer(alinearCentro);
+        tablaMedicos.getColumnModel().getColumn(1).setCellRenderer(alinearIzquierda);
+        tablaMedicos.getColumnModel().getColumn(2).setCellRenderer(alinearIzquierda);
+        tablaMedicos.getColumnModel().getColumn(3).setCellRenderer(alinearCentro);
+        tablaMedicos.getColumnModel().getColumn(4).setCellRenderer(alinearCentro);
+        tablaMedicos.getColumnModel().getColumn(5).setCellRenderer(alinearCentro);
+        tablaMedicos.getColumnModel().getColumn(6).setCellRenderer(alinearCentro);
 
     }
 
