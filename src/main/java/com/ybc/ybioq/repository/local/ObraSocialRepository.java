@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface ObraSocialRepository extends JpaRepository<ObraSocial, Integer> {
 
-    Optional<ObraSocial> findObraSocialByIntCodigoObraSocialAndNombreObraSocial(String intCodigoObraSocial, String nombreObraSocial);
+    Optional<ObraSocial> findObraSocialByIntCodigoAndNombre(String intCodigoObraSocial, String nombreObraSocial);
 }

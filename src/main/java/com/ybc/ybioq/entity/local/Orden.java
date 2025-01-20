@@ -16,6 +16,7 @@ public class Orden {
 
     @Id
     @Column(name = "id_ordenes", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "periodo", nullable = false)

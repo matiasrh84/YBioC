@@ -146,13 +146,6 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="txtProvincia" min="-2" pref="175" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="txtTelefono" min="-2" pref="129" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="txtEmail" pref="0" max="32767" attributes="0"/>
-                          </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
@@ -179,13 +172,6 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="txtDireccion" min="-2" pref="247" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="txtLocalidad" pref="0" max="32767" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="txtCodigoPostal" min="-2" pref="72" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="txtUnidadArancel" min="-2" pref="225" max="-2" attributes="0"/>
@@ -203,6 +189,16 @@
                                           <Component id="txtTelefonoReferente" pref="0" max="32767" attributes="0"/>
                                           <Component id="txtPorcentajeAfiliado" pref="0" max="32767" attributes="0"/>
                                       </Group>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="txtDireccion" max="32767" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="txtTelefono" min="-2" pref="129" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="txtEmail" min="-2" pref="199" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="txtLocalidad" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -234,14 +230,12 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="txtDireccion" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
-                          <Component id="txtLocalidad" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
-                          <Component id="txtCodigoPostal" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
+                          <Component id="txtTelefono" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txtProvincia" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
-                          <Component id="txtTelefono" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
                           <Component id="txtEmail" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
+                          <Component id="txtLocalidad" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -388,57 +382,6 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="RSMaterialComponent.RSTextFieldMaterial" name="txtLocalidad">
-              <Properties>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="84" green="5a" red="0" type="rgb"/>
-                </Property>
-                <Property name="colorMaterial" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="84" green="5a" red="0" type="rgb"/>
-                </Property>
-                <Property name="phColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="84" green="5a" red="0" type="rgb"/>
-                </Property>
-                <Property name="placeholder" type="java.lang.String" value="Localidad"/>
-                <Property name="selectionColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="84" green="5a" red="0" type="rgb"/>
-                </Property>
-              </Properties>
-            </Component>
-            <Component class="RSMaterialComponent.RSTextFieldMaterial" name="txtCodigoPostal">
-              <Properties>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="84" green="5a" red="0" type="rgb"/>
-                </Property>
-                <Property name="colorMaterial" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="84" green="5a" red="0" type="rgb"/>
-                </Property>
-                <Property name="phColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="84" green="5a" red="0" type="rgb"/>
-                </Property>
-                <Property name="placeholder" type="java.lang.String" value="CP"/>
-                <Property name="selectionColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="84" green="5a" red="0" type="rgb"/>
-                </Property>
-              </Properties>
-            </Component>
-            <Component class="RSMaterialComponent.RSTextFieldMaterial" name="txtProvincia">
-              <Properties>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="84" green="5a" red="0" type="rgb"/>
-                </Property>
-                <Property name="colorMaterial" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="84" green="5a" red="0" type="rgb"/>
-                </Property>
-                <Property name="phColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="84" green="5a" red="0" type="rgb"/>
-                </Property>
-                <Property name="placeholder" type="java.lang.String" value="Provincia"/>
-                <Property name="selectionColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="84" green="5a" red="0" type="rgb"/>
-                </Property>
-              </Properties>
-            </Component>
             <Component class="RSMaterialComponent.RSTextFieldMaterial" name="txtTelefono">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -455,6 +398,9 @@
                   <Color blue="84" green="5a" red="0" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTelefonoActionPerformed"/>
+              </Events>
             </Component>
             <Component class="RSMaterialComponent.RSTextFieldMaterial" name="txtEmail">
               <Properties>
@@ -587,6 +533,23 @@
                   <Color blue="84" green="5a" red="0" type="rgb"/>
                 </Property>
                 <Property name="placeholder" type="java.lang.String" value="% afiliado"/>
+                <Property name="selectionColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="84" green="5a" red="0" type="rgb"/>
+                </Property>
+              </Properties>
+            </Component>
+            <Component class="RSMaterialComponent.RSTextFieldMaterial" name="txtLocalidad">
+              <Properties>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="84" green="5a" red="0" type="rgb"/>
+                </Property>
+                <Property name="colorMaterial" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="84" green="5a" red="0" type="rgb"/>
+                </Property>
+                <Property name="phColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="84" green="5a" red="0" type="rgb"/>
+                </Property>
+                <Property name="placeholder" type="java.lang.String" value="Localidad"/>
                 <Property name="selectionColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="84" green="5a" red="0" type="rgb"/>
                 </Property>
@@ -752,6 +715,9 @@
                 </Property>
                 <Property name="round" type="int" value="20"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarActionPerformed"/>
+              </Events>
             </Component>
             <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnCancelar">
               <Properties>
@@ -774,6 +740,9 @@
                 </Property>
                 <Property name="round" type="int" value="20"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarActionPerformed"/>
+              </Events>
             </Component>
             <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnSalir">
               <Properties>
@@ -821,6 +790,9 @@
                 </Property>
                 <Property name="round" type="int" value="20"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnModificarActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -965,10 +937,12 @@
                           <Component id="rsSiAltaComplejidad" min="-2" pref="55" max="-2" attributes="0"/>
                           <Component id="rsSiFacturaNoNomenclados" min="-2" pref="55" max="-2" attributes="0"/>
                           <Component id="rsSiFacturaPorPaciente" min="-2" pref="55" max="-2" attributes="0"/>
-                          <Component id="rsNunca" min="-2" max="-2" attributes="0"/>
                           <Component id="rsCupon" alignment="0" min="-2" pref="82" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="rsIncluye" min="-2" pref="87" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="rsIncluye" pref="87" max="32767" attributes="0"/>
+                                  <Component id="rsNunca" pref="0" max="32767" attributes="0"/>
+                              </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="rsPacienteCompleto" alignment="0" min="-2" pref="162" max="-2" attributes="0"/>
@@ -1180,6 +1154,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="84" green="5a" red="0" type="rgb"/>
                 </Property>
+                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Si"/>
                 <Property name="colorCheck" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="84" green="5a" red="0" type="rgb"/>
@@ -1240,6 +1215,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="84" green="5a" red="0" type="rgb"/>
                 </Property>
+                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Si"/>
                 <Property name="colorCheck" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="84" green="5a" red="0" type="rgb"/>
@@ -1280,6 +1256,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="84" green="5a" red="0" type="rgb"/>
                 </Property>
+                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Cup&#xf3;n"/>
                 <Property name="colorCheck" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="84" green="5a" red="0" type="rgb"/>
@@ -1320,6 +1297,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="84" green="5a" red="0" type="rgb"/>
                 </Property>
+                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Si"/>
                 <Property name="colorCheck" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="84" green="5a" red="0" type="rgb"/>
@@ -1360,6 +1338,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="84" green="5a" red="0" type="rgb"/>
                 </Property>
+                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Nunca"/>
                 <Property name="colorCheck" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="84" green="5a" red="0" type="rgb"/>
@@ -1371,6 +1350,9 @@
                   <Color blue="84" green="5a" red="0" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rsNuncaActionPerformed"/>
+              </Events>
             </Component>
             <Component class="RSMaterialComponent.RSRadioButtonMaterial" name="rsNoIncluye">
               <Properties>
@@ -1400,6 +1382,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="84" green="5a" red="0" type="rgb"/>
                 </Property>
+                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Incluye"/>
                 <Property name="colorCheck" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="84" green="5a" red="0" type="rgb"/>
@@ -1440,6 +1423,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="84" green="5a" red="0" type="rgb"/>
                 </Property>
+                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Si"/>
                 <Property name="colorCheck" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="84" green="5a" red="0" type="rgb"/>
@@ -1480,6 +1464,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="84" green="5a" red="0" type="rgb"/>
                 </Property>
+                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Si"/>
                 <Property name="colorCheck" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="84" green="5a" red="0" type="rgb"/>
@@ -1520,6 +1505,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="84" green="5a" red="0" type="rgb"/>
                 </Property>
+                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Directa"/>
                 <Property name="colorCheck" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="84" green="5a" red="0" type="rgb"/>
@@ -1681,7 +1667,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="cboTipoIVA1" pref="241" max="32767" attributes="0"/>
+                      <Component id="cboTipoFacturacion" pref="241" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -1690,14 +1676,14 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="cboTipoIVA1" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="cboTipoFacturacion" min="-2" pref="20" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="RSMaterialComponent.RSComboBox" name="cboTipoIVA1">
+            <Component class="RSMaterialComponent.RSComboBox" name="cboTipoFacturacion">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="84" green="5a" red="0" type="rgb"/>

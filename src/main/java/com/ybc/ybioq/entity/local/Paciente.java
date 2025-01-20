@@ -16,6 +16,7 @@ public class Paciente {
 
     @Id
     @Column(name = "id_Pacientes", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "telefono", length = 20)

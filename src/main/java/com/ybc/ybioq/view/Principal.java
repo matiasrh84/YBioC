@@ -1,6 +1,7 @@
 package com.ybc.ybioq.view;
 
 import com.mxrck.autocompleter.TextAutoCompleter;
+import com.ybc.ybioq.controller.LocalidadController;
 import com.ybc.ybioq.controller.MedicoController;
 import com.ybc.ybioq.controller.ObraSocialController;
 import com.ybc.ybioq.controller.PersonaController;
@@ -3367,7 +3368,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnObrasSocialesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrasSocialesActionPerformed
         ObraSocialController obraSocialController = context.getBean(ObraSocialController.class);
-        new AgregarOS(this, true, obraSocialController).setVisible(true);
+        LocalidadController localidadController = context.getBean(LocalidadController.class);
+        new AgregarOS(this, true, obraSocialController, localidadController).setVisible(true);
     }//GEN-LAST:event_btnObrasSocialesActionPerformed
 
     private void btnActualizarBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarBDActionPerformed

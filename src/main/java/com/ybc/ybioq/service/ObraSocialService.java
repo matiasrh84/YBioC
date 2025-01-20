@@ -19,6 +19,14 @@ public class ObraSocialService {
     }
 
     public Optional<ObraSocial> getObraSocialByCodigoAndNombre(String codigo, String nombre) {
-        return obraSocialRepository.findObraSocialByIntCodigoObraSocialAndNombreObraSocial(codigo, nombre);
+        return obraSocialRepository.findObraSocialByIntCodigoAndNombre(codigo, nombre);
+    }
+
+    public ObraSocial addObraSocial(ObraSocial obraSocial) {
+        try {
+            return obraSocialRepository.save(obraSocial);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

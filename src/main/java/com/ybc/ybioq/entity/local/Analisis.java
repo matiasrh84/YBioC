@@ -12,6 +12,7 @@ public class Analisis {
 
     @Id
     @Column(name = "id_analisis", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "nombre", length = 100)

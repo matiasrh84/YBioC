@@ -14,6 +14,7 @@ public class Persona {
 
     @Id
     @Column(name = "dni", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "apellido", length = 45)

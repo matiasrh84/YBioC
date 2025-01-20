@@ -1,9 +1,6 @@
 package com.ybc.ybioq.entity.local;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
@@ -15,8 +12,8 @@ import org.hibernate.annotations.ColumnDefault;
 public class Provincia {
 
     @Id
-    @ColumnDefault("0")
     @Column(name = "id_provincia", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "nombre_provincia", nullable = false, length = 20)

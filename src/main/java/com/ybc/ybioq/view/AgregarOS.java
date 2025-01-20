@@ -1,19 +1,23 @@
 package com.ybc.ybioq.view;
 
 
+import com.mxrck.autocompleter.TextAutoCompleter;
 import com.ybc.ybioq.config.TableCellAlignmentHelper;
+import com.ybc.ybioq.controller.LocalidadController;
 import com.ybc.ybioq.controller.ObraSocialController;
+import com.ybc.ybioq.entity.local.Localidad;
 import com.ybc.ybioq.entity.local.ObraSocial;
+import lombok.extern.log4j.Log4j2;
 
 import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static com.ybc.ybioq.config.Escape.funcionescape;
+import static com.ybc.ybioq.utils.Constantes.*;
 
+@Log4j2
 public class AgregarOS extends javax.swing.JDialog {
 
     private int x;
@@ -21,14 +25,25 @@ public class AgregarOS extends javax.swing.JDialog {
     DefaultTableModel model;
     TableCellAlignmentHelper alignmentHelper = new TableCellAlignmentHelper();
     private final ObraSocialController obraSocialController;
+    TextAutoCompleter textAutocompleterLocalidad;
+    Map<String, Localidad> localidadMap = new HashMap<>();
 
-    public AgregarOS(java.awt.Frame parent, boolean modal, ObraSocialController obraSocialController) {
+    public AgregarOS(java.awt.Frame parent, boolean modal, ObraSocialController obraSocialController, LocalidadController localidadController) {
         super(parent, modal);
         this.obraSocialController = obraSocialController;
         initComponents();
         setLocationRelativeTo(null);
         funcionescape(this);
         cargarTabla();
+        eventoTabla();
+        textAutocompleterLocalidad = new TextAutoCompleter(txtLocalidad);
+
+        for (Localidad localidad : localidadController.getLocalidades()) {
+            String displayName = localidad.toString();
+            localidadMap.put(displayName, localidad);
+            textAutocompleterLocalidad.addItem(displayName);
+        }
+
         btnModificar.setEnabled(false);
     }
 
@@ -43,8 +58,8 @@ public class AgregarOS extends javax.swing.JDialog {
             }
         };
         for (ObraSocial obraSocial : obraSocialList) {
-            registros[0] = obraSocial.getIntCodigoObraSocial();
-            registros[1] = obraSocial.getNombreObraSocial();
+            registros[0] = obraSocial.getIntCodigo();
+            registros[1] = obraSocial.getNombre();
             model.addRow(registros);
         }
         tablaObrasSociales.setModel(model);
@@ -53,6 +68,149 @@ public class AgregarOS extends javax.swing.JDialog {
         tablaObrasSociales.getColumnModel().getColumn(0).setMinWidth(60);
         tablaObrasSociales.getColumnModel().getColumn(0).setPreferredWidth(60);
         alignmentHelper.alinearColumnas(tablaObrasSociales.getColumnModel(), new int[]{0}, new int[]{}, new int[]{1});
+    }
+
+    public void cargarObraSocial(String codigo, String razonSocial) {
+
+        Optional<ObraSocial> optionalObraSocial = obraSocialController.getObraSocialByCodigoAndNombre(codigo, razonSocial);
+
+        if (optionalObraSocial.isPresent()) {
+            ObraSocial obraSocial = optionalObraSocial.get();
+            btnModificar.setEnabled(true);
+            btnAgregar.setEnabled(false);
+            txtRazonSocial.setText(obraSocial.getNombre());
+            txtCodigoOs.setText(obraSocial.getCodigo());
+
+            //convertir el localdate en date
+            LocalDate fechaDeAlta = obraSocial.getFechaDeAlta();
+            if (fechaDeAlta != null) {
+                Date date = Date.from(fechaDeAlta.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                dcFechaAlta.setDate(date);
+            }
+
+            txtCuit.setText(obraSocial.getCuit());
+            txtCodigoFacturacion.setText(obraSocial.getCodigoFacturacion());
+            txtDireccion.setText(obraSocial.getDireccion());
+            txtLocalidad.setText(obraSocial.getLocalidad().getNombreLocalidad() + " - " + obraSocial.getLocalidad().getProvincia().getNombreProvincia());
+            txtTelefono.setText(obraSocial.getTelefono());
+            txtEmail.setText(obraSocial.getMail1());
+            txtPaginaWeb.setText(obraSocial.getWeb());
+            txtReferente.setText(obraSocial.getNombreReferente());
+            txtTelefonoReferente.setText(obraSocial.getCelularReferente());
+            txtUnidadArancel.setText(obraSocial.getImporteUnidadDeArancel().toString());
+            txtContrato.setText(obraSocial.getNumeroResolucionIngreso());
+            txtPorcentajeAfiliado.setText(obraSocial.getPorcentajeAfiliado());
+
+            if (obraSocial.getFacturaAltaComplejidad().equals(SI)) {
+                rsSiAltaComplejidad.setSelected(true);
+            } else {
+                rsNoAltaComplejidad.setSelected(true);
+            }
+
+            if (obraSocial.getFacturaNoNomenclados().equals(SI)) {
+                rsSiFacturaNoNomenclados.setSelected(true);
+            } else {
+                rsNoFacturaNoNomenclados.setSelected(true);
+            }
+
+            if (obraSocial.getFacturaPor().equals(CUPON)) {
+                rsCupon.setSelected(true);
+            } else {
+                rsPacienteCompleto.setSelected(true);
+            }
+
+            if (obraSocial.getFacturaPorPaciente().equals(SI)) {
+                rsSiFacturaPorPaciente.setSelected(true);
+            } else {
+                rsNoFacturaPorPaciente.setSelected(true);
+            }
+
+            if (obraSocial.getImprimeDobleInforme().equals(NUNCA)) {
+                rsNunca.setSelected(true);
+            } else if (obraSocial.getImprimeDobleInforme().equals(SIEMPRE)) {
+                rsSiempre.setSelected(true);
+            } else {
+                rsSelectivo.setSelected(true);
+            }
+
+            if (obraSocial.getD998().equals(INCLUYE)) {
+                rsIncluye.setSelected(true);
+            } else if (obraSocial.getD998().equals(NO_INCLUYE)) {
+                rsNoIncluye.setSelected(true);
+            } else {
+                rsDiscrimina.setSelected(true);
+            }
+
+            if (obraSocial.getSubtotalPorPaciente().equals(SI)) {
+                rsSiSubtotal.setSelected(true);
+            } else {
+                rsNoSubtotal.setSelected(true);
+            }
+
+            if (obraSocial.getTieneCategorizacion().equals(SI)) {
+                rsSiCategorizacion.setSelected(true);
+            } else {
+                rsNoCategorizacion.setSelected(true);
+            }
+
+            if (obraSocial.getTipoDeFacturacion().equals(DIRECTA)) {
+                rsDirecta.setSelected(true);
+            } else {
+                rsColegio.setSelected(true);
+            }
+
+            switch (obraSocial.getTipoDeFacturacion()) {
+                case IMPORTES:
+                    cboTipoFacturacion.setSelectedIndex(0);
+                    break;
+                case NBU:
+                    cboTipoFacturacion.setSelectedIndex(1);
+                    break;
+                case CONVENIO:
+                    cboTipoFacturacion.setSelectedIndex(2);
+                    break;
+                case CONV_DCTO:
+                    cboTipoFacturacion.setSelectedIndex(3);
+                    break;
+                case S_DETALLE:
+                    cboTipoFacturacion.setSelectedIndex(4);
+                    break;
+                default:
+                    cboTipoFacturacion.setSelectedIndex(0);
+                    break;
+            }
+
+            switch (obraSocial.getTipoIva()) {
+                case EXENTO:
+                    cboTipoIVA.setSelectedIndex(0);
+                    break;
+                case MEDIO_IVA:
+                    cboTipoIVA.setSelectedIndex(1);
+                    break;
+                case IVA:
+                    cboTipoIVA.setSelectedIndex(2);
+                    break;
+                case RESPONSABLE_INSCRIPTO:
+                    cboTipoIVA.setSelectedIndex(3);
+                    break;
+                default:
+                    cboTipoIVA.setSelectedIndex(0);
+                    break;
+            }
+        }
+    }
+
+    private void eventoTabla() {
+        tablaObrasSociales.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int selectedRow = tablaObrasSociales.getSelectedRow();
+                if (selectedRow != -1) {
+                    String codigo = tablaObrasSociales.getValueAt(selectedRow, 0).toString();
+                    String razonSocial = tablaObrasSociales.getValueAt(selectedRow, 1).toString();
+                    cargarObraSocial(codigo, razonSocial);
+                }
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -76,9 +234,6 @@ public class AgregarOS extends javax.swing.JDialog {
         cboNBU = new RSMaterialComponent.RSComboBox();
         txtCodigoFacturacion = new RSMaterialComponent.RSTextFieldMaterial();
         txtDireccion = new RSMaterialComponent.RSTextFieldMaterial();
-        txtLocalidad = new RSMaterialComponent.RSTextFieldMaterial();
-        txtCodigoPostal = new RSMaterialComponent.RSTextFieldMaterial();
-        txtProvincia = new RSMaterialComponent.RSTextFieldMaterial();
         txtTelefono = new RSMaterialComponent.RSTextFieldMaterial();
         txtEmail = new RSMaterialComponent.RSTextFieldMaterial();
         txtPaginaWeb = new RSMaterialComponent.RSTextFieldMaterial();
@@ -88,6 +243,7 @@ public class AgregarOS extends javax.swing.JDialog {
         dcFechaAlta = new newscomponents.RSDateChooser();
         txtContrato = new RSMaterialComponent.RSTextFieldMaterial();
         txtPorcentajeAfiliado = new RSMaterialComponent.RSTextFieldMaterial();
+        txtLocalidad = new RSMaterialComponent.RSTextFieldMaterial();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaObrasSociales = new RSMaterialComponent.RSTableMetroCustom();
@@ -133,7 +289,7 @@ public class AgregarOS extends javax.swing.JDialog {
         jPanel8 = new javax.swing.JPanel();
         cboTipoIVA = new RSMaterialComponent.RSComboBox();
         jPanel9 = new javax.swing.JPanel();
-        cboTipoIVA1 = new RSMaterialComponent.RSComboBox();
+        cboTipoFacturacion = new RSMaterialComponent.RSComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -194,29 +350,16 @@ public class AgregarOS extends javax.swing.JDialog {
         txtDireccion.setPlaceholder("Dirección");
         txtDireccion.setSelectionColor(new java.awt.Color(0, 90, 132));
 
-        txtLocalidad.setForeground(new java.awt.Color(0, 90, 132));
-        txtLocalidad.setColorMaterial(new java.awt.Color(0, 90, 132));
-        txtLocalidad.setPhColor(new java.awt.Color(0, 90, 132));
-        txtLocalidad.setPlaceholder("Localidad");
-        txtLocalidad.setSelectionColor(new java.awt.Color(0, 90, 132));
-
-        txtCodigoPostal.setForeground(new java.awt.Color(0, 90, 132));
-        txtCodigoPostal.setColorMaterial(new java.awt.Color(0, 90, 132));
-        txtCodigoPostal.setPhColor(new java.awt.Color(0, 90, 132));
-        txtCodigoPostal.setPlaceholder("CP");
-        txtCodigoPostal.setSelectionColor(new java.awt.Color(0, 90, 132));
-
-        txtProvincia.setForeground(new java.awt.Color(0, 90, 132));
-        txtProvincia.setColorMaterial(new java.awt.Color(0, 90, 132));
-        txtProvincia.setPhColor(new java.awt.Color(0, 90, 132));
-        txtProvincia.setPlaceholder("Provincia");
-        txtProvincia.setSelectionColor(new java.awt.Color(0, 90, 132));
-
         txtTelefono.setForeground(new java.awt.Color(0, 90, 132));
         txtTelefono.setColorMaterial(new java.awt.Color(0, 90, 132));
         txtTelefono.setPhColor(new java.awt.Color(0, 90, 132));
         txtTelefono.setPlaceholder("Teléfono");
         txtTelefono.setSelectionColor(new java.awt.Color(0, 90, 132));
+        txtTelefono.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTelefonoActionPerformed(evt);
+            }
+        });
 
         txtEmail.setForeground(new java.awt.Color(0, 90, 132));
         txtEmail.setColorMaterial(new java.awt.Color(0, 90, 132));
@@ -266,6 +409,12 @@ public class AgregarOS extends javax.swing.JDialog {
         txtPorcentajeAfiliado.setPlaceholder("% afiliado");
         txtPorcentajeAfiliado.setSelectionColor(new java.awt.Color(0, 90, 132));
 
+        txtLocalidad.setForeground(new java.awt.Color(0, 90, 132));
+        txtLocalidad.setColorMaterial(new java.awt.Color(0, 90, 132));
+        txtLocalidad.setPhColor(new java.awt.Color(0, 90, 132));
+        txtLocalidad.setPlaceholder("Localidad");
+        txtLocalidad.setSelectionColor(new java.awt.Color(0, 90, 132));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -273,12 +422,6 @@ public class AgregarOS extends javax.swing.JDialog {
                         .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addComponent(txtProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addGroup(jPanel2Layout.createSequentialGroup()
@@ -299,12 +442,6 @@ public class AgregarOS extends javax.swing.JDialog {
                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addGroup(jPanel2Layout.createSequentialGroup()
-                                                                .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(18, 18, 18)
-                                                                .addComponent(txtLocalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                                                                .addGap(18, 18, 18)
-                                                                .addComponent(txtCodigoPostal, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addGroup(jPanel2Layout.createSequentialGroup()
                                                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                                                                 .addComponent(txtUnidadArancel, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -317,7 +454,15 @@ public class AgregarOS extends javax.swing.JDialog {
                                                                 .addGap(18, 18, 18)
                                                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                                         .addComponent(txtTelefonoReferente, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                                                                        .addComponent(txtPorcentajeAfiliado, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))))
+                                                                        .addComponent(txtPorcentajeAfiliado, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)))
+                                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                                                .addComponent(txtDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(txtLocalidad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                                 .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
@@ -339,13 +484,11 @@ public class AgregarOS extends javax.swing.JDialog {
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtLocalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtCodigoPostal, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(txtProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtLocalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(txtPaginaWeb, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -412,6 +555,11 @@ public class AgregarOS extends javax.swing.JDialog {
         btnAgregar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnAgregar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
         btnAgregar.setRound(20);
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setBackground(new java.awt.Color(0, 90, 132));
         btnCancelar.setText("Cancelar");
@@ -421,6 +569,11 @@ public class AgregarOS extends javax.swing.JDialog {
         btnCancelar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnCancelar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLEAR);
         btnCancelar.setRound(20);
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         btnSalir.setBackground(new java.awt.Color(0, 90, 132));
         btnSalir.setText("Salir");
@@ -444,6 +597,11 @@ public class AgregarOS extends javax.swing.JDialog {
         btnModificar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnModificar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.EDIT);
         btnModificar.setRound(20);
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -580,6 +738,7 @@ public class AgregarOS extends javax.swing.JDialog {
 
         grupoAltaComplejidad.add(rsSiAltaComplejidad);
         rsSiAltaComplejidad.setForeground(new java.awt.Color(0, 90, 132));
+        rsSiAltaComplejidad.setSelected(true);
         rsSiAltaComplejidad.setText("Si");
         rsSiAltaComplejidad.setColorCheck(new java.awt.Color(0, 90, 132));
         rsSiAltaComplejidad.setColorUnCheck(new java.awt.Color(0, 90, 132));
@@ -601,6 +760,7 @@ public class AgregarOS extends javax.swing.JDialog {
 
         grupoNoNomenclados.add(rsSiFacturaNoNomenclados);
         rsSiFacturaNoNomenclados.setForeground(new java.awt.Color(0, 90, 132));
+        rsSiFacturaNoNomenclados.setSelected(true);
         rsSiFacturaNoNomenclados.setText("Si");
         rsSiFacturaNoNomenclados.setColorCheck(new java.awt.Color(0, 90, 132));
         rsSiFacturaNoNomenclados.setColorUnCheck(new java.awt.Color(0, 90, 132));
@@ -615,6 +775,7 @@ public class AgregarOS extends javax.swing.JDialog {
 
         grupoFacturaPor.add(rsCupon);
         rsCupon.setForeground(new java.awt.Color(0, 90, 132));
+        rsCupon.setSelected(true);
         rsCupon.setText("Cupón");
         rsCupon.setColorCheck(new java.awt.Color(0, 90, 132));
         rsCupon.setColorUnCheck(new java.awt.Color(0, 90, 132));
@@ -629,6 +790,7 @@ public class AgregarOS extends javax.swing.JDialog {
 
         grupoFacturaPorPaciente.add(rsSiFacturaPorPaciente);
         rsSiFacturaPorPaciente.setForeground(new java.awt.Color(0, 90, 132));
+        rsSiFacturaPorPaciente.setSelected(true);
         rsSiFacturaPorPaciente.setText("Si");
         rsSiFacturaPorPaciente.setColorCheck(new java.awt.Color(0, 90, 132));
         rsSiFacturaPorPaciente.setColorUnCheck(new java.awt.Color(0, 90, 132));
@@ -643,10 +805,16 @@ public class AgregarOS extends javax.swing.JDialog {
 
         grupoImprimeDobleInforme.add(rsNunca);
         rsNunca.setForeground(new java.awt.Color(0, 90, 132));
+        rsNunca.setSelected(true);
         rsNunca.setText("Nunca");
         rsNunca.setColorCheck(new java.awt.Color(0, 90, 132));
         rsNunca.setColorUnCheck(new java.awt.Color(0, 90, 132));
         rsNunca.setRippleColor(new java.awt.Color(0, 90, 132));
+        rsNunca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rsNuncaActionPerformed(evt);
+            }
+        });
 
         grupoD998.add(rsNoIncluye);
         rsNoIncluye.setForeground(new java.awt.Color(0, 90, 132));
@@ -657,6 +825,7 @@ public class AgregarOS extends javax.swing.JDialog {
 
         grupoD998.add(rsIncluye);
         rsIncluye.setForeground(new java.awt.Color(0, 90, 132));
+        rsIncluye.setSelected(true);
         rsIncluye.setText("Incluye");
         rsIncluye.setColorCheck(new java.awt.Color(0, 90, 132));
         rsIncluye.setColorUnCheck(new java.awt.Color(0, 90, 132));
@@ -671,6 +840,7 @@ public class AgregarOS extends javax.swing.JDialog {
 
         grupoSubtotal.add(rsSiSubtotal);
         rsSiSubtotal.setForeground(new java.awt.Color(0, 90, 132));
+        rsSiSubtotal.setSelected(true);
         rsSiSubtotal.setText("Si");
         rsSiSubtotal.setColorCheck(new java.awt.Color(0, 90, 132));
         rsSiSubtotal.setColorUnCheck(new java.awt.Color(0, 90, 132));
@@ -685,6 +855,7 @@ public class AgregarOS extends javax.swing.JDialog {
 
         grupoTieneCategorizacion.add(rsSiCategorizacion);
         rsSiCategorizacion.setForeground(new java.awt.Color(0, 90, 132));
+        rsSiCategorizacion.setSelected(true);
         rsSiCategorizacion.setText("Si");
         rsSiCategorizacion.setColorCheck(new java.awt.Color(0, 90, 132));
         rsSiCategorizacion.setColorUnCheck(new java.awt.Color(0, 90, 132));
@@ -699,6 +870,7 @@ public class AgregarOS extends javax.swing.JDialog {
 
         grupoTipoDeFacturacion.add(rsDirecta);
         rsDirecta.setForeground(new java.awt.Color(0, 90, 132));
+        rsDirecta.setSelected(true);
         rsDirecta.setText("Directa");
         rsDirecta.setColorCheck(new java.awt.Color(0, 90, 132));
         rsDirecta.setColorUnCheck(new java.awt.Color(0, 90, 132));
@@ -742,10 +914,11 @@ public class AgregarOS extends javax.swing.JDialog {
                                         .addComponent(rsSiAltaComplejidad, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(rsSiFacturaNoNomenclados, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(rsSiFacturaPorPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(rsNunca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(rsCupon, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(jPanel7Layout.createSequentialGroup()
-                                                .addComponent(rsIncluye, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(rsIncluye, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                                                        .addComponent(rsNunca, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
                                                 .addGap(18, 18, 18)
                                                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addComponent(rsPacienteCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -861,16 +1034,16 @@ public class AgregarOS extends javax.swing.JDialog {
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Tipo de facturación", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 90, 132))); // NOI18N
         jPanel9.setForeground(new java.awt.Color(0, 90, 132));
 
-        cboTipoIVA1.setForeground(new java.awt.Color(0, 90, 132));
-        cboTipoIVA1.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Importes", "NBU", "Convenio", "CONV+DCTO", "S/Detalle"}));
-        cboTipoIVA1.setColorArrow(new java.awt.Color(0, 90, 132));
-        cboTipoIVA1.setColorBorde(new java.awt.Color(255, 255, 255));
-        cboTipoIVA1.setColorBoton(new java.awt.Color(255, 255, 255));
-        cboTipoIVA1.setColorDisabledIndex(new java.awt.Color(0, 90, 132));
-        cboTipoIVA1.setColorDisabledIndexText(new java.awt.Color(0, 90, 132));
-        cboTipoIVA1.setColorFondo(new java.awt.Color(255, 255, 255));
-        cboTipoIVA1.setColorListaItemsTXT(new java.awt.Color(0, 90, 132));
-        cboTipoIVA1.setColorSeleccion(new java.awt.Color(0, 90, 132));
+        cboTipoFacturacion.setForeground(new java.awt.Color(0, 90, 132));
+        cboTipoFacturacion.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Importes", "NBU", "Convenio", "CONV+DCTO", "S/Detalle"}));
+        cboTipoFacturacion.setColorArrow(new java.awt.Color(0, 90, 132));
+        cboTipoFacturacion.setColorBorde(new java.awt.Color(255, 255, 255));
+        cboTipoFacturacion.setColorBoton(new java.awt.Color(255, 255, 255));
+        cboTipoFacturacion.setColorDisabledIndex(new java.awt.Color(0, 90, 132));
+        cboTipoFacturacion.setColorDisabledIndexText(new java.awt.Color(0, 90, 132));
+        cboTipoFacturacion.setColorFondo(new java.awt.Color(255, 255, 255));
+        cboTipoFacturacion.setColorListaItemsTXT(new java.awt.Color(0, 90, 132));
+        cboTipoFacturacion.setColorSeleccion(new java.awt.Color(0, 90, 132));
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -878,14 +1051,14 @@ public class AgregarOS extends javax.swing.JDialog {
                 jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(cboTipoIVA1, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                                .addComponent(cboTipoFacturacion, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
                                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
                 jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel9Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(cboTipoIVA1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cboTipoFacturacion, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -975,97 +1148,143 @@ public class AgregarOS extends javax.swing.JDialog {
     }//GEN-LAST:event_txtRazonSocialActionPerformed
 
     private void txtCodigoOsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoOsActionPerformed
-        String codigo = txtCodigoOs.getText();
-        String razonSocial = txtRazonSocial.getText();
-        Optional<ObraSocial> optionalObraSocial = obraSocialController.getObraSocialByCodigoAndNombre(codigo, razonSocial);
-
-        if (optionalObraSocial.isPresent()) {
-            ObraSocial obraSocial = optionalObraSocial.get();
-            btnModificar.setEnabled(true);
-            txtRazonSocial.setText(obraSocial.getNombreObraSocial());
-            txtCodigoOs.setText(obraSocial.getCodigoObraSocial());
-
-            //convertir el localdate en date
-            LocalDate fechaDeAlta = obraSocial.getFechaDeAltaObraSocial();
-            if(fechaDeAlta != null) {
-                Date date = Date.from(fechaDeAlta.atStartOfDay(ZoneId.systemDefault()).toInstant());
-                dcFechaAlta.setDate(date);
-            }
-
-            txtCuit.setText(obraSocial.getCuitObraSocial());
-            txtCodigoFacturacion.setText(obraSocial.getCodigoFacturacionObraSocial());
-            txtDireccion.setText(obraSocial.getDireccionObraSocial());
-            txtLocalidad.setText(obraSocial.getLocalidadObraSocial());
-            txtCodigoPostal.setText(obraSocial.getCodigoPostalObraSocial());
-            txtProvincia.setText(obraSocial.getProvinciaObraSocial());
-            txtTelefono.setText(obraSocial.getTelefonoObraSocial());
-            txtEmail.setText(obraSocial.getMail1ObraSocial());
-            txtPaginaWeb.setText(obraSocial.getHttpObraSocial());
-            txtReferente.setText(obraSocial.getNombreReferenteObraSocial());
-            txtTelefonoReferente.setText(obraSocial.getCelularReferenteObrasocial());
-            txtUnidadArancel.setText(obraSocial.getImporteUnidadDeArancelObraSocial().toString());
-            txtContrato.setText(obraSocial.getNResolucionIngresoObraSocial());
-            txtPorcentajeAfiliado.setText(obraSocial.getPorcentajeAfiliadoObraSocial());
-
-            if (obraSocial.getFacturaAltaComplejidad().equals("SI")) {
-                rsSiAltaComplejidad.setSelected(true);
-            } else {
-                rsNoAltaComplejidad.setSelected(true);
-            }
-
-            if (obraSocial.getFacturaNoNomenclados().equals("SI")) {
-                rsSiFacturaNoNomenclados.setSelected(true);
-            } else {
-                rsNoFacturaNoNomenclados.setSelected(true);
-            }
-
-            if (obraSocial.getFacturaPor().equals("CUPON")) {
-                rsCupon.setSelected(true);
-            } else {
-                rsPacienteCompleto.setSelected(true);
-            }
-
-            if (obraSocial.getFacturaPorPaciente().equals("SI")) {
-                rsSiFacturaPorPaciente.setSelected(true);
-            } else {
-                rsNoFacturaPorPaciente.setSelected(true);
-            }
-
-            if (obraSocial.getImprimeDobleInforme().equals("NUNCA")) {
-                rsNunca.setSelected(true);
-            } else if (obraSocial.getImprimeDobleInforme().equals("SIEMPRE")) {
-                rsSiempre.setSelected(true);
-            } else {
-                rsSelectivo.setSelected(true);
-            }
-
-            if (obraSocial.getD998().equals("INCLUYE")) {
-                rsIncluye.setSelected(true);
-            } else if (obraSocial.getD998().equals("NO INCLUYE")) {
-                rsNoIncluye.setSelected(true);
-            } else {
-                rsDiscrimina.setSelected(true);
-            }
-
-            if (obraSocial.getSubtotalPorPaciente().equals("SI")) {
-                rsSiSubtotal.setSelected(true);
-            } else {
-                rsNoSubtotal.setSelected(true);
-            }
-
-            if (obraSocial.getTieneCategorizacion().equals("SI")) {
-                rsSiCategorizacion.setSelected(true);
-            } else {
-                rsNoCategorizacion.setSelected(true);
-            }
-
-            if (obraSocial.getTipoDeFacturacion().equals("DIRECTA")) {
-                rsDirecta.setSelected(true);
-            } else {
-                rsColegio.setSelected(true);
-            }
-        }
+        cargarObraSocial(txtCodigoOs.getText(), txtRazonSocial.getText());
     }//GEN-LAST:event_txtCodigoOsActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+
+        //TODO aqui van las condiciones iniciales para crear una OS
+        if (!txtRazonSocial.getText().isEmpty() && !txtCodigoOs.getText().isEmpty()) {
+
+            ObraSocial obraSocial = new ObraSocial();
+            guardarObrasocial(obraSocial, false);
+        } else {
+            Dialogo dialogo = new Dialogo(null, true);
+            dialogo.lblTitulo.setText("Error");
+            dialogo.lblCuerpo.setText("Datos faltantes");
+            dialogo.setVisible(true);
+        }
+
+
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void guardarObrasocial(ObraSocial obraSocial, boolean modifica) {
+        try {
+            String altaComplejidadPorSeparado = rsSiAltaComplejidad.isSelected() ? SI : NO;
+            String noNomenclados = rsSiFacturaNoNomenclados.isSelected() ? SI : NO;
+            String facturaPor = rsCupon.isSelected() ? CUPON : PACIENTE_COMPLETO;
+            String facturaPorPaciente = rsSiFacturaPorPaciente.isSelected() ? SI : NO;
+            String imprimeDobleInforme = rsNunca.isSelected() ? NUNCA : rsSiempre.isSelected() ? SIEMPRE : SELECTIVO;
+            String d998 = rsIncluye.isSelected() ? INCLUYE : rsNoIncluye.isSelected() ? NO_INCLUYE : DISCRIMINA;
+            String subtotalPorPaciente = rsSiSubtotal.isSelected() ? SI : NO;
+            String tieneCategorizacion = rsSiCategorizacion.isSelected() ? SI : NO;
+            String tipoFacturacion = rsDirecta.isSelected() ? DIRECTA : COLEGIO;
+
+            obraSocial.setRazonSocial(txtRazonSocial.getText());
+            obraSocial.setNombre(txtRazonSocial.getText());
+            obraSocial.setCodigo(txtCodigoOs.getText());
+            obraSocial.setIntCodigo(txtCodigoOs.getText());
+            obraSocial.setCuit(txtCuit.getText());
+            obraSocial.setCodigoFacturacion(txtCodigoFacturacion.getText());
+            obraSocial.setDireccion(txtDireccion.getText());
+            obraSocial.setTelefono(txtTelefono.getText());
+            obraSocial.setMail1(txtEmail.getText());
+            obraSocial.setWeb(txtPaginaWeb.getText());
+            obraSocial.setNombreReferente(txtReferente.getText());
+            obraSocial.setCelularReferente(txtTelefonoReferente.getText());
+            obraSocial.setImporteUnidadDeArancel(Double.valueOf(txtUnidadArancel.getText()));
+            obraSocial.setNumeroResolucionIngreso(txtContrato.getText());
+            obraSocial.setPorcentajeAfiliado(txtPorcentajeAfiliado.getText());
+            obraSocial.setFechaDeAlta(dcFechaAlta.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            obraSocial.setPeriodoNbu(Objects.requireNonNull(cboNBU.getSelectedItem()).toString());
+            obraSocial.setFacturaAltaComplejidad(altaComplejidadPorSeparado);
+            obraSocial.setFacturaNoNomenclados(noNomenclados);
+            obraSocial.setFacturaPor(facturaPor);
+            obraSocial.setFacturaPorPaciente(facturaPorPaciente);
+            obraSocial.setImprimeDobleInforme(imprimeDobleInforme);
+            obraSocial.setD998(d998);
+            obraSocial.setSubtotalPorPaciente(subtotalPorPaciente);
+            obraSocial.setTieneCategorizacion(tieneCategorizacion);
+            obraSocial.setTipoDeFacturacionDirectaOColegio(tipoFacturacion);
+            obraSocial.setTipoDeFacturacion(Objects.requireNonNull(cboTipoFacturacion.getSelectedItem()).toString());
+            obraSocial.setTipoIva(Objects.requireNonNull(cboTipoIVA.getSelectedItem()).toString());
+
+            String selectedText = (String) textAutocompleterLocalidad.getItemSelected();
+            Localidad localidad = localidadMap.get(selectedText);
+
+            obraSocial.setLocalidad(localidad);
+            obraSocial.setProvincia(localidad.getProvincia());
+            obraSocialController.addObraSocial(obraSocial);
+
+            Dialogo dialogo = new Dialogo(null, true);
+            dialogo.lblTitulo.setText("Info");
+            String mensaje = modifica? "modificada":"guardada";
+
+            dialogo.lblCuerpo.setText("La Obra Social fue " + mensaje + " exitosamente");
+            dialogo.setVisible(true);
+            limpiarCampos();
+            btnModificar.setEnabled(false);
+            btnAgregar.setEnabled(true);
+
+        } catch (Exception ex) {
+            Dialogo dialogo = new Dialogo(null, true);
+            dialogo.lblTitulo.setText("Error");
+            dialogo.lblCuerpo.setText("Error al guardar la obra social");
+            dialogo.setVisible(true);
+            log.error(ex.getMessage());
+        }
+    }
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        Optional<ObraSocial> optObraSocial = obraSocialController.getObraSocialByCodigoAndNombre(txtCodigoOs.getText(), txtRazonSocial.getText());
+        if (optObraSocial.isPresent()) {
+            ObraSocial obraSocial = optObraSocial.get();
+            guardarObrasocial(obraSocial, true);
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        limpiarCampos();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void limpiarCampos() {
+        txtRazonSocial.setText("");
+        txtCodigoOs.setText("");
+        txtCuit.setText("");
+        txtCodigoFacturacion.setText("");
+        txtDireccion.setText("");
+        txtLocalidad.setText("");
+        txtTelefono.setText("");
+        txtEmail.setText("");
+        txtPaginaWeb.setText("");
+        txtReferente.setText("");
+        txtTelefonoReferente.setText("");
+        txtUnidadArancel.setText("");
+        txtContrato.setText("");
+        txtPorcentajeAfiliado.setText("");
+        rsSiAltaComplejidad.setSelected(true);
+        rsSiFacturaNoNomenclados.setSelected(true);
+        rsCupon.setSelected(true);
+        rsSiFacturaPorPaciente.setSelected(true);
+        rsNunca.setSelected(true);
+        rsIncluye.setSelected(true);
+        rsSiSubtotal.setSelected(true);
+        rsSiCategorizacion.setSelected(true);
+        rsDirecta.setSelected(true);
+        cboNBU.setSelectedIndex(0);
+        dcFechaAlta.setDate(new Date());
+        cboTipoFacturacion.setSelectedIndex(0);
+        cboTipoIVA.setSelectedIndex(0);
+        txtRazonSocial.requestFocus();
+    }
+
+    private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTelefonoActionPerformed
+
+    private void rsNuncaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rsNuncaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rsNuncaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private RSMaterialComponent.RSButtonMaterialIconOne btnAgregar;
@@ -1074,8 +1293,8 @@ public class AgregarOS extends javax.swing.JDialog {
     private RSMaterialComponent.RSButtonMaterialIconOne btnModificar;
     private RSMaterialComponent.RSButtonMaterialIconOne btnSalir;
     private RSMaterialComponent.RSComboBox cboNBU;
+    private RSMaterialComponent.RSComboBox cboTipoFacturacion;
     private RSMaterialComponent.RSComboBox cboTipoIVA;
-    private RSMaterialComponent.RSComboBox cboTipoIVA1;
     private newscomponents.RSDateChooser dcFechaAlta;
     private javax.swing.ButtonGroup grupoAltaComplejidad;
     private javax.swing.ButtonGroup grupoD998;
@@ -1129,7 +1348,6 @@ public class AgregarOS extends javax.swing.JDialog {
     private RSMaterialComponent.RSTableMetroCustom tablaObrasSociales;
     private RSMaterialComponent.RSTextFieldMaterial txtCodigoFacturacion;
     private RSMaterialComponent.RSTextFieldMaterial txtCodigoOs;
-    private RSMaterialComponent.RSTextFieldMaterial txtCodigoPostal;
     private RSMaterialComponent.RSTextFieldMaterial txtContrato;
     private RSMaterialComponent.RSTextFieldMaterial txtCuit;
     private RSMaterialComponent.RSTextFieldMaterial txtDireccion;
@@ -1137,7 +1355,6 @@ public class AgregarOS extends javax.swing.JDialog {
     private RSMaterialComponent.RSTextFieldMaterial txtLocalidad;
     private RSMaterialComponent.RSTextFieldMaterial txtPaginaWeb;
     private RSMaterialComponent.RSTextFieldMaterial txtPorcentajeAfiliado;
-    private RSMaterialComponent.RSTextFieldMaterial txtProvincia;
     private RSMaterialComponent.RSTextFieldMaterial txtRazonSocial;
     private RSMaterialComponent.RSTextFieldMaterial txtReferente;
     private RSMaterialComponent.RSTextFieldMaterial txtTelefono;

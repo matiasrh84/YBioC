@@ -14,6 +14,7 @@ public class Medico {
 
     @Id
     @Column(name = "id_medicos", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "nombre", length = 100)

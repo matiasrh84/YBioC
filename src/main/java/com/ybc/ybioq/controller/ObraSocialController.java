@@ -21,4 +21,8 @@ public class ObraSocialController {
     public Optional<ObraSocial> getObraSocialByCodigoAndNombre(String codigo, String nombre) {
         return obraSocialService.getObraSocialByCodigoAndNombre(codigo, nombre);
     }
+
+    public ObraSocial addObraSocial(ObraSocial obraSocial) {
+        return obraSocialService.addObraSocial(obraSocial);
+    }
 }

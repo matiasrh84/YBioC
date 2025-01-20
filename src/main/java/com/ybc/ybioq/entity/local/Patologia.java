@@ -12,6 +12,7 @@ public class Patologia {
 
     @Id
     @Column(name = "id_patologia", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "nombre", nullable = false, length = 200)

@@ -14,13 +14,19 @@ public class Localidad {
 
     @Id
     @Column(name = "id_localidad", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_provincia", nullable = false)
-    private Provincia idProvincia;
+    private Provincia provincia;
 
     @Column(name = "nombre_localidad", nullable = false, length = 45)
     private String nombreLocalidad;
+
+    @Override
+    public String toString() {
+        return nombreLocalidad + " - " + provincia.getNombreProvincia();
+    }
 }
