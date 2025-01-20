@@ -18,6 +18,7 @@ public class AgregarProfesional extends javax.swing.JDialog {
     DefaultTableCellRenderer alinearCentro, alinearDerecha, alinearIzquierda;
 
     public AgregarProfesional(java.awt.Frame parent, boolean modal) {
+        //TODO ver como se tiene que implementar este formulario
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);

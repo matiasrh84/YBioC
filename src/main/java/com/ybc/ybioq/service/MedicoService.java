@@ -21,7 +21,7 @@ public class MedicoService {
     private EspecialidadRepository especialidadRepository;
 
     public List<Especialidad> listarEspecialidades() {
-        return especialidadRepository.findAllByOrderByNombreAsc();
+        return especialidadRepository.findAllByEstadoIsTrueOrderByNombreAsc();
     }
 
     public List<Medico> obtenerMedicosConEspecialidades() {

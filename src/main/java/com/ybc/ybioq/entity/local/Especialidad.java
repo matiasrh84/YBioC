@@ -19,5 +19,5 @@ public class Especialidad {
     private String nombre;
 
     @Column(name = "estado", nullable = false)
-    private Integer estado;
+    private boolean estado;
 }
