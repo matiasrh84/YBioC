@@ -1,6 +1,7 @@
 package com.ybc.ybioq.entity.local;
 
 import jakarta.persistence.*;
+import java.math.BigDecimal;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
@@ -25,14 +26,14 @@ public class ObraSocial {
     @Column(name = "celular_referente", length = 45)
     private String celularReferente;
 
-    @Column(name = "importe_unidad_de_arancel")
-    private Double importeUnidadDeArancel;
+    @Column(name = "importe_unidad_de_arancel", precision = 10, scale = 2)
+    private BigDecimal importeUnidadDeArancel;
 
     @Column(name = "razon_social", length = 45)
     private String razonSocial;
 
-    @Column(name = "importe_unidad_de_gasto", length = 45)
-    private String importeUnidadDeGasto;
+    @Column(name = "importe_unidad_de_gasto", precision = 10, scale = 2)
+    private BigDecimal importeUnidadDeGasto;
 
     @Column(name = "codigo_facturacion", length = 45)
     private String codigoFacturacion;
@@ -49,17 +50,23 @@ public class ObraSocial {
     @Column(name = "direccion", length = 45)
     private String direccion;
 
-    @Column(name = "factura_alta_complejidad", length = 2)
-    private String facturaAltaComplejidad;
+    @Column(name = "factura_alta_complejidad")
+    private Boolean facturaAltaComplejidad;
 
-    @Column(name = "factura_no_nomenclados", length = 2)
-    private String facturaNoNomenclados;
+    @Column(name = "factura_no_nomenclados")
+    private Boolean facturaNoNomenclados;
+
+    @Column(name = "factura_por_paciente")
+    private Boolean facturaPorPaciente;
+
+    @Column(name = "subtotal_por_paciente")
+    private Boolean subtotalPorPaciente;
+
+    @Column(name = "tiene_categorizacion")
+    private Boolean tieneCategorizacion;
 
     @Column(name = "factura_por", length = 45)
     private String facturaPor;
-
-    @Column(name = "factura_por_paciente", length = 2)
-    private String facturaPorPaciente;
 
     @Column(name = "fax", length = 45)
     private String fax;
@@ -106,14 +113,8 @@ public class ObraSocial {
     @Column(name = "porcentaje_descuento", length = 45)
     private String porcentajeDescuento;
 
-    @Column(name = "subtotal_por_paciente", length = 2)
-    private String subtotalPorPaciente;
-
     @Column(name = "telefono", length = 45)
     private String telefono;
-
-    @Column(name = "tiene_categorizacion", length = 2)
-    private String tieneCategorizacion;
 
     @Column(name = "tipo_de_facturacion", length = 45)
     private String tipoDeFacturacion;
