@@ -1722,6 +1722,9 @@
                   <Color blue="84" green="5a" red="0" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cboTipoFacturacionActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

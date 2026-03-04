@@ -3421,7 +3421,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_txtObraSocialActionPerformed
 
     private void txtDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDNIActionPerformed
-
+        
     }//GEN-LAST:event_txtDNIActionPerformed
 
     private void txtApellidoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtApellidoFocusGained
