@@ -102,13 +102,13 @@ public class AgregarOS extends javax.swing.JDialog {
             txtContrato.setText(obraSocial.getNumeroResolucionIngreso());
             txtPorcentajeAfiliado.setText(obraSocial.getPorcentajeAfiliado());
 
-            if (obraSocial.getFacturaAltaComplejidad().equals(SI)) {
+            if (obraSocial.getFacturaAltaComplejidad()) {
                 rsSiAltaComplejidad.setSelected(true);
             } else {
                 rsNoAltaComplejidad.setSelected(true);
             }
 
-            if (obraSocial.getFacturaNoNomenclados().equals(SI)) {
+            if (obraSocial.getFacturaNoNomenclados()) {
                 rsSiFacturaNoNomenclados.setSelected(true);
             } else {
                 rsNoFacturaNoNomenclados.setSelected(true);
@@ -120,7 +120,7 @@ public class AgregarOS extends javax.swing.JDialog {
                 rsPacienteCompleto.setSelected(true);
             }
 
-            if (obraSocial.getFacturaPorPaciente().equals(SI)) {
+            if (obraSocial.getFacturaPorPaciente()) {
                 rsSiFacturaPorPaciente.setSelected(true);
             } else {
                 rsNoFacturaPorPaciente.setSelected(true);
@@ -142,13 +142,13 @@ public class AgregarOS extends javax.swing.JDialog {
                 rsDiscrimina.setSelected(true);
             }
 
-            if (obraSocial.getSubtotalPorPaciente().equals(SI)) {
+            if (obraSocial.getSubtotalPorPaciente()) {
                 rsSiSubtotal.setSelected(true);
             } else {
                 rsNoSubtotal.setSelected(true);
             }
 
-            if (obraSocial.getTieneCategorizacion().equals(SI)) {
+            if (obraSocial.getTieneCategorizacion()) {
                 rsSiCategorizacion.setSelected(true);
             } else {
                 rsNoCategorizacion.setSelected(true);
@@ -182,9 +182,6 @@ public class AgregarOS extends javax.swing.JDialog {
             }
 
             switch (obraSocial.getTipoIva()) {
-                case EXENTO:
-                    cboTipoIVA.setSelectedIndex(0);
-                    break;
                 case MEDIO_IVA:
                     cboTipoIVA.setSelectedIndex(1);
                     break;
@@ -1243,10 +1240,7 @@ public class AgregarOS extends javax.swing.JDialog {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         Optional<ObraSocial> optObraSocial = obraSocialController.getObraSocialByCodigoAndNombre(txtCodigoOs.getText(), txtRazonSocial.getText());
-        if (optObraSocial.isPresent()) {
-            ObraSocial obraSocial = optObraSocial.get();
-            guardarObrasocial(obraSocial, true);
-        }
+        optObraSocial.ifPresent(obraSocial -> guardarObrasocial(obraSocial, true));
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
