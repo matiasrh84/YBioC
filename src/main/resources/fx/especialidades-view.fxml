@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="18.0" styleClass="content"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ybc.ybioq.fx.controller.EspecialidadesFxController">
+    <padding>
+        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0"/>
+    </padding>
+    <VBox spacing="6.0">
+        <Label styleClass="section-title" text="Especialidades"/>
+        <Label styleClass="section-subtitle" text="Mantenimiento de especialidades medicas."/>
+    </VBox>
+    <HBox alignment="CENTER_LEFT" spacing="10.0">
+        <TextField fx:id="filtroField" promptText="Buscar por nombre" HBox.hgrow="ALWAYS"/>
+        <Button onAction="#cargar" styleClass="secondary-button" text="Actualizar"/>
+    </HBox>
+    <HBox spacing="18.0" VBox.vgrow="ALWAYS">
+        <TableView fx:id="especialidadesTable" prefWidth="560.0" HBox.hgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="idColumn" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" text="ID"/>
+                <TableColumn fx:id="nombreColumn" prefWidth="340.0" text="Nombre"/>
+                <TableColumn fx:id="estadoColumn" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" text="Estado"/>
+            </columns>
+        </TableView>
+        <VBox minWidth="280.0" prefWidth="300.0" spacing="12.0" styleClass="editor-panel">
+            <Label styleClass="panel-title" text="Datos"/>
+            <VBox spacing="8.0">
+                <Label styleClass="field-label" text="Nombre"/>
+                <TextField fx:id="nombreField" onAction="#guardar" promptText="Especialidad"/>
+            </VBox>
+            <CheckBox fx:id="estadoCheck" text="Activa"/>
+            <Region VBox.vgrow="ALWAYS"/>
+            <Label fx:id="mensajeLabel" styleClass="form-message" wrapText="true"/>
+            <HBox spacing="8.0">
+                <Button onAction="#nuevo" styleClass="secondary-button" text="Nuevo"/>
+                <Button onAction="#guardar" text="Guardar"/>
+            </HBox>
+            <Button maxWidth="Infinity" onAction="#cambiarEstado" styleClass="secondary-button" text="Baja / Reactivar"/>
+        </VBox>
+    </HBox>
+</VBox>

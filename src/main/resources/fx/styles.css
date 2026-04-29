@@ -58,6 +58,10 @@
     -fx-background-color: #f4f7f9;
 }
 
+.content-host {
+    -fx-background-color: #f4f7f9;
+}
+
 .login-form {
     -fx-background-color: #ffffff;
     -fx-background-radius: 8px;
@@ -155,7 +159,8 @@
 }
 
 .metric-card,
-.work-panel {
+.work-panel,
+.editor-panel {
     -fx-background-color: #ffffff;
     -fx-background-radius: 8px;
     -fx-border-color: #d8e2ea;
@@ -177,4 +182,34 @@
 
 .error-label {
     -fx-text-fill: #b42318;
+}
+
+.form-message {
+    -fx-text-fill: #005a84;
+}
+
+.table-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d8e2ea;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #005a84;
+    -fx-background-radius: 8px 8px 0 0;
+}
+
+.table-view .column-header,
+.table-view .filler {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: 700;
+}
+
+.check-box {
+    -fx-text-fill: #26323b;
 }

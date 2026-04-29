@@ -43,3 +43,28 @@ La migracion a JavaFX se organiza sin borrar ni mover los formularios Swing viej
 3. Cada pantalla nueva JavaFX debe llamar servicios, no consultar directamente repositorios desde la UI.
 4. Los CRUD simples se implementan en servicios pequenos y controladores JavaFX dedicados.
 5. Las entidades que no existan en el SQL actual deben tratarse como legado hasta decidir si se eliminan del modelo JPA o si falta su tabla en el script.
+
+## Convencion de nombres para pantallas JavaFX
+
+Las pantallas nuevas se nombran por dominio, en plural, sin prefijos de accion:
+
+- `Especialidades`
+- `Medicos`
+- `Pacientes`
+- `Ordenes`
+- `Practicas`
+
+Archivos asociados:
+
+- FXML: `especialidades-view.fxml`, `medicos-view.fxml`
+- Controller JavaFX: `EspecialidadesFxController`, `MedicosFxController`
+- Controller Spring existente: `EspecialidadController`, `MedicoController`
+
+No crear nuevos formularios con nombres `Alta...`, `Agregar...`, `Tabla...` o similares. Esas palabras quedan como acciones internas de pantalla:
+
+- `Nuevo`
+- `Guardar`
+- `Baja / Reactivar`
+- `Actualizar`
+
+Si una pantalla necesita un dialogo puntual, el dialogo debe nombrarse por su proposito especifico, por ejemplo `SeleccionMedicoDialog`, no `AgregarMedico`.

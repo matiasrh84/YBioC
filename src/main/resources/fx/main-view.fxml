@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane fx:id="root" prefHeight="760.0" prefWidth="1180.0" styleClass="app-root"
@@ -33,7 +34,9 @@
             <padding>
                 <Insets bottom="24.0" left="16.0" right="16.0" top="24.0"/>
             </padding>
-            <Button maxWidth="Infinity" styleClass="nav-button-selected" text="Inicio"/>
+            <Button maxWidth="Infinity" onAction="#showHome" styleClass="nav-button-selected" text="Inicio"/>
+            <Button maxWidth="Infinity" onAction="#showEspecialidades" styleClass="nav-button" text="Especialidades"/>
+            <Button maxWidth="Infinity" onAction="#showMedicos" styleClass="nav-button" text="Medicos"/>
             <Button disable="true" maxWidth="Infinity" styleClass="nav-button" text="Pacientes"/>
             <Button disable="true" maxWidth="Infinity" styleClass="nav-button" text="Ordenes"/>
             <Button disable="true" maxWidth="Infinity" styleClass="nav-button" text="Resultados"/>
@@ -42,32 +45,34 @@
         </VBox>
     </left>
     <center>
-        <VBox spacing="22.0" styleClass="content">
-            <padding>
-                <Insets bottom="30.0" left="30.0" right="30.0" top="30.0"/>
-            </padding>
-            <VBox spacing="6.0">
-                <Label styleClass="section-title" text="Panel principal"/>
-                <Label styleClass="section-subtitle" text="Base JavaFX conectada al contexto Spring Boot y a MariaDB."/>
+        <StackPane fx:id="contentStack" styleClass="content-host">
+            <VBox fx:id="homeContent" spacing="22.0" styleClass="content">
+                <padding>
+                    <Insets bottom="30.0" left="30.0" right="30.0" top="30.0"/>
+                </padding>
+                <VBox spacing="6.0">
+                    <Label styleClass="section-title" text="Panel principal"/>
+                    <Label styleClass="section-subtitle" text="Base JavaFX conectada al contexto Spring Boot y a MariaDB."/>
+                </VBox>
+                <GridPane hgap="14.0" vgap="14.0">
+                    <VBox styleClass="metric-card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <Label styleClass="metric-title" text="Especialidades"/>
+                        <Label styleClass="metric-value" text="Disponible"/>
+                    </VBox>
+                    <VBox styleClass="metric-card" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                        <Label styleClass="metric-title" text="Medicos"/>
+                        <Label styleClass="metric-value" text="Disponible"/>
+                    </VBox>
+                    <VBox styleClass="metric-card" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                        <Label styleClass="metric-title" text="Pacientes"/>
+                        <Label styleClass="metric-value" text="Migracion pendiente"/>
+                    </VBox>
+                </GridPane>
+                <VBox spacing="10.0" styleClass="work-panel">
+                    <Label styleClass="panel-title" text="Convencion de pantallas"/>
+                    <Label styleClass="body-text" text="Las nuevas pantallas se nombran por dominio en plural: Especialidades, Medicos, Pacientes. Las acciones internas usan Nuevo, Guardar y Baja/Reactivar." wrapText="true"/>
+                </VBox>
             </VBox>
-            <GridPane hgap="14.0" vgap="14.0">
-                <VBox styleClass="metric-card" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                    <Label styleClass="metric-title" text="Pacientes"/>
-                    <Label styleClass="metric-value" text="Migracion pendiente"/>
-                </VBox>
-                <VBox styleClass="metric-card" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                    <Label styleClass="metric-title" text="Ordenes"/>
-                    <Label styleClass="metric-value" text="Migracion pendiente"/>
-                </VBox>
-                <VBox styleClass="metric-card" GridPane.columnIndex="2" GridPane.rowIndex="0">
-                    <Label styleClass="metric-title" text="Resultados"/>
-                    <Label styleClass="metric-value" text="Migracion pendiente"/>
-                </VBox>
-            </GridPane>
-            <VBox spacing="10.0" styleClass="work-panel">
-                <Label styleClass="panel-title" text="Siguiente etapa"/>
-                <Label styleClass="body-text" text="Las pantallas Swing pueden migrarse una por una a FXML reutilizando los controladores y servicios Spring existentes." wrapText="true"/>
-            </VBox>
-        </VBox>
+        </StackPane>
     </center>
 </BorderPane>
