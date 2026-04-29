@@ -20,7 +20,7 @@ public class LoginService {
         Usuario usuarioEncontrado = usuarioRepository.findByUsuario(usuario)
                 .orElseThrow(() -> new RuntimeException("Nombre de usuario incorrecto"));
         if (!passwordEncoder.matches(clave, usuarioEncontrado.getClave())) {
-            throw new RuntimeException("Contraseña incorrecta");
+            throw new RuntimeException("Clave incorrecta");
         }
         return usuarioEncontrado;
     }
