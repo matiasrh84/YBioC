@@ -6,6 +6,8 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @Entity
@@ -49,15 +51,15 @@ public class Practica {
     @Column(name = "tipo_informe", nullable = false)
     private Integer tipoInforme;
 
-    @Column(name = "precio1", columnDefinition = "float UNSIGNED")
-    private double precio1;
+    @Column(name = "precio1", nullable = false, precision = 10, scale = 2)
+    private BigDecimal precio1;
 
-    @Column(name = "precio2", columnDefinition = "float UNSIGNED")
-    private double precio2;
+    @Column(name = "precio2", nullable = false, precision = 10, scale = 2)
+    private BigDecimal precio2;
 
-    @Column(name = "precio3", columnDefinition = "float UNSIGNED")
-    private double precio3;
+    @Column(name = "precio3", nullable = false, precision = 10, scale = 2)
+    private BigDecimal precio3;
 
-    @Column(name = "precio4", columnDefinition = "float UNSIGNED")
-    private double precio4;
+    @Column(name = "precio4", nullable = false, precision = 10, scale = 2)
+    private BigDecimal precio4;
 }

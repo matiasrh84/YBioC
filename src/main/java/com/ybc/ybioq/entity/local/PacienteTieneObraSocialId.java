@@ -15,7 +15,7 @@ public class PacienteTieneObraSocialId implements java.io.Serializable {
 
     private static final long serialVersionUID = -5375647456019327026L;
 
-    @Column(name = "id_Pacientes", nullable = false)
+    @Column(name = "id_pacientes", nullable = false)
     private Integer idPacientes;
 
     @Column(name = "id_obrasocial", nullable = false)

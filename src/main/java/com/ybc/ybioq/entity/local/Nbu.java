@@ -17,4 +17,7 @@ public class Nbu {
 
     @Column(name = "año")
     private Integer periodoNbu;
+
+    @Column(name = "detalle", length = 50)
+    private String detalle;
 }

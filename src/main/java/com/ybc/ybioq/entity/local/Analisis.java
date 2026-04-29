@@ -12,13 +12,16 @@ public class Analisis {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Integer id;
 
+    @Column(name = "nombre", length = 100)
     private String nombre;
 
     @Column(name = "valores_referencia")
     private String valoresReferencia;
 
+    @Column(name = "unidad", length = 100)
     private String unidad;
 
     @Column(name = "codigo_interno", nullable = false)
@@ -33,6 +36,7 @@ public class Analisis {
     @Column(name = "unidad_extra")
     private String unidadExtra;
 
+    @Column(name = "prioridad")
     private Integer prioridad;
 
     @Column(nullable = false)

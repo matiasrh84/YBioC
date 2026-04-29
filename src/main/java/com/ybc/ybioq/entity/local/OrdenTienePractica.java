@@ -7,6 +7,8 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @Entity
@@ -16,8 +18,8 @@ public class OrdenTienePractica {
     @EmbeddedId
     private OrdenTienePracticaId id;
 
-    @Column(name = "precio_practica", nullable = false, length = 9)
-    private String precioPractica;
+    @Column(name = "precio_practica", nullable = false, precision = 10, scale = 2)
+    private BigDecimal precioPractica;
 
     @Column(name = "cod_practica_fac", nullable = false, length = 6)
     private String codPracticaFac;

@@ -4,7 +4,6 @@ import com.ybc.ybioq.entity.local.Especialidad;
 import com.ybc.ybioq.entity.local.Medico;
 import com.ybc.ybioq.repository.local.EspecialidadRepository;
 import com.ybc.ybioq.repository.local.MedicoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -12,13 +11,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MedicoService {
+public class MedicoService extends AbstractCrudService<Medico, Integer> {
 
-    @Autowired
-    private MedicoRepository medicoRepository;
+    private final MedicoRepository medicoRepository;
+    private final EspecialidadRepository especialidadRepository;
 
-    @Autowired
-    private EspecialidadRepository especialidadRepository;
+    public MedicoService(MedicoRepository medicoRepository, EspecialidadRepository especialidadRepository) {
+        super(medicoRepository);
+        this.medicoRepository = medicoRepository;
+        this.especialidadRepository = especialidadRepository;
+    }
 
     public List<Especialidad> listarEspecialidades() {
         return especialidadRepository.findAllByEstadoIsTrueOrderByNombreAsc();
@@ -29,7 +31,7 @@ public class MedicoService {
     }
 
     public Medico guardarMedico(Medico medico) {
-        return medicoRepository.save(medico);
+        return save(medico);
     }
 
     public int obtenerMaxId() {
@@ -51,6 +53,6 @@ public class MedicoService {
         medico.setEstado(1);
 
         // Guardar en la base de datos
-        return medicoRepository.save(medico);
+        return save(medico);
     }
 }

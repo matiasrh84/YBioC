@@ -18,7 +18,7 @@ public class PacienteTieneObraSocial {
     @MapsId("idPacientes")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "id_Pacientes", nullable = false)
+    @JoinColumn(name = "id_pacientes", nullable = false)
     private Paciente idPacientes;
 
     @MapsId("idObrasocial")

@@ -14,10 +14,13 @@ public class Caja {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Integer id;
 
+    @Column(name = "monto")
     private Double monto;
 
+    @Column(name = "fecha")
     private LocalDate fecha;
 
     @ManyToOne(fetch = FetchType.LAZY)

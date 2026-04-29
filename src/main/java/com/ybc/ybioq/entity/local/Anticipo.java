@@ -13,8 +13,10 @@ public class Anticipo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Integer id;
 
+    @Column(name = "anticipo")
     private BigDecimal anticipo;
 
     @Column(name = "id_orden")

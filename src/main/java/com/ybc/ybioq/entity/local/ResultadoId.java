@@ -24,17 +24,8 @@ public class ResultadoId implements java.io.Serializable {
     @Column(name = "id_ordenes", nullable = false)
     private Integer idOrdenes;
 
-    @Column(name = "id_Usuarios", nullable = false)
+    @Column(name = "id_usuarios", nullable = false)
     private Integer idUsuarios;
-
-    @Column(name = "id_medicos", nullable = false)
-    private Integer idMedicos;
-
-    @Column(name = "id_especialidades", nullable = false)
-    private Integer idEspecialidades;
-
-    @Column(name = "id_Pacientes", nullable = false)
-    private Integer idPacientes;
 
     @Override
     public boolean equals(Object o) {
@@ -43,15 +34,11 @@ public class ResultadoId implements java.io.Serializable {
         ResultadoId entity = (ResultadoId) o;
         return Objects.equals(this.idOrdenes, entity.idOrdenes) &&
                 Objects.equals(this.idPracticas, entity.idPracticas) &&
-                Objects.equals(this.idAnalisis, entity.idAnalisis) &&
-                Objects.equals(this.idMedicos, entity.idMedicos) &&
-                Objects.equals(this.idEspecialidades, entity.idEspecialidades) &&
-                Objects.equals(this.idPacientes, entity.idPacientes) &&
-                Objects.equals(this.idUsuarios, entity.idUsuarios);
+                Objects.equals(this.idAnalisis, entity.idAnalisis);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idOrdenes, idPracticas, idAnalisis, idMedicos, idEspecialidades, idPacientes, idUsuarios);
+        return Objects.hash(idOrdenes, idPracticas, idAnalisis);
     }
 }

@@ -15,10 +15,11 @@ public class Persona {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Integer id;
 
     @NaturalId
-    @Column(nullable = false, unique = true)
+    @Column(name = "dni", nullable = false, unique = true)
     private Integer dni;
 
     @Column(name = "apellido", length = 45)

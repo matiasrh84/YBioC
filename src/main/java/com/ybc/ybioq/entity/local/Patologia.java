@@ -12,16 +12,25 @@ public class Patologia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "id_paciente")
     private Paciente paciente;
 
+    @Column(name = "nombre")
     private String nombre;
+
+    @Column(name = "descripcion")
     private String descripcion;
+
+    @Column(name = "tipo")
     private String tipo;
+
     @Column(name = "fecha_inicio")
     private LocalDate fechaInicio;
+
+    @Column(name = "estado")
     private Boolean estado;
 }

@@ -28,6 +28,10 @@ La migracion a JavaFX se organiza sin borrar ni mover los formularios Swing viej
   - Formularios Swing/NetBeans y sus `.form`.
   - No se eliminan ni se renombran por ahora.
   - Se usan como referencia para reconstruir formularios JavaFX.
+- `src/main/java/com/ybc/ybioq/legacy`
+  - Entidades y repositorios del modelo viejo que no coinciden con el SQL actual.
+  - Compilan, pero no estan dentro de los paquetes escaneados por Spring Data/JPA.
+  - Sirven como referencia historica hasta confirmar si se migran, se reemplazan por tablas nuevas o se eliminan mas adelante.
 - `src/main/java/com/ybc/ybioq/config`
   - Mezcla de configuracion Spring, utilidades y clases auxiliares usadas por el sistema viejo.
   - Debe separarse gradualmente: configuracion Spring real en `config`, utilidades de negocio en `service` o `utils`, y codigo puramente Swing como legado.

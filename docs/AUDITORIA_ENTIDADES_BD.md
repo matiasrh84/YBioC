@@ -22,9 +22,9 @@ Fuente de verdad revisada: `src/main/resources/bd/bioquimicos estructura.sql`.
 - `Patologia`: `fechaInicio` corregida a `fecha_inicio`.
 - Entidades agregadas: `ConfiguracionReporte`, `ConfiguracionReporteLayout`, `Expediente`.
 
-## Entidades que aun requieren decision
+## Entidades movidas a legado
 
-Estas entidades apuntan a tablas que no estan en el SQL actual:
+Estas entidades apuntan a tablas que no estan en el SQL actual. Se movieron a `com.ybc.ybioq.legacy` para que compilen, pero no sean escaneadas por el `EntityManagerFactory` local:
 
 - `Arancel` -> `aranceles`
 - `HistoriaClinica` -> `historia_clinica`
@@ -32,7 +32,17 @@ Estas entidades apuntan a tablas que no estan en el SQL actual:
 - `Licencia` -> `licencia`
 - `Reporte` -> `reportes`
 
-Con `ddl-auto: update`, Hibernate puede intentar crear esas tablas aunque no pertenezcan a la base real. Antes de pasar a validacion estricta conviene moverlas a legado, excluirlas del `EntityManagerFactory`, o confirmar que faltan en el script SQL.
+Con `ddl-auto: update`, si estas entidades estuvieran en el paquete activo Hibernate podria intentar crear tablas que no pertenecen a la base real.
+
+## Cambios de segunda pasada
+
+- `PacienteTieneObraSocial`: columnas corregidas a `id_pacientes` e `id_obrasocial`.
+- `ResultadoId`: se quitaron de la clave embebida los campos viejos `id_medicos`, `id_especialidades` e `id_Pacientes`; la clave actual queda en `id_analisis`, `id_practicas`, `id_ordenes`, con `id_usuarios` como columna adicional.
+- `Orden`: `total` y `precio_coseguro` pasaron a `BigDecimal`; `fecha` y `fecha_de_autorizacion` pasaron a `LocalDateTime`; `hora` paso a `LocalTime`.
+- `OrdenTienePractica`: `precio_practica` paso a `BigDecimal`.
+- `Practica`: precios `precio1..precio4` pasaron a `BigDecimal`.
+- `Nbu`: se agrego `detalle`.
+- `Analisis`, `Anticipo`, `Caja`, `Derivacion`, `Patologia` y `Persona`: se agregaron anotaciones `@Column` explicitas para evitar depender de convenciones.
 
 ## Pendiente de segunda pasada
 

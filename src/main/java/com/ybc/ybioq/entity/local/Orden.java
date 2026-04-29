@@ -6,7 +6,10 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -26,13 +29,13 @@ public class Orden {
     private String numeroOrden;
 
     @Column(name = "total", nullable = false)
-    private Float total;
+    private BigDecimal total;
 
     @Column(name = "estado_orden", nullable = false)
     private Integer estadoOrden;
 
-    @Column(name = "fecha", length = 25)
-    private String fecha;
+    @Column(name = "fecha")
+    private LocalDateTime fecha;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -66,8 +69,8 @@ public class Orden {
     @Column(name = "nro_de_autorizacion")
     private Long nroDeAutorizacion;
 
-    @Column(name = "fecha_de_autorizacion", length = 25)
-    private String fechaDeAutorizacion;
+    @Column(name = "fecha_de_autorizacion")
+    private LocalDateTime fechaDeAutorizacion;
 
     @Column(name = "fecha_de_coseguro")
     private LocalDate fechaDeCoseguro;
@@ -81,7 +84,7 @@ public class Orden {
     private ObraSocial idObrasocial;
 
     @Column(name = "precio_coseguro")
-    private Float precioCoseguro;
+    private BigDecimal precioCoseguro;
 
     @Column(name = "nombre_recien_nacido", length = 100)
     private String nombreRecienNacido;
@@ -89,8 +92,8 @@ public class Orden {
     @Column(name = "estado_enviado", nullable = false)
     private Integer estadoEnviado;
 
-    @Column(name = "hora", length = 10)
-    private String hora;
+    @Column(name = "hora")
+    private LocalTime hora;
 
     @Column(name = "id_expediente")
     private Integer idExpediente;

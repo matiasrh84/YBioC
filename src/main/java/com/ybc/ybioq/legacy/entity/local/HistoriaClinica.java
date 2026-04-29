@@ -1,4 +1,4 @@
-package com.ybc.ybioq.entity.local;
+package com.ybc.ybioq.legacy.entity.local;
 
 import jakarta.persistence.*;
 import lombok.Getter;
