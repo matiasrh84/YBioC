@@ -16,19 +16,21 @@ public class Analisis {
 
     private String nombre;
 
+    @Column(name = "valores_referencia")
     private String valoresReferencia;
 
     private String unidad;
 
-    @Column(nullable = false)
+    @Column(name = "codigo_interno", nullable = false)
     private String codigoInterno;
 
-    @Column(nullable = false)
+    @Column(name = "estado_titulo", nullable = false)
     private Integer estadoTitulo;
 
-    @Column(nullable = false)
+    @Column(name = "tipo_resultado", nullable = false)
     private String tipoResultado;
 
+    @Column(name = "unidad_extra")
     private String unidadExtra;
 
     private Integer prioridad;

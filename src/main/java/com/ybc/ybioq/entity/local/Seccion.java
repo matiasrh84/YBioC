@@ -11,7 +11,7 @@ import lombok.Setter;
 public class Seccion {
 
     @Id
-    @Column(name = "id_secciones", nullable = false)
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 

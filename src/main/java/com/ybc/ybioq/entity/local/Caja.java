@@ -21,6 +21,6 @@ public class Caja {
     private LocalDate fecha;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_historia_clinica", nullable = false)
-    private HistoriaClinica historiaClinica;
+    @JoinColumn(name = "id_expediente", nullable = false)
+    private Expediente expediente;
 }

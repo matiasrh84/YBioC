@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class Orden {
 
     @Id
-    @Column(name = "id_ordenes", nullable = false)
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -36,7 +36,7 @@ public class Orden {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "id_Usuarios", nullable = false)
+    @JoinColumn(name = "id_usuarios", nullable = false)
     private Usuario idUsuarios;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -51,7 +51,7 @@ public class Orden {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "id_Pacientes", nullable = false)
+    @JoinColumn(name = "id_pacientes", nullable = false)
     private Paciente idPacientes;
 
     @Column(name = "servicio", length = 45)
@@ -92,6 +92,9 @@ public class Orden {
     @Column(name = "hora", length = 10)
     private String hora;
 
-    @Column(name = "anticipo")
+    @Column(name = "id_expediente")
+    private Integer idExpediente;
+
+    @Transient
     private Float anticipo;
 }

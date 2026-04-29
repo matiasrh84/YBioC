@@ -14,13 +14,13 @@ public class Practica {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_practicas", nullable = false)
+    @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "codigo_practica", nullable = false)
+    @Column(name = "codigo", nullable = false)
     private Integer codigoPractica;
 
-    @Column(name = "determinacion_practica")
+    @Column(name = "determinacion")
     private String determinacionPractica;
 
     @Column(name = "instrucciones")
@@ -31,7 +31,7 @@ public class Practica {
     @JoinColumn(name = "id_derivaciones")
     private Derivacion idDerivaciones;
 
-    @Column(name = "metodo")
+    @Transient
     private String metodo;
 
     @Column(name = "estado_deriva", nullable = false)

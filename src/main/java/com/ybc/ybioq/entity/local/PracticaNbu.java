@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 public class PracticaNbu {
 
     @Id
-    @Column(name = "id_practicasnbu", nullable = false)
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 

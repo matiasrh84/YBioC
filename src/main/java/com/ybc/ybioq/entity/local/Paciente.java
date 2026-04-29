@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class Paciente {
 
     @Id
-    @Column(name = "id_Pacientes", nullable = false)
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -33,7 +33,7 @@ public class Paciente {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "personas_dni", nullable = false)
+    @JoinColumn(name = "id_persona", nullable = false)
     private Persona personasDni;
 
     @Column(name = "estado", nullable = false)

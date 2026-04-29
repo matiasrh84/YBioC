@@ -11,10 +11,10 @@ import lombok.Setter;
 public class Nbu {
 
     @Id
-    @Column(name = "id_nbu", nullable = false)
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "periodo_nbu")
+    @Column(name = "año")
     private Integer periodoNbu;
 }

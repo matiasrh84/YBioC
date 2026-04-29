@@ -18,27 +18,27 @@ public class ObraSocialTienePracticaNbu {
     @MapsId("idObrasocial")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "id_obrasocial", nullable = false)
+    @JoinColumn(name = "id_obra_social", nullable = false)
     private ObraSocial idObrasocial;
 
-    @Column(name = "codigo_fac_practicas_obrasocial")
+    @Column(name = "codigo_fac_practicas_obra_social")
     private Integer codigoFacPracticasObrasocial;
 
-    @Column(name = "unidadbioquimica")
+    @Column(name = "unidad_bioquimica")
     private Double unidadbioquimica;
 
-    @Column(name = "importeunidaddearancel_obrasocial", length = 15)
+    @Column(name = "importe_unidad_de_arancel_obra_social")
     private String importeunidaddearancelObrasocial;
 
-    @Column(name = "preciofijo", length = 15)
+    @Column(name = "precio_fijo")
     private String preciofijo;
 
-    @Column(name = "preciototal")
+    @Column(name = "precio_total")
     private Double preciototal;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "id_Usuarios")
+    @JoinColumn(name = "id_usuarios")
     private Usuario idUsuarios;
 
     @Column(name = "estado")

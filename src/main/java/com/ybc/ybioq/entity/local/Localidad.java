@@ -13,7 +13,7 @@ import org.hibernate.annotations.OnDeleteAction;
 public class Localidad {
 
     @Id
-    @Column(name = "id_localidad", nullable = false)
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -22,7 +22,7 @@ public class Localidad {
     @JoinColumn(name = "id_provincia", nullable = false)
     private Provincia provincia;
 
-    @Column(name = "nombre_localidad", nullable = false, length = 45)
+    @Column(name = "nombre", nullable = false, length = 45)
     private String nombreLocalidad;
 
     @Override

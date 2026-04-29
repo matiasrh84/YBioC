@@ -21,6 +21,7 @@ public class Patologia {
     private String nombre;
     private String descripcion;
     private String tipo;
+    @Column(name = "fecha_inicio")
     private LocalDate fechaInicio;
     private Boolean estado;
 }

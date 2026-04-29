@@ -15,10 +15,10 @@ public class ObraSocialTienePracticaNbuId implements java.io.Serializable {
 
     private static final long serialVersionUID = -514024944330224026L;
 
-    @Column(name = "id_obrasocial", nullable = false)
+    @Column(name = "id_obra_social", nullable = false)
     private Integer idObrasocial;
 
-    @Column(name = "id_practicasnbu", nullable = false)
+    @Column(name = "id_practicas_nbu", nullable = false)
     private Integer idPracticasnbu;
 
     @Column(name = "id_nbu", nullable = false)

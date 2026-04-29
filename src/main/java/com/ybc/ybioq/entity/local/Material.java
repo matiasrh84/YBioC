@@ -11,16 +11,16 @@ import lombok.Setter;
 public class Material {
 
     @Id
-    @Column(name = "id_materiales", nullable = false)
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "nombre_mat", length = 45)
+    @Column(name = "nombre", nullable = false, length = 150)
     private String nombreMat;
 
-    @Column(name = "precio")
+    @Transient
     private Double precio;
 
-    @Column(name = "stock")
+    @Transient
     private Integer stock;
 }

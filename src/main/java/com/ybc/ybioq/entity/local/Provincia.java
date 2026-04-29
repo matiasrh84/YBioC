@@ -12,10 +12,9 @@ import org.hibernate.annotations.ColumnDefault;
 public class Provincia {
 
     @Id
-    @Column(name = "id_provincia", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "nombre_provincia", nullable = false, length = 20)
+    @Column(name = "nombre", nullable = false, length = 20)
     private String nombreProvincia;
 }

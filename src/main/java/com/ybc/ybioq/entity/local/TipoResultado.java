@@ -11,14 +11,14 @@ import lombok.Setter;
 public class TipoResultado {
 
     @Id
-    @Column(name = "Id", nullable = false)
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "nombre", nullable = false, length = 500)
     private String nombre;
 
-    @Column(name = "id_practicas")
+    @Transient
     private Integer idPracticas;
 
     @Column(name = "estado", nullable = false)

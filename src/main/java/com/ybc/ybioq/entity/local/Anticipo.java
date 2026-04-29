@@ -17,5 +17,18 @@ public class Anticipo {
 
     private BigDecimal anticipo;
 
+    @Column(name = "id_orden")
+    private Integer idOrden;
+
+    @Column(name = "estado")
+    private Integer estado;
+
+    @Column(name = "fecha")
+    private java.time.LocalDate fecha;
+
+    @Column(name = "observacion")
+    private String observacion;
+
+    @Transient
     private Integer idHistoriaClinica;
 }

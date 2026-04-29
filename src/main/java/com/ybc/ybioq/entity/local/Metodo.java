@@ -11,10 +11,10 @@ import lombok.Setter;
 public class Metodo {
 
     @Id
-    @Column(name = "idMetodos", nullable = false)
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "Nombre")
+    @Column(name = "nombre", length = 1000)
     private String nombre;
 }

@@ -11,20 +11,20 @@ import lombok.Setter;
 public class Usuario {
 
     @Id
-    @Column(name = "id_Usuarios", nullable = false)
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "Nombre", length = 25)
+    @Column(name = "nombre", length = 25)
     private String nombre;
 
-    @Column(name = "Apellido", length = 25)
+    @Column(name = "apellido", length = 25)
     private String apellido;
 
     @Column(name = "usuario", length = 15)
     private String usuario;
 
-    @Column(name = "clave", length = 15)
+    @Column(name = "clave", length = 60)
     private String clave;
 
     @Column(name = "datos", nullable = false)
