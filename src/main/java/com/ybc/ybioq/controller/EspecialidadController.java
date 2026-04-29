@@ -2,31 +2,34 @@ package com.ybc.ybioq.controller;
 
 import com.ybc.ybioq.entity.local.Especialidad;
 import com.ybc.ybioq.service.EspecialidadService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class EspecialidadController {
+public class EspecialidadController extends AbstractCrudController<Especialidad, Integer> {
 
-    @Autowired
-    private EspecialidadService especialidadService;
+    private final EspecialidadService especialidadService;
+
+    public EspecialidadController(EspecialidadService especialidadService) {
+        super(especialidadService);
+        this.especialidadService = especialidadService;
+    }
 
     public List<Especialidad> getEspecialidadesByNombre(String valor) {
         return especialidadService.findAll(valor);
     }
 
     public List<Especialidad> getEspecialidades() {
-        return especialidadService.findAll();
+        return findAll();
     }
 
     public Especialidad addEspecialidad(Especialidad especialidad) {
-        return especialidadService.addEspecialidad(especialidad);
+        return save(especialidad);
     }
 
     public Optional<Especialidad> getEspecialidadById(int id) {
-        return especialidadService.findEspecialidadById(id);
+        return findById(id);
     }
 }

@@ -11,8 +11,8 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-    public Usuario autenticar(String usuario, String contraseña) {
-        return loginService.autenticar(usuario, contraseña);
+    public Usuario autenticar(String usuario, String password) {
+        return loginService.autenticar(usuario, password);
     }
 
     public Usuario registrarUsuario(Usuario usuario) {

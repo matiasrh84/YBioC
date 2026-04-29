@@ -2,20 +2,23 @@ package com.ybc.ybioq.controller;
 
 import com.ybc.ybioq.entity.local.ObraSocial;
 import com.ybc.ybioq.service.ObraSocialService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class ObraSocialController {
+public class ObraSocialController extends AbstractCrudController<ObraSocial, Integer> {
 
-    @Autowired
-    private ObraSocialService obraSocialService;
+    private final ObraSocialService obraSocialService;
+
+    public ObraSocialController(ObraSocialService obraSocialService) {
+        super(obraSocialService);
+        this.obraSocialService = obraSocialService;
+    }
 
     public List<ObraSocial> getAllObraSocial() {
-        return obraSocialService.getAllObraSocial();
+        return findAll();
     }
 
     public Optional<ObraSocial> getObraSocialByCodigoAndNombre(String codigo, String nombre) {
@@ -23,6 +26,6 @@ public class ObraSocialController {
     }
 
     public ObraSocial addObraSocial(ObraSocial obraSocial) {
-        return obraSocialService.addObraSocial(obraSocial);
+        return save(obraSocial);
     }
 }
