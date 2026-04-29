@@ -4,21 +4,23 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+import java.time.LocalDate;
+
 @Entity
-@Table(name = "patologias", schema = "bioquimicos")
+@Table(name = "patologias")
 public class Patologia {
 
     @Id
-    @Column(name = "id_patologia", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "nombre", nullable = false, length = 200)
-    private String nombre;
+    @ManyToOne
+    @JoinColumn(name = "id_paciente")
+    private Paciente paciente;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_paciente", nullable = false)
-    private Paciente idPaciente;
+    private String nombre;
+    private String descripcion;
+    private String tipo;
+    private LocalDate fechaInicio;
+    private Boolean estado;
 }

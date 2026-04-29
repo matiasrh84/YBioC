@@ -13,16 +13,14 @@ import java.time.LocalDate;
 public class Caja {
 
     @Id
-    @Column(name = "idCaja", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "monto")
     private Double monto;
 
-    @Column(name = "fecha")
     private LocalDate fecha;
 
-    @Column(name = "idHistoriaClinica")
-    private Integer idHistoriaClinica;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_historia_clinica", nullable = false)
+    private HistoriaClinica historiaClinica;
 }

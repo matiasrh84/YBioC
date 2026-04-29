@@ -3,6 +3,7 @@ package com.ybc.ybioq.entity.local;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -13,9 +14,12 @@ import org.hibernate.annotations.OnDeleteAction;
 public class Persona {
 
     @Id
-    @Column(name = "dni", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @NaturalId
+    @Column(nullable = false, unique = true)
+    private Integer dni;
 
     @Column(name = "apellido", length = 45)
     private String apellido;

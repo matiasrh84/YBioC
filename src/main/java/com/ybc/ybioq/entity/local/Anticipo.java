@@ -1,6 +1,7 @@
 package com.ybc.ybioq.entity.local;
 
 import jakarta.persistence.*;
+import java.math.BigDecimal;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,13 +12,10 @@ import lombok.Setter;
 public class Anticipo {
 
     @Id
-    @Column(name = "`id_anticipo`", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "anticipo")
-    private Double anticipo;
+    private BigDecimal anticipo;
 
-    @Column(name = "id_historia_clinica", nullable = false)
     private Integer idHistoriaClinica;
 }

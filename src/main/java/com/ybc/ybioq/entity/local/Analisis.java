@@ -11,45 +11,40 @@ import lombok.Setter;
 public class Analisis {
 
     @Id
-    @Column(name = "id_analisis", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "nombre", length = 100)
     private String nombre;
 
-    @Column(name = "valoresreferencia", length = 1000)
-    private String valoresreferencia;
+    private String valoresReferencia;
 
-    @Column(name = "unidad", length = 100)
     private String unidad;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_practicas", nullable = false)
-    private Practica idPracticas;
-
-    @Column(name = "codigo_interno", nullable = false, length = 15)
+    @Column(nullable = false)
     private String codigoInterno;
 
-    @Column(name = "estado_titulo", nullable = false)
+    @Column(nullable = false)
     private Integer estadoTitulo;
+
+    @Column(nullable = false)
+    private String tipoResultado;
+
+    private String unidadExtra;
+
+    private Integer prioridad;
+
+    @Column(nullable = false)
+    private Integer estado;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_metodo")
+    private Metodo metodo;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_practica", nullable = false)
+    private Practica practica;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_titulo")
-    private Titulo idTitulo;
-
-    @Column(name = "tipo_resultado", nullable = false, length = 25)
-    private String tipoResultado;
-
-    @Column(name = "unidad_extra", length = 100)
-    private String unidadExtra;
-
-    @Column(name = "prioridad")
-    private Integer prioridad;
-
-    @Column(name = "estado", nullable = false)
-    private Integer estado;
-
-    @Column(name = "idMetodos")
-    private Integer idMetodos;
+    private Titulo titulo;
 }

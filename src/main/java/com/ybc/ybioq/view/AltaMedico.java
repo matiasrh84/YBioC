@@ -77,12 +77,12 @@ public class AltaMedico extends javax.swing.JDialog {
                 if (e.getClickCount() == 2) {
                     txtNombre.setText(tablaMedicos.getValueAt(tablaMedicos.getSelectedRow(), 2).toString());
                     txtApellido.setText(tablaMedicos.getValueAt(tablaMedicos.getSelectedRow(), 1).toString());
-                    txtMatricula.setText(tablaMedicos.getValueAt(tablaMedicos.getSelectedRow(), 3).toString());
-                    cboEspecialidad.setSelectedItem(tablaMedicos.getValueAt(tablaMedicos.getSelectedRow(), 4).toString());
-                    if (tablaMedicos.getValueAt(tablaMedicos.getSelectedRow(), 5) != null) {
-                        txtObservaciones.setText(tablaMedicos.getValueAt(tablaMedicos.getSelectedRow(), 5).toString());
+                    txtMatricula.setText(tablaMedicos.getValueAt(tablaMedicos.getSelectedRow(), 0).toString());
+                    cboEspecialidad.setSelectedItem(tablaMedicos.getValueAt(tablaMedicos.getSelectedRow(), 3).toString());
+                    if (tablaMedicos.getValueAt(tablaMedicos.getSelectedRow(), 4) != null) {
+                        txtObservaciones.setText(tablaMedicos.getValueAt(tablaMedicos.getSelectedRow(), 4).toString());
                     }
-                    if (tablaMedicos.getValueAt(tablaMedicos.getSelectedRow(), 6).equals("OK")) {
+                    if (tablaMedicos.getValueAt(tablaMedicos.getSelectedRow(), 5).equals("Activo")) {
                         bmodificar = 1;
                     } else {
                         JOptionPane.showMessageDialog(null, "El Medico se encuentra dado de Baja");
@@ -125,9 +125,22 @@ public class AltaMedico extends javax.swing.JDialog {
 
         tablaMedicos.setModel(model);
         tablaMedicos.setAutoCreateRowSorter(true);
-        tablaMedicos.getColumnModel().getColumn(0).setMaxWidth(20);
-        tablaMedicos.getColumnModel().getColumn(0).setMinWidth(20);
-        tablaMedicos.getColumnModel().getColumn(0).setPreferredWidth(20);
+        tablaMedicos.getColumnModel().getColumn(0).setMaxWidth(60);
+        tablaMedicos.getColumnModel().getColumn(0).setMinWidth(60);
+        tablaMedicos.getColumnModel().getColumn(0).setPreferredWidth(60);
+        
+        tablaMedicos.getColumnModel().getColumn(1).setMaxWidth(180);
+        tablaMedicos.getColumnModel().getColumn(1).setMinWidth(180);
+        tablaMedicos.getColumnModel().getColumn(1).setPreferredWidth(180);
+        
+        tablaMedicos.getColumnModel().getColumn(2).setMaxWidth(180);
+        tablaMedicos.getColumnModel().getColumn(2).setMinWidth(180);
+        tablaMedicos.getColumnModel().getColumn(2).setPreferredWidth(180);
+        
+        tablaMedicos.getColumnModel().getColumn(3).setMaxWidth(210);
+        tablaMedicos.getColumnModel().getColumn(3).setMinWidth(210);
+        tablaMedicos.getColumnModel().getColumn(3).setPreferredWidth(210);
+        
         alinear();
         tablaMedicos.getColumnModel().getColumn(0).setCellRenderer(alinearCentro);
         tablaMedicos.getColumnModel().getColumn(1).setCellRenderer(alinearIzquierda);

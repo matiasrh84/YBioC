@@ -11,7 +11,6 @@ import lombok.Setter;
 public class Derivacion {
 
     @Id
-    @Column(name = "id_derivaciones", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 

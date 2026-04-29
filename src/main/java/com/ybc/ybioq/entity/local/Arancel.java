@@ -11,7 +11,6 @@ import lombok.Setter;
 public class Arancel {
 
     @Id
-    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 }
