@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="850.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ybc.ybioq.fx.controller.PrincipalController">
+
+    <left>
+        <VBox prefWidth="240.0" spacing="5.0" style="-fx-background-color: #004d73;" BorderPane.alignment="CENTER">
+            <children>
+                <VBox alignment="CENTER" prefHeight="160.0" style="-fx-background-color: #003a57;">
+                    <children>
+                        <Label text="YBIOQ" textFill="WHITE">
+                            <font><Font name="System Bold" size="32.0" /></font>
+                        </Label>
+                        <Label text="Sistema de Gestión" textFill="#a3d2e8">
+                            <font><Font size="14.0" /></font>
+                        </Label>
+                    </children>
+                </VBox>
+
+                <Label text="MENÚ PRINCIPAL" textFill="#8cb9cc">
+                    <font><Font name="System Bold" size="12.0" /></font>
+                    <VBox.margin><Insets bottom="5.0" left="20.0" top="20.0" /></VBox.margin>
+                </Label>
+
+                <Button fx:id="btnMenuCargarPaciente" prefHeight="45.0" prefWidth="240.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-alignment: center-left; -fx-padding: 0 0 0 20; -fx-font-size: 14px;" text="👤  Cargar Paciente" />
+                <Button fx:id="btnMenuTurnos" prefHeight="45.0" prefWidth="240.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-alignment: center-left; -fx-padding: 0 0 0 20; -fx-font-size: 14px;" text="📅  Turnos y Órdenes" />
+                <Button fx:id="btnMenuFacturacion" prefHeight="45.0" prefWidth="240.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-alignment: center-left; -fx-padding: 0 0 0 20; -fx-font-size: 14px;" text="💰  Facturación" />
+                <Button fx:id="btnMenuUtilitarios" prefHeight="45.0" prefWidth="240.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-alignment: center-left; -fx-padding: 0 0 0 20; -fx-font-size: 14px;" text="🛠  Utilitarios" />
+
+                <Region VBox.vgrow="ALWAYS" />
+                <Button fx:id="btnSalir" prefHeight="55.0" prefWidth="240.0" style="-fx-background-color: #cc0000; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px;" text="SALIR" />
+            </children>
+        </VBox>
+    </left>
+
+    <center>
+        <StackPane style="-fx-background-color: #eaeff2;" BorderPane.alignment="CENTER">
+            <children>
+
+                <ScrollPane fx:id="panelCargarPaciente" fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #eaeff2;">
+                    <content>
+                        <VBox spacing="20.0">
+                            <padding><Insets bottom="30.0" left="30.0" right="30.0" top="30.0" /></padding>
+                            <children>
+
+                                <Label text="Gestión de Pacientes" textFill="#004d73">
+                                    <font><Font name="System Bold" size="26.0" /></font>
+                                </Label>
+
+                                <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 8; -fx-padding: 15 20 15 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 3);">
+                                    <children>
+                                        <Button fx:id="btnBuscar" prefHeight="35.0" style="-fx-background-color: #004d73; -fx-text-fill: white;" text="🔍 Buscar Paciente" />
+                                        <Button fx:id="btnSinDNI" prefHeight="35.0" style="-fx-background-color: #0073e6; -fx-text-fill: white;" text="Cargar Sin DNI" />
+                                        <Button fx:id="btnModificar" prefHeight="35.0" style="-fx-background-color: #f39c12; -fx-text-fill: white;" text="✏ Modificar" />
+                                        <Button fx:id="btnBorrar" prefHeight="35.0" style="-fx-background-color: #e74c3c; -fx-text-fill: white;" text="🗑 Borrar" />
+
+                                        <Region HBox.hgrow="ALWAYS" />
+
+                                        <Button fx:id="btnPatologias" prefHeight="35.0" style="-fx-background-color: #27ae60; -fx-text-fill: white;" text="🩺 Patologías" />
+                                        <Button fx:id="btnResultados" prefHeight="35.0" style="-fx-background-color: #27ae60; -fx-text-fill: white;" text="📄 Resultados" />
+                                        <Button fx:id="btnCargarConsulta" prefHeight="35.0" style="-fx-background-color: #27ae60; -fx-text-fill: white;" text="➕ Nueva Consulta" />
+                                    </children>
+                                </HBox>
+
+                                <VBox spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 8; -fx-padding: 25; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 3);">
+                                    <children>
+                                        <Label text="Datos Personales y Contacto" textFill="#555555">
+                                            <font><Font name="System Bold" size="16.0" /></font>
+                                            <VBox.margin><Insets bottom="10.0" /></VBox.margin>
+                                        </Label>
+
+                                        <GridPane hgap="20.0" vgap="15.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints halignment="RIGHT" minWidth="80.0" />
+                                                <ColumnConstraints hgrow="ALWAYS" minWidth="150.0" />
+                                                <ColumnConstraints halignment="RIGHT" minWidth="80.0" />
+                                                <ColumnConstraints hgrow="ALWAYS" minWidth="150.0" />
+                                                <ColumnConstraints halignment="RIGHT" minWidth="80.0" />
+                                                <ColumnConstraints hgrow="ALWAYS" minWidth="150.0" />
+                                            </columnConstraints>
+
+                                            <children>
+                                                <Label text="DNI:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                                <TextField fx:id="txtDNI" prefHeight="30.0" promptText="Nº Documento" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                                                <Label text="Nombre:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                                                <TextField fx:id="txtNombre" prefHeight="30.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+                                                <Label text="Apellido:" GridPane.columnIndex="4" GridPane.rowIndex="0" />
+                                                <TextField fx:id="txtApellido" prefHeight="30.0" GridPane.columnIndex="5" GridPane.rowIndex="0" />
+
+                                                <Label text="Dirección:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                                <TextField fx:id="txtDireccion" prefHeight="30.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+
+                                                <Label text="Localidad:" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                                                <TextField fx:id="txtLocalidad" prefHeight="30.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+
+                                                <Label text="Teléfono:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                                <TextField fx:id="txtTelefono" prefHeight="30.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                                                <Label text="Celular:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                                <TextField fx:id="txtCelular" prefHeight="30.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+
+                                                <Label text="Email:" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                                                <TextField fx:id="txtMail" prefHeight="30.0" promptText="correo@ejemplo.com" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+
+                                                <Label text="Obra Social:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                                <TextField fx:id="txtObraSocial" prefHeight="30.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
+
+                                                <Label text="Nº Afiliado:" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                                                <TextField fx:id="txtNumeroAfiliado" prefHeight="30.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+
+                                                <Label text="Sexo:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                                                <ComboBox fx:id="cboSexo" prefHeight="30.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+                                                <Label text="Edad:" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                                <Label fx:id="lblEdad" text="0 años" textFill="#004d73" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                                                    <font><Font name="System Bold" size="14.0" /></font>
+                                                </Label>
+                                            </children>
+                                 <rowConstraints>
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                 </rowConstraints>
+                                        </GridPane>
+                                    </children>
+                                </VBox>
+
+                                <VBox style="-fx-background-color: white; -fx-background-radius: 8; -fx-padding: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 3);" VBox.vgrow="ALWAYS">
+                                    <children>
+                                        <TableView fx:id="tablaPacientes" prefHeight="300.0" VBox.vgrow="ALWAYS">
+                                            <columns>
+                                                <TableColumn prefWidth="120.0" text="Nº Historia" />
+                                                <TableColumn prefWidth="120.0" text="DNI" />
+                                                <TableColumn prefWidth="250.0" text="Apellido y Nombre" />
+                                                <TableColumn prefWidth="200.0" text="Obra Social" />
+                                                <TableColumn prefWidth="150.0" text="Fecha Registro" />
+                                            </columns>
+                                        </TableView>
+                                    </children>
+                                </VBox>
+
+                            </children>
+                        </VBox>
+                    </content>
+                </ScrollPane>
+
+                <ScrollPane fx:id="panelCargarOrden" fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #eaeff2;" visible="false">
+                    <content>
+                        <VBox spacing="20.0">
+                            <padding><Insets bottom="30.0" left="30.0" right="30.0" top="30.0" /></padding>
+                            <children>
+
+                                <Label text="Gestión de Órdenes y Prácticas" textFill="#004d73">
+                                    <font><Font name="System Bold" size="26.0" /></font>
+                                </Label>
+
+                                <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 8; -fx-padding: 15 20 15 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 3);">
+                                    <children>
+                                        <TextField fx:id="txtBuscarOrden" prefHeight="35.0" prefWidth="200.0" promptText="🔍 Buscar Nº Orden..." />
+                                        <TextField fx:id="txtMedico" prefHeight="35.0" prefWidth="250.0" promptText="Médico Solicitante" />
+                                        <TextField fx:id="txtMotivo" prefHeight="35.0" prefWidth="250.0" promptText="Motivo / Diagnóstico" />
+
+                                        <Region HBox.hgrow="ALWAYS" />
+
+                                        <Button fx:id="btnImprimirListado" prefHeight="35.0" style="-fx-background-color: #004d73; -fx-text-fill: white;" text="🖨 Imprimir Listado" />
+                                        <Button fx:id="btnCertificadoAsistencia" prefHeight="35.0" style="-fx-background-color: #004d73; -fx-text-fill: white;" text="📄 Certificado" />
+                                    </children>
+                                </HBox>
+
+                                <SplitPane dividerPositions="0.4" orientation="VERTICAL" style="-fx-background-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 3);" VBox.vgrow="ALWAYS">
+                                    <items>
+                                        <VBox spacing="10.0" style="-fx-background-color: white; -fx-padding: 15;">
+                                            <children>
+                                                <Label text="Lista de Órdenes" textFill="#555555">
+                                                    <font><Font name="System Bold" size="14.0" /></font>
+                                                </Label>
+                                                <TableView fx:id="tablaOrdenes" VBox.vgrow="ALWAYS">
+                                                    <columns>
+                                                        <TableColumn prefWidth="100.0" text="Nº Orden" />
+                                                        <TableColumn prefWidth="250.0" text="Paciente" />
+                                                        <TableColumn prefWidth="250.0" text="Médico" />
+                                                        <TableColumn prefWidth="150.0" text="Estado" />
+                                                    </columns>
+                                                </TableView>
+                                            </children>
+                                        </VBox>
+
+                                        <VBox spacing="10.0" style="-fx-background-color: white; -fx-padding: 15;">
+                                            <children>
+                                                <HBox alignment="CENTER_LEFT" spacing="15.0">
+                                                    <children>
+                                                        <Label text="Prácticas Asignadas" textFill="#555555">
+                                                            <font><Font name="System Bold" size="14.0" /></font>
+                                                        </Label>
+                                                        <Region HBox.hgrow="ALWAYS" />
+                                                        <TextField fx:id="txtBuscarPractica" prefHeight="30.0" prefWidth="250.0" promptText="➕ Agregar Práctica (Código / Nombre)" />
+                                                    </children>
+                                                </HBox>
+
+                                                <TableView fx:id="tablaPracticas" VBox.vgrow="ALWAYS">
+                                                    <columns>
+                                                        <TableColumn prefWidth="100.0" text="Código" />
+                                                        <TableColumn prefWidth="400.0" text="Descripción de Práctica" />
+                                                        <TableColumn prefWidth="120.0" text="Importe OS" />
+                                                        <TableColumn prefWidth="120.0" text="Importe Part." />
+                                                    </columns>
+                                                </TableView>
+                                            </children>
+                                        </VBox>
+                                    </items>
+                                </SplitPane>
+
+                                <HBox alignment="CENTER_RIGHT" spacing="30.0" style="-fx-background-color: white; -fx-background-radius: 8; -fx-padding: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 3);">
+                                    <children>
+                                        <VBox alignment="CENTER_RIGHT" spacing="5.0">
+                                            <children>
+                                                <Label text="Total Particular" textFill="#888888" />
+                                                <Label fx:id="lblTotalParticular" text="\$ 0.00" textFill="#333333">
+                                                    <font><Font name="System Bold" size="16.0" /></font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+
+                                        <VBox alignment="CENTER_RIGHT" spacing="5.0">
+                                            <children>
+                                                <Label text="Total Obra Social" textFill="#888888" />
+                                                <Label fx:id="lblTotalOS" text="\$ 0.00" textFill="#333333">
+                                                    <font><Font name="System Bold" size="16.0" /></font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+
+                                        <VBox alignment="CENTER_RIGHT" spacing="5.0">
+                                            <children>
+                                                <Label text="Seña" textFill="#e67e22" />
+                                                <Label fx:id="lblSeña" text="\$ 0.00" textFill="#e67e22">
+                                                    <font><Font name="System Bold" size="16.0" /></font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+
+                                        <Region prefWidth="30.0" style="-fx-border-color: #cccccc; -fx-border-width: 0 0 0 1;" />
+
+                                        <VBox alignment="CENTER_RIGHT">
+                                            <children>
+                                                <Label text="TOTAL A ABONAR" textFill="#004d73">
+                                                    <font><Font name="System Bold" size="14.0" /></font>
+                                                </Label>
+                                                <Label fx:id="lblTotal" text="\$ 0.00" textFill="#27ae60">
+                                                    <font><Font name="System Bold" size="30.0" /></font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </HBox>
+
+                            </children>
+                        </VBox>
+                    </content>
+                </ScrollPane>
+            <ScrollPane fx:id="panelUtilitarios" fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #eaeff2;" visible="false">
+               <content>
+                  <VBox spacing="20.0">
+                     <padding>
+                        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                     </padding>
+                     <children>
+                        <Label text="Utilitarios" textFill="#004d73">
+                           <font>
+                              <Font name="System Bold" size="26.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 8; -fx-padding: 15 20 15 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 3);">
+                           <children>
+                              <Button fx:id="btnAnalisis" prefHeight="35.0" style="-fx-background-color: #004d73; -fx-text-fill: white;" text="Analisis" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+
+            </children>
+        </StackPane>
+    </center>
+</BorderPane>

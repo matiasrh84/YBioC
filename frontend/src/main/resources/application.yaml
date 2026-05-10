@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: ybioq-frontend
+  main:
+    web-application-type: none
+
+backend:
+  api:
+    base-url: http://localhost:8080/api
