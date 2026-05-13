@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -25,16 +26,25 @@ public class YbioqFxApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        SplashFxController splashController = showSplash(primaryStage);
+        // 1. Creamos un Stage nuevo y específico para el Splash
+        Stage splashStage = new Stage();
+        SplashFxController splashController = showSplash(splashStage);
+
         Task<ConfigurableApplicationContext> springBootTask = createSpringBootTask();
 
         springBootTask.setOnSucceeded(event -> {
             splashProgress.stop();
             splashController.setProgress(1.0, "Inicializacion completa");
+
             applicationContext = springBootTask.getValue();
             FxNavigationService navigationService = applicationContext.getBean(FxNavigationService.class);
+
+            // 2. Cerramos el Splash y preparamos el Stage principal
+            splashStage.close();
+
             navigationService.setPrimaryStage(primaryStage);
             navigationService.showLogin();
+            // El primaryStage por defecto es DECORATED, así que el Login tendrá sus bordes.
         });
 
         springBootTask.setOnFailed(event -> {
@@ -71,18 +81,21 @@ public class YbioqFxApplication extends Application {
         };
     }
 
-    private SplashFxController showSplash(Stage primaryStage) {
+    private SplashFxController showSplash(Stage stage) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fx/splash-view.fxml"));
             Parent root = loader.load();
             SplashFxController controller = loader.getController();
-            Scene scene = new Scene(root, 520, 330);
+
+            // Usamos las dimensiones que necesites para tu imagen
+            Scene scene = new Scene(root, 1061, 600);
             scene.getStylesheets().add(getClass().getResource("/fx/styles.css").toExternalForm());
-            primaryStage.setTitle("YBioC");
-            primaryStage.setScene(scene);
-            primaryStage.setResizable(false);
-            primaryStage.centerOnScreen();
-            primaryStage.show();
+
+            stage.initStyle(StageStyle.UNDECORATED); // Solo afecta a esta ventana temporal
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.show();
+
             startSplashProgress(controller);
             return controller;
         } catch (IOException e) {

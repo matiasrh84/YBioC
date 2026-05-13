@@ -88,6 +88,48 @@ public class FxNavigationService {
         }
     }
 
+    public void showObrasSociales() {
+        try {
+            Parent root = fxmlLoader.load("/fx/obras-sociales-view.fxml");
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Obras Sociales - YBioC");
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.initOwner(primaryStage);
+
+            Scene scene = new Scene(root, 1260, 760);
+            scene.getStylesheets().add(getClass().getResource("/fx/styles.css").toExternalForm());
+
+            dialogStage.setScene(scene);
+            dialogStage.setMinWidth(1180);
+            dialogStage.setMinHeight(700);
+            dialogStage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showMedicos() {
+        try {
+            Parent root = fxmlLoader.load("/fx/medicos-view.fxml");
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Medicos - YBioC");
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.initOwner(primaryStage);
+
+            Scene scene = new Scene(root, 1260, 760);
+            scene.getStylesheets().add(getClass().getResource("/fx/styles.css").toExternalForm());
+
+            dialogStage.setScene(scene);
+            dialogStage.setMinWidth(1180);
+            dialogStage.setMinHeight(700);
+            dialogStage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private Scene createScene(Parent root, double width, double height) {
         Scene scene = new Scene(root, width, height);
         scene.getStylesheets().add(getClass().getResource("/fx/styles.css").toExternalForm());

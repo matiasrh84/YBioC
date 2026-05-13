@@ -21,7 +21,7 @@
 }
 
 .splash-root .progress-bar {
-    -fx-background-color: #eef3f6;
+    -fx-background-color: transparent;
     -fx-background-radius: 0;
     -fx-padding: 0;
 }
@@ -33,7 +33,9 @@
 }
 
 .splash-root .progress-bar > .track {
-    -fx-background-color: #eef3f6;
+    -fx-background-color: #e8eef3;
+    -fx-border-color: #c7d3dc;
+    -fx-border-width: 1px;
     -fx-background-radius: 0;
     -fx-background-insets: 0;
 }

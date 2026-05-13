@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="760.0"
+            prefWidth="1260.0"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.ybc.ybioq.fx.controller.ObrasSocialesFxController">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="12.0" style="-fx-background-color: #ffffff; -fx-border-color: transparent transparent #d8e2ea transparent; -fx-padding: 14 18;">
+            <children>
+                <Label text="Obras Sociales">
+                    <font><Font name="System Bold" size="22.0"/></font>
+                </Label>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button onAction="#cerrar" styleClass="secondary-button" text="Cerrar"/>
+            </children>
+        </HBox>
+    </top>
+
+    <center>
+        <HBox spacing="16.0" style="-fx-background-color: #f4f7f9;">
+            <padding>
+                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
+            </padding>
+            <children>
+                <ScrollPane fitToHeight="true" fitToWidth="true" HBox.hgrow="ALWAYS" style="-fx-background-color: transparent; -fx-background: transparent;">
+                    <content>
+                        <VBox spacing="12.0" style="-fx-background-color: transparent;">
+                            <children>
+                                <VBox spacing="12.0" styleClass="editor-panel">
+                                    <children>
+                                        <Label styleClass="panel-title" text="Datos principales"/>
+                                        <GridPane hgap="10.0" vgap="10.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="ALWAYS"/>
+                                                <ColumnConstraints hgrow="ALWAYS"/>
+                                                <ColumnConstraints minWidth="130.0"/>
+                                            </columnConstraints>
+                                            <children>
+                                                <TextField fx:id="txtRazonSocial" promptText="Razon Social" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0"/>
+                                                <TextField fx:id="txtCodigoOs" promptText="Codigo OS" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+
+                                                <DatePicker fx:id="dpFechaAlta" promptText="Fecha de alta" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                                                <TextField fx:id="txtCuit" promptText="CUIT" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                                <ComboBox fx:id="cboNBU" prefWidth="120.0" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+
+                                                <TextField fx:id="txtCodigoFacturacion" promptText="Codigo facturacion" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                                                <TextField fx:id="txtDireccion" promptText="Direccion" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2"/>
+
+                                                <TextField fx:id="txtTelefono" promptText="Telefono" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                                                <TextField fx:id="txtEmail" promptText="Email" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3"/>
+
+                                                <TextField fx:id="txtLocalidad" promptText="Localidad" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="4"/>
+                                                <TextField fx:id="txtPaginaWeb" promptText="Pagina web" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
+
+                                                <TextField fx:id="txtReferente" promptText="Referente" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                                                <TextField fx:id="txtTelefonoReferente" promptText="Telefono referente" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                                                <TextField fx:id="txtContrato" promptText="Contrato" GridPane.columnIndex="2" GridPane.rowIndex="5"/>
+
+                                                <TextField fx:id="txtUnidadArancel" promptText="Unidad arancel" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+                                                <TextField fx:id="txtPorcentajeAfiliado" promptText="Porcentaje afiliado" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+                                            </children>
+                                        </GridPane>
+                                    </children>
+                                </VBox>
+
+                                <HBox spacing="12.0">
+                                    <children>
+                                        <TitledPane expanded="false" text="Parametros de facturacion" HBox.hgrow="ALWAYS">
+                                            <content>
+                                                <VBox spacing="10.0" style="-fx-padding: 10;">
+                                                    <children>
+                                                        <fx:define>
+                                                            <ToggleGroup fx:id="groupAltaComplejidad"/>
+                                                            <ToggleGroup fx:id="groupNoNomenclados"/>
+                                                            <ToggleGroup fx:id="groupFacturaPor"/>
+                                                            <ToggleGroup fx:id="groupFacturaPorPaciente"/>
+                                                            <ToggleGroup fx:id="groupImprimeDobleInforme"/>
+                                                            <ToggleGroup fx:id="groupD998"/>
+                                                            <ToggleGroup fx:id="groupSubtotal"/>
+                                                            <ToggleGroup fx:id="groupCategorizacion"/>
+                                                            <ToggleGroup fx:id="groupTipoFacturacionDirectaColegio"/>
+                                                        </fx:define>
+
+                                                        <GridPane hgap="12.0" vgap="10.0">
+                                                            <columnConstraints>
+                                                                <ColumnConstraints minWidth="210.0"/>
+                                                                <ColumnConstraints hgrow="ALWAYS"/>
+                                                                <ColumnConstraints hgrow="ALWAYS"/>
+                                                            </columnConstraints>
+                                                            <children>
+                                                                <Label styleClass="field-label" text="Factura alta complejidad por separado" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                                                                <RadioButton fx:id="rbSiAltaComplejidad" text="Si" toggleGroup="$groupAltaComplejidad" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                                                                <RadioButton text="No" toggleGroup="$groupAltaComplejidad" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+
+                                                                <Label styleClass="field-label" text="Factura no nomenclados" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                                                                <RadioButton fx:id="rbSiFacturaNoNomenclados" text="Si" toggleGroup="$groupNoNomenclados" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                                                <RadioButton text="No" toggleGroup="$groupNoNomenclados" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+
+                                                                <Label styleClass="field-label" text="Factura por" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                                                                <RadioButton fx:id="rbCupon" text="Cupon" toggleGroup="$groupFacturaPor" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                                                <RadioButton text="Paciente completo" toggleGroup="$groupFacturaPor" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+
+                                                                <Label styleClass="field-label" text="Factura por paciente" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                                                                <RadioButton fx:id="rbSiFacturaPorPaciente" text="Si" toggleGroup="$groupFacturaPorPaciente" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                                                                <RadioButton text="No" toggleGroup="$groupFacturaPorPaciente" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+
+                                                                <Label styleClass="field-label" text="Imprime doble informe" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                                                                <RadioButton fx:id="rbNunca" text="Nunca" toggleGroup="$groupImprimeDobleInforme" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                                                                <HBox spacing="10.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                                                    <children>
+                                                                        <RadioButton text="Siempre" toggleGroup="$groupImprimeDobleInforme"/>
+                                                                        <RadioButton text="Selectivo" toggleGroup="$groupImprimeDobleInforme"/>
+                                                                    </children>
+                                                                </HBox>
+
+                                                                <Label styleClass="field-label" text="D998" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                                                                <RadioButton fx:id="rbIncluye" text="Incluye" toggleGroup="$groupD998" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                                                                <HBox spacing="10.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                                                    <children>
+                                                                        <RadioButton text="No incluye" toggleGroup="$groupD998"/>
+                                                                        <RadioButton text="Discrimina" toggleGroup="$groupD998"/>
+                                                                    </children>
+                                                                </HBox>
+
+                                                                <Label styleClass="field-label" text="Subtotal por paciente" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+                                                                <RadioButton fx:id="rbSiSubtotal" text="Si" toggleGroup="$groupSubtotal" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+                                                                <RadioButton text="No" toggleGroup="$groupSubtotal" GridPane.columnIndex="2" GridPane.rowIndex="6"/>
+
+                                                                <Label styleClass="field-label" text="Tiene categorizacion" GridPane.columnIndex="0" GridPane.rowIndex="7"/>
+                                                                <RadioButton fx:id="rbSiCategorizacion" text="Si" toggleGroup="$groupCategorizacion" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+                                                                <RadioButton text="No" toggleGroup="$groupCategorizacion" GridPane.columnIndex="2" GridPane.rowIndex="7"/>
+
+                                                                <Label styleClass="field-label" text="Tipo de facturacion directa o colegio" GridPane.columnIndex="0" GridPane.rowIndex="8"/>
+                                                                <RadioButton fx:id="rbDirecta" text="Directa" toggleGroup="$groupTipoFacturacionDirectaColegio" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+                                                                <RadioButton text="Colegio" toggleGroup="$groupTipoFacturacionDirectaColegio" GridPane.columnIndex="2" GridPane.rowIndex="8"/>
+                                                            </children>
+                                                        </GridPane>
+                                                    </children>
+                                                </VBox>
+                                            </content>
+                                        </TitledPane>
+                                    </children>
+                                </HBox>
+
+                                <HBox spacing="12.0">
+                                    <children>
+                                        <VBox spacing="8.0" styleClass="editor-panel" HBox.hgrow="ALWAYS">
+                                            <children>
+                                                <Label styleClass="field-label" text="Tipo de facturacion"/>
+                                                <ComboBox fx:id="cboTipoFacturacion"/>
+                                            </children>
+                                        </VBox>
+                                        <VBox spacing="8.0" styleClass="editor-panel" HBox.hgrow="ALWAYS">
+                                            <children>
+                                                <Label styleClass="field-label" text="Tipo IVA"/>
+                                                <ComboBox fx:id="cboTipoIVA"/>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </content>
+                </ScrollPane>
+
+                <VBox spacing="12.0" prefWidth="360.0" minWidth="340.0" maxWidth="420.0">
+                    <VBox spacing="8.0" styleClass="editor-panel" VBox.vgrow="ALWAYS">
+                        <children>
+                            <Label styleClass="panel-title" text="Listado de obras sociales"/>
+                            <TableView fx:id="tablaObrasSociales" prefHeight="560.0" VBox.vgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn fx:id="colCodigo" prefWidth="95.0" text="Codigo"/>
+                                    <TableColumn fx:id="colRazonSocial" prefWidth="230.0" text="Razon Social"/>
+                                </columns>
+                            </TableView>
+                        </children>
+                    </VBox>
+
+                    <Label fx:id="mensajeLabel" styleClass="form-message" text="Formulario listo para conectar backend." wrapText="true"/>
+
+                    <HBox spacing="8.0">
+                        <children>
+                            <Button fx:id="btnAgregar" onAction="#guardar" text="Agregar"/>
+                            <Button fx:id="btnModificar" onAction="#modificar" styleClass="secondary-button" text="Modificar"/>
+                            <Button onAction="#limpiarCampos" styleClass="secondary-button" text="Cancelar"/>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Button onAction="#cerrar" styleClass="secondary-button" text="Salir"/>
+                        </children>
+                    </HBox>
+                </VBox>
+            </children>
+        </HBox>
+    </center>
+</BorderPane>

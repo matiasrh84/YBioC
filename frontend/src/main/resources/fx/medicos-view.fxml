@@ -13,66 +13,86 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox spacing="18.0" styleClass="content"
+<VBox minHeight="760.0"
+      minWidth="1260.0"
+      prefHeight="760.0"
+      prefWidth="1260.0"
+      spacing="18.0"
+      style="-fx-background-color: #f4f7f9;"
+      styleClass="content"
+      stylesheets="@styles.css"
       xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.ybc.ybioq.fx.controller.MedicosFxController">
     <padding>
         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0"/>
     </padding>
+
     <VBox spacing="6.0">
         <Label styleClass="section-title" text="Medicos"/>
-        <Label styleClass="section-subtitle" text="Mantenimiento basico de medicos."/>
+        <Label styleClass="section-subtitle" text="Mantenimiento de medicos y estado operativo."/>
     </VBox>
-    <HBox alignment="CENTER_LEFT" spacing="10.0">
+
+    <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="editor-panel">
         <TextField fx:id="filtroField" promptText="Buscar por apellido, nombre o matricula" HBox.hgrow="ALWAYS"/>
         <Button onAction="#cargar" styleClass="secondary-button" text="Actualizar"/>
     </HBox>
-    <TableView fx:id="medicosTable" prefHeight="310.0" VBox.vgrow="ALWAYS">
-        <columns>
-            <TableColumn fx:id="matriculaColumn" maxWidth="100.0" minWidth="90.0" prefWidth="90.0" text="Matricula"/>
-            <TableColumn fx:id="apellidoColumn" prefWidth="170.0" text="Apellido"/>
-            <TableColumn fx:id="nombreColumn" prefWidth="170.0" text="Nombre"/>
-            <TableColumn fx:id="mailColumn" prefWidth="210.0" text="Mail"/>
-            <TableColumn fx:id="telefonoColumn" prefWidth="120.0" text="Telefono"/>
-            <TableColumn fx:id="estadoColumn" maxWidth="100.0" minWidth="90.0" prefWidth="90.0" text="Estado"/>
-        </columns>
-    </TableView>
-    <VBox spacing="12.0" styleClass="editor-panel">
-        <Label styleClass="panel-title" text="Datos"/>
-        <GridPane hgap="12.0" vgap="10.0">
-            <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                <Label styleClass="field-label" text="Apellido"/>
-                <TextField fx:id="apellidoField" promptText="Apellido"/>
-            </VBox>
-            <VBox spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                <Label styleClass="field-label" text="Nombre"/>
-                <TextField fx:id="nombreField" promptText="Nombre"/>
-            </VBox>
-            <VBox spacing="6.0" GridPane.columnIndex="2" GridPane.rowIndex="0">
-                <Label styleClass="field-label" text="Matricula"/>
-                <TextField fx:id="matriculaField" promptText="Matricula"/>
-            </VBox>
-            <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
-                <Label styleClass="field-label" text="Mail"/>
-                <TextField fx:id="mailField" promptText="Mail"/>
-            </VBox>
-            <VBox spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                <Label styleClass="field-label" text="Telefono"/>
-                <TextField fx:id="telefonoField" promptText="Telefono"/>
-            </VBox>
-            <VBox spacing="6.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                <Label styleClass="field-label" text="Observaciones"/>
-                <TextField fx:id="observacionesField" promptText="Observaciones"/>
-            </VBox>
-        </GridPane>
-        <HBox alignment="CENTER_LEFT" spacing="12.0">
+
+    <HBox spacing="18.0" VBox.vgrow="ALWAYS">
+        <TableView fx:id="medicosTable" prefWidth="760.0" HBox.hgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="matriculaColumn" maxWidth="100.0" minWidth="90.0" prefWidth="90.0" text="Matricula"/>
+                <TableColumn fx:id="apellidoColumn" prefWidth="170.0" text="Apellido"/>
+                <TableColumn fx:id="nombreColumn" prefWidth="170.0" text="Nombre"/>
+                <TableColumn fx:id="mailColumn" prefWidth="220.0" text="Mail"/>
+                <TableColumn fx:id="telefonoColumn" prefWidth="140.0" text="Telefono"/>
+                <TableColumn fx:id="estadoColumn" maxWidth="100.0" minWidth="90.0" prefWidth="90.0" text="Estado"/>
+            </columns>
+        </TableView>
+
+        <VBox minWidth="360.0" prefWidth="380.0" spacing="12.0" styleClass="editor-panel">
+            <Label styleClass="panel-title" text="Datos del medico"/>
+
+            <GridPane hgap="10.0" vgap="10.0">
+                <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <Label styleClass="field-label" text="Apellido"/>
+                    <TextField fx:id="apellidoField" promptText="Apellido"/>
+                </VBox>
+                <VBox spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                    <Label styleClass="field-label" text="Nombre"/>
+                    <TextField fx:id="nombreField" promptText="Nombre"/>
+                </VBox>
+
+                <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                    <Label styleClass="field-label" text="Matricula"/>
+                    <TextField fx:id="matriculaField" promptText="Matricula"/>
+                </VBox>
+                <VBox spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <Label styleClass="field-label" text="Telefono"/>
+                    <TextField fx:id="telefonoField" promptText="Telefono"/>
+                </VBox>
+
+                <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                    <Label styleClass="field-label" text="Mail"/>
+                    <TextField fx:id="mailField" promptText="Mail"/>
+                </VBox>
+                <VBox spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <Label styleClass="field-label" text="Observaciones"/>
+                    <TextField fx:id="observacionesField" promptText="Observaciones"/>
+                </VBox>
+            </GridPane>
+
             <CheckBox fx:id="estadoCheck" text="Activo"/>
-            <Region HBox.hgrow="ALWAYS"/>
+
+            <Region VBox.vgrow="ALWAYS"/>
+
             <Label fx:id="mensajeLabel" styleClass="form-message" wrapText="true"/>
-            <Button onAction="#nuevo" styleClass="secondary-button" text="Nuevo"/>
-            <Button onAction="#guardar" text="Guardar"/>
-            <Button onAction="#cambiarEstado" styleClass="secondary-button" text="Baja / Reactivar"/>
-        </HBox>
-    </VBox>
+
+            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                <Button onAction="#nuevo" styleClass="secondary-button" text="Nuevo"/>
+                <Button onAction="#guardar" text="Guardar"/>
+            </HBox>
+            <Button maxWidth="Infinity" onAction="#cambiarEstado" styleClass="secondary-button" text="Baja / Reactivar"/>
+        </VBox>
+    </HBox>
 </VBox>

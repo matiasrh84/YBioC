@@ -1,137 +1,185 @@
 package com.ybc.ybioq.fx.controller;
 
 import com.ybc.ybioq.fx.navigation.FxNavigationService;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class PrincipalController {
 
-    // --- SERVICIO DE NAVEGACIÓN DE SPRING ---
     private final FxNavigationService navigationService;
+
+    @FXML
+    private ScrollPane panelCargarPaciente;
+
+    @FXML
+    private ScrollPane panelCargarOrden;
+
+    @FXML
+    private ScrollPane panelInformes;
+
+    @FXML
+    private ScrollPane panelFacturacion;
+
+    @FXML
+    private ScrollPane panelUtilitarios;
+
+    @FXML
+    private Button btnMenuCargarPaciente;
+
+    @FXML
+    private Button btnMenuTurnos;
+
+    @FXML
+    private Button btnMenuInformes;
+
+    @FXML
+    private Button btnMenuFacturacion;
+
+    @FXML
+    private Button btnMenuUtilitarios;
+
+    @FXML
+    private Button btnSalir;
+
+    @FXML
+    private Button btnAnalisis;
+
+    @FXML
+    private Button btnObrasSociales;
+
+    @FXML Button btnMedicos;
+
+    @FXML
+    private ComboBox<String> cboSexo;
+
+    @FXML
+    private ComboBox<String> cboServicio;
+
+    @FXML
+    private CheckBox chkCoseguro;
+
+    @FXML
+    private CheckBox chkObrasocial;
+
+    @FXML
+    private Label lblTotalParticular;
+
+    @FXML
+    private Label lblTotalOS;
+
+    @FXML
+    private Label lblSena;
+
+    @FXML
+    private Label lblTotal;
 
     public PrincipalController(FxNavigationService navigationService) {
         this.navigationService = navigationService;
     }
 
-    // --- PANELES ---
-    @FXML private ScrollPane panelCargarPaciente;
-    @FXML private ScrollPane panelCargarOrden;
-    // @FXML private ScrollPane panelFacturacion;
-    @FXML private ScrollPane panelUtilitarios;
-
-    // --- BOTONES DEL MENÚ LATERAL ---
-    @FXML private Button btnMenuCargarPaciente;
-    @FXML private Button btnMenuTurnos;
-    @FXML private Button btnMenuFacturacion;
-    @FXML private Button btnMenuUtilitarios;
-    @FXML private Button btnSalir;
-
-    // ==========================================
-    // --- COMPONENTES: PANEL PACIENTES
-    // ==========================================
-    @FXML private TextField txtDNI;
-    @FXML private TextField txtNombre;
-    @FXML private TextField txtApellido;
-    @FXML private TextField txtDireccion;
-    @FXML private TextField txtLocalidad;
-    @FXML private TextField txtTelefono;
-    @FXML private TextField txtCelular;
-    @FXML private TextField txtMail;
-    @FXML private TextField txtObraSocial;
-    @FXML private TextField txtNumeroAfiliado;
-    @FXML private ComboBox<String> cboSexo;
-    @FXML private Label lblEdad;
-    @FXML private TableView<?> tablaPacientes;
-
-    @FXML private Button btnBuscar;
-    @FXML private Button btnSinDNI;
-    @FXML private Button btnModificar;
-    @FXML private Button btnBorrar;
-    @FXML private Button btnPatologias;
-    @FXML private Button btnResultados;
-    @FXML private Button btnCargarConsulta;
-
-    // ==========================================
-    // --- COMPONENTES: PANEL ÓRDENES/TURNOS
-    // ==========================================
-    @FXML private TextField txtBuscarOrden;
-    @FXML private TextField txtBuscarPractica;
-    @FXML private TextField txtMedico;
-    @FXML private TextField txtMotivo;
-    @FXML private TableView<?> tablaOrdenes;
-    @FXML private TableView<?> tablaPracticas;
-
-    @FXML private Label lblTotalParticular;
-    @FXML private Label lblTotalOS;
-    @FXML private Label lblSeña;
-    @FXML private Label lblTotal;
-
-    @FXML private Button btnImprimirListado;
-    @FXML private Button btnCertificadoAsistencia;
-
-    // ==========================================
-    // --- COMPONENTES: PANEL UTILITARIOS
-    // ==========================================
-    // ESTE ES EL BOTON QUE ABRE EL FORMULARIO DE ANALISIS
-    @FXML private Button btnAnalisis;
-
-
     @FXML
     public void initialize() {
-        // 1. Llenar combos iniciales
-        cboSexo.getItems().addAll("Masculino", "Femenino", "Indistinto");
-        if (!cboSexo.getItems().isEmpty()) {
-            cboSexo.getSelectionModel().selectFirst();
+        initCombo(cboSexo, "Masculino", "Femenino", "Indistinto");
+        initCombo(cboServicio, "Ambulatorio", "Domicilio", "Internacion");
+
+        if (chkCoseguro != null) {
+            chkCoseguro.setSelected(false);
+        }
+        if (chkObrasocial != null) {
+            chkObrasocial.setSelected(false);
         }
 
-        // 2. Navegación del Menú Lateral (Para cambiar de pantallas)
-        btnMenuCargarPaciente.setOnAction(e -> mostrarPanel(panelCargarPaciente));
-        btnMenuTurnos.setOnAction(e -> mostrarPanel(panelCargarOrden));
-        // btnMenuFacturacion.setOnAction(e -> mostrarPanel(panelFacturacion));
-        btnMenuUtilitarios.setOnAction(e -> mostrarPanel(panelUtilitarios));
+        if (lblTotalParticular != null) {
+            lblTotalParticular.setText("$ 0.00");
+        }
+        if (lblTotalOS != null) {
+            lblTotalOS.setText("$ 0.00");
+        }
+        if (lblSena != null) {
+            lblSena.setText("$ 0.00");
+        }
+        if (lblTotal != null) {
+            lblTotal.setText("$ 0.00");
+        }
 
-        // 3. Botón de salida
-        btnSalir.setOnAction(e -> {
-            Stage stage = (Stage) btnSalir.getScene().getWindow();
-            stage.close();
-        });
-
-        // ---------------------------------------------------------
-        // 4. ABRIR FORMULARIO DE ANÁLISIS
-        // Aquí conectamos tu botón "btnAnalisis" con el servicio de Spring
-        // ---------------------------------------------------------
+        if (btnMenuCargarPaciente != null) {
+            btnMenuCargarPaciente.setOnAction(event -> mostrarPanel(panelCargarPaciente));
+        }
+        if (btnMenuTurnos != null) {
+            btnMenuTurnos.setOnAction(event -> mostrarPanel(panelCargarOrden));
+        }
+        if (btnMenuInformes != null) {
+            btnMenuInformes.setOnAction(event -> mostrarPanel(panelInformes));
+        }
+        if (btnMenuFacturacion != null) {
+            btnMenuFacturacion.setOnAction(event -> mostrarPanel(panelFacturacion));
+        }
+        if (btnMenuUtilitarios != null) {
+            btnMenuUtilitarios.setOnAction(event -> mostrarPanel(panelUtilitarios));
+        }
+        if (btnSalir != null) {
+            btnSalir.setOnAction(event -> cerrarVentana());
+        }
         if (btnAnalisis != null) {
-            btnAnalisis.setOnAction(e -> {
-                // Al hacer clic, le decimos al NavigationService que abra la ventana modal
-                navigationService.showConfiguracionAnalisis();
-            });
+            btnAnalisis.setOnAction(event -> navigationService.showConfiguracionAnalisis());
+        }
+        if (btnObrasSociales != null) {
+            btnObrasSociales.setOnAction(event -> navigationService.showObrasSociales());
+        }
+
+        if(btnMedicos != null) {
+            btnMedicos.setOnAction(event -> navigationService.showMedicos());
+        }
+
+        mostrarPanel(panelCargarPaciente);
+    }
+
+    private void initCombo(ComboBox<String> combo, String... items) {
+        if (combo == null) {
+            return;
+        }
+        combo.getItems().setAll(items);
+        if (!combo.getItems().isEmpty()) {
+            combo.getSelectionModel().selectFirst();
         }
     }
 
-    /**
-     * Oculta todos los paneles y hace visible solo el solicitado.
-     */
     private void mostrarPanel(ScrollPane panelDestino) {
-        if (panelCargarPaciente != null) panelCargarPaciente.setVisible(false);
-        if (panelCargarOrden != null) panelCargarOrden.setVisible(false);
-        if (panelUtilitarios != null) panelUtilitarios.setVisible(false);
-
+        if (panelCargarPaciente != null) {
+            panelCargarPaciente.setVisible(false);
+        }
+        if (panelCargarOrden != null) {
+            panelCargarOrden.setVisible(false);
+        }
+        if (panelInformes != null) {
+            panelInformes.setVisible(false);
+        }
+        if (panelFacturacion != null) {
+            panelFacturacion.setVisible(false);
+        }
+        if (panelUtilitarios != null) {
+            panelUtilitarios.setVisible(false);
+        }
         if (panelDestino != null) {
             panelDestino.setVisible(true);
         }
+    }
+
+    private void cerrarVentana() {
+        if (btnSalir == null || btnSalir.getScene() == null) {
+            return;
+        }
+        Stage stage = (Stage) btnSalir.getScene().getWindow();
+        stage.close();
     }
 }
