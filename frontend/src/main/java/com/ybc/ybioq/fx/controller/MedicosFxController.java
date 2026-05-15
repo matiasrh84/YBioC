@@ -1,16 +1,16 @@
 package com.ybc.ybioq.fx.controller;
 
-import com.ybc.ybioq.fx.client.BackendApiClient;
+import com.ybc.ybioq.fx.client.EspecialidadClient;
+import com.ybc.ybioq.fx.client.MedicoClient;
+import com.ybc.ybioq.fx.client.dto.EspecialidadDto;
 import com.ybc.ybioq.fx.client.dto.MedicoDto;
+import com.ybc.ybioq.fx.navigation.FxNavigationService;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -23,8 +23,10 @@ import java.util.Locale;
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class MedicosFxController {
 
-    private final BackendApiClient backendApiClient;
+    private final MedicoClient medicoClient;
+    private final EspecialidadClient especialidadClient;
     private final ObservableList<MedicoDto> medicos = FXCollections.observableArrayList();
+    private final FxNavigationService navigationService;
 
     @FXML
     private TextField filtroField;
@@ -45,7 +47,7 @@ public class MedicosFxController {
     private TextField telefonoField;
 
     @FXML
-    private TextField observacionesField;
+    private TextArea observacionesField;
 
     @FXML
     private CheckBox estadoCheck;
@@ -74,8 +76,12 @@ public class MedicosFxController {
     @FXML
     private Label mensajeLabel;
 
-    public MedicosFxController(BackendApiClient backendApiClient) {
-        this.backendApiClient = backendApiClient;
+    @FXML private ComboBox<String> especialidadCombo;
+
+    public MedicosFxController(MedicoClient medicoClient, EspecialidadClient especialidadClient, FxNavigationService navigationService) {
+        this.medicoClient = medicoClient;
+        this.especialidadClient = especialidadClient;
+        this.navigationService = navigationService;
     }
 
     @FXML
@@ -111,8 +117,8 @@ public class MedicosFxController {
     private void guardar() {
         String apellido = text(apellidoField);
         String nombre = text(nombreField);
-        Integer matricula = parseInteger(text(matriculaField), "matricula");
-        Long telefono = text(telefonoField).isBlank() ? null : parseLong(text(telefonoField), "telefono");
+        Integer matricula = parseInteger(text(matriculaField));
+        Long telefono = text(telefonoField).isBlank() ? null : parseLong(text(telefonoField));
         if (matricula == null || telefonoField.getText() != null && !telefonoField.getText().isBlank() && telefono == null) {
             return;
         }
@@ -131,11 +137,11 @@ public class MedicosFxController {
         medico.setMatricula(matricula);
         medico.setMail(text(mailField));
         medico.setTelefono(telefono);
-        medico.setObservaciones(text(observacionesField));
+        medico.setObservaciones(observacionesField.getText());
         medico.setEstado(estadoCheck.isSelected() ? 1 : 0);
 
         try {
-            backendApiClient.saveMedico(medico);
+            medicoClient.save(medico);
             cargar();
             nuevo();
             mensajeLabel.setText("Medico guardado.");
@@ -154,7 +160,7 @@ public class MedicosFxController {
 
         medico.setEstado(isActivo(medico) ? 0 : 1);
         try {
-            backendApiClient.saveMedico(medico);
+            medicoClient.save(medico);
             cargar();
             mensajeLabel.setText(isActivo(medico) ? "Medico reactivado." : "Medico dado de baja.");
         } catch (RuntimeException ex) {
@@ -163,10 +169,28 @@ public class MedicosFxController {
     }
 
     @FXML
+    private void agregarEspecialidad(ActionEvent event) {
+        navigationService.showEspecialidades();
+        cargarComboEspecialidades();
+    }
+
+    private void cargarComboEspecialidades() {
+        try {
+            List<String> nombres = especialidadClient.findall().stream()
+                    .filter(EspecialidadDto::isEstado) // Solo las activas
+                    .map(EspecialidadDto::getNombre)
+                    .toList();
+            especialidadCombo.getItems().setAll(nombres);
+        } catch (Exception e) {
+            mensajeLabel.setText("Error al refrescar especialidades.");
+        }
+    }
+
+    @FXML
     private void cargar() {
         String filtro = text(filtroField).toLowerCase(Locale.ROOT);
         try {
-            List<MedicoDto> datos = backendApiClient.findMedicos().stream()
+            List<MedicoDto> datos = medicoClient.findAll().stream()
                     .filter(item -> coincideFiltro(item, filtro))
                     .sorted(Comparator.comparing(MedicoDto::getApellido, Comparator.nullsLast(String::compareToIgnoreCase))
                             .thenComparing(MedicoDto::getNombre, Comparator.nullsLast(String::compareToIgnoreCase)))
@@ -176,6 +200,7 @@ public class MedicosFxController {
             mensajeLabel.setText(ex.getMessage());
         }
     }
+
 
     private void seleccionar(MedicoDto medico) {
         if (medico == null) {
@@ -204,20 +229,20 @@ public class MedicosFxController {
         return medico.getEstado() != null && medico.getEstado() == 1;
     }
 
-    private Integer parseInteger(String value, String fieldName) {
+    private Integer parseInteger(String value) {
         try {
             return Integer.valueOf(value);
         } catch (NumberFormatException e) {
-            mensajeLabel.setText("El campo " + fieldName + " debe ser numerico.");
+            mensajeLabel.setText("El campo " + "matricula" + " debe ser numerico.");
             return null;
         }
     }
 
-    private Long parseLong(String value, String fieldName) {
+    private Long parseLong(String value) {
         try {
             return Long.valueOf(value);
         } catch (NumberFormatException e) {
-            mensajeLabel.setText("El campo " + fieldName + " debe ser numerico.");
+            mensajeLabel.setText("El campo " + "telefono" + " debe ser numerico.");
             return null;
         }
     }

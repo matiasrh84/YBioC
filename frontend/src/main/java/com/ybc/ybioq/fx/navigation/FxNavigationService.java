@@ -130,6 +130,30 @@ public class FxNavigationService {
         }
     }
 
+    public void showEspecialidades() {
+        try {
+            // Cargamos el FXML de especialidades
+            Parent root = fxmlLoader.load("/fx/especialidades-view.fxml");
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Mantenimiento de Especialidades - YBioC");
+            dialogStage.initModality(Modality.APPLICATION_MODAL); // Hace que sea una ventana emergente
+            dialogStage.initOwner(primaryStage);
+
+            Scene scene = new Scene(root, 1260, 760);
+            scene.getStylesheets().add(getClass().getResource("/fx/styles.css").toExternalForm());
+
+            dialogStage.setScene(scene);
+            dialogStage.setMinWidth(1180);
+            dialogStage.setMinHeight(700);
+
+            // El programa se detiene aquí hasta que se cierre esta ventana
+            dialogStage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private Scene createScene(Parent root, double width, double height) {
         Scene scene = new Scene(root, width, height);
         scene.getStylesheets().add(getClass().getResource("/fx/styles.css").toExternalForm());

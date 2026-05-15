@@ -1,6 +1,6 @@
 package com.ybc.ybioq.fx.controller;
 
-import com.ybc.ybioq.fx.client.BackendApiClient;
+import com.ybc.ybioq.fx.client.EspecialidadClient;
 import com.ybc.ybioq.fx.client.dto.EspecialidadDto;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -23,7 +23,7 @@ import java.util.Locale;
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class EspecialidadesFxController {
 
-    private final BackendApiClient backendApiClient;
+    private final EspecialidadClient especialidadClient;
     private final ObservableList<EspecialidadDto> especialidades = FXCollections.observableArrayList();
 
     @FXML
@@ -50,8 +50,8 @@ public class EspecialidadesFxController {
     @FXML
     private Label mensajeLabel;
 
-    public EspecialidadesFxController(BackendApiClient backendApiClient) {
-        this.backendApiClient = backendApiClient;
+    public EspecialidadesFxController(EspecialidadClient especialidadClient) {
+        this.especialidadClient = especialidadClient;
     }
 
     @FXML
@@ -92,7 +92,7 @@ public class EspecialidadesFxController {
         especialidad.setEstado(estadoCheck.isSelected());
 
         try {
-            backendApiClient.saveEspecialidad(especialidad);
+            especialidadClient.save(especialidad);
             cargar();
             nuevo();
             mensajeLabel.setText("Especialidad guardada.");
@@ -111,7 +111,7 @@ public class EspecialidadesFxController {
 
         especialidad.setEstado(!especialidad.isEstado());
         try {
-            backendApiClient.saveEspecialidad(especialidad);
+            especialidadClient.save(especialidad);
             cargar();
             mensajeLabel.setText(especialidad.isEstado() ? "Especialidad reactivada." : "Especialidad dada de baja.");
         } catch (RuntimeException ex) {
@@ -123,7 +123,7 @@ public class EspecialidadesFxController {
     private void cargar() {
         String filtro = filtroField.getText() == null ? "" : filtroField.getText().trim().toLowerCase(Locale.ROOT);
         try {
-            List<EspecialidadDto> datos = backendApiClient.findEspecialidades().stream()
+            List<EspecialidadDto> datos = especialidadClient.findall().stream()
                     .filter(item -> filtro.isBlank() || nullToEmpty(item.getNombre()).toLowerCase(Locale.ROOT).contains(filtro))
                     .sorted(Comparator.comparing(EspecialidadDto::getNombre, Comparator.nullsLast(String::compareToIgnoreCase)))
                     .toList();

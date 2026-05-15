@@ -78,7 +78,7 @@ public class PrincipalController {
     private Label lblTotalOS;
 
     @FXML
-    private Label lblSena;
+    private Label lblAnticipo;
 
     @FXML
     private Label lblTotal;
@@ -105,8 +105,8 @@ public class PrincipalController {
         if (lblTotalOS != null) {
             lblTotalOS.setText("$ 0.00");
         }
-        if (lblSena != null) {
-            lblSena.setText("$ 0.00");
+        if (lblAnticipo != null) {
+            lblAnticipo.setText("$ 0.00");
         }
         if (lblTotal != null) {
             lblTotal.setText("$ 0.00");

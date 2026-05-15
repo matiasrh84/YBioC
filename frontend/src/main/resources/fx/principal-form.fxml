@@ -231,7 +231,7 @@
                                         <Button fx:id="btnGrabar" text="Grabar"/>
                                         <Button fx:id="btnGrabarImprimir" text="Grabar e imprimir"/>
                                         <Button fx:id="btnResultados" text="Resultados"/>
-                                        <Button fx:id="btnSenas" text="Senas"/>
+                                        <Button fx:id="btnAnticipos" text="Anticipos"/>
                                         <Button fx:id="btnReimprimir" text="Reimprimir"/>
                                         <Button fx:id="btnPresupuesto" text="Presupuesto"/>
                                         <Button fx:id="btnCertificadoAsistencia" text="Certificado asistencia"/>
@@ -269,8 +269,8 @@
                                         <Label text="Total OS"/>
                                         <Label fx:id="lblTotalOS" text="\$ 0.00"/>
                                         <Separator orientation="VERTICAL"/>
-                                        <Label text="Sena"/>
-                                        <Label fx:id="lblSena" text="\$ 0.00"/>
+                                        <Label text="Anticipo"/>
+                                        <Label fx:id="lblAnticipo" text="\$ 0.00"/>
                                         <Separator orientation="VERTICAL"/>
                                         <Label text="Total"/>
                                         <Label fx:id="lblTotal" text="\$ 0.00" textFill="#1f8f45">

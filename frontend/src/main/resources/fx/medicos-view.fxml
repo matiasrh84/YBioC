@@ -12,7 +12,9 @@
 <?import javafx.scene.layout.Priority?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ComboBox?>
 
+<?import javafx.scene.control.TextArea?>
 <VBox minHeight="760.0"
       minWidth="1260.0"
       prefHeight="760.0"
@@ -76,9 +78,15 @@
                     <Label styleClass="field-label" text="Mail"/>
                     <TextField fx:id="mailField" promptText="Mail"/>
                 </VBox>
+
                 <VBox spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <Label styleClass="field-label" text="Especialidad"/>
+                    <ComboBox fx:id="especialidadCombo" prefWidth="200.0" promptText="Seleccionar..." maxWidth="Infinity"/>
+                </VBox>
+
+                <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="2">
                     <Label styleClass="field-label" text="Observaciones"/>
-                    <TextField fx:id="observacionesField" promptText="Observaciones"/>
+                    <TextArea fx:id="observacionesField" promptText="Observaciones" prefRowCount="3" wrapText="true"/>
                 </VBox>
             </GridPane>
 
@@ -91,6 +99,7 @@
             <HBox alignment="CENTER_LEFT" spacing="8.0">
                 <Button onAction="#nuevo" styleClass="secondary-button" text="Nuevo"/>
                 <Button onAction="#guardar" text="Guardar"/>
+                <Button onAction="#agregarEspecialidad" styleClass="secondary-button" text="Agregar Especialidad"/>
             </HBox>
             <Button maxWidth="Infinity" onAction="#cambiarEstado" styleClass="secondary-button" text="Baja / Reactivar"/>
         </VBox>
