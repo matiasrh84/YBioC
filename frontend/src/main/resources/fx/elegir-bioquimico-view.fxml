@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox minHeight="420.0"
+      minWidth="560.0"
+      prefHeight="460.0"
+      prefWidth="620.0"
+      spacing="18.0"
+      styleClass="content"
+      stylesheets="@styles.css"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ybc.ybioq.fx.controller.ElegirBioquimicoFxController">
+    <padding>
+        <Insets bottom="26.0" left="26.0" right="26.0" top="26.0"/>
+    </padding>
+
+    <VBox spacing="6.0">
+        <Label styleClass="section-title" text="Elegir Bioquimico"/>
+        <Label styleClass="section-subtitle" text="Seleccione el profesional que firmara o facturara el proceso."/>
+    </VBox>
+
+    <VBox spacing="8.0" styleClass="editor-panel">
+        <children>
+            <Label styleClass="field-label" text="Bioquimico"/>
+            <TextField fx:id="txtBioquimico" promptText="Buscar bioquimico"/>
+        </children>
+    </VBox>
+
+    <GridPane hgap="10.0" vgap="12.0" styleClass="editor-panel" VBox.vgrow="ALWAYS">
+        <columnConstraints>
+            <ColumnConstraints minWidth="100.0"/>
+            <ColumnConstraints hgrow="ALWAYS"/>
+        </columnConstraints>
+        <children>
+            <Label styleClass="field-label" text="Apellido" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <Label fx:id="lblApellido" styleClass="metric-value" text="-" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+            <Label styleClass="field-label" text="Nombre" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <Label fx:id="lblNombre" styleClass="metric-value" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+            <Label styleClass="field-label" text="Matricula" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <Label fx:id="lblMatricula" styleClass="metric-value" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+            <Label styleClass="field-label" text="Cuil" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+            <Label fx:id="lblCuil" styleClass="metric-value" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+        </children>
+    </GridPane>
+
+    <Label fx:id="mensajeLabel" styleClass="form-message" wrapText="true"/>
+
+    <HBox spacing="8.0">
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button minWidth="130.0" onAction="#aceptar" styleClass="primary-button" text="Aceptar"/>
+        <Button minWidth="130.0" onAction="#cancelar" styleClass="secondary-button" text="Cancelar"/>
+    </HBox>
+</VBox>

@@ -60,6 +60,21 @@ public class PrincipalController {
     @FXML Button btnMedicos;
 
     @FXML
+    private Button btnAnticipos;
+
+    @FXML
+    private Button btnBuscar;
+
+    @FXML
+    private Button btnResultados;
+
+    @FXML
+    private Button btnDetallePracticasFacturacion;
+
+    @FXML
+    private Button btnEnviarFacturacion;
+
+    @FXML
     private ComboBox<String> cboSexo;
 
     @FXML
@@ -139,6 +154,21 @@ public class PrincipalController {
 
         if(btnMedicos != null) {
             btnMedicos.setOnAction(event -> navigationService.showMedicos());
+        }
+        if (btnAnticipos != null) {
+            btnAnticipos.setOnAction(event -> navigationService.showAnticipo());
+        }
+        if (btnBuscar != null) {
+            btnBuscar.setOnAction(event -> navigationService.showBuscarPersona());
+        }
+        if (btnResultados != null) {
+            btnResultados.setOnAction(event -> navigationService.showDetallePracticasOrden());
+        }
+        if (btnDetallePracticasFacturacion != null) {
+            btnDetallePracticasFacturacion.setOnAction(event -> navigationService.showDetallePracticasFacturacion());
+        }
+        if (btnEnviarFacturacion != null) {
+            btnEnviarFacturacion.setOnAction(event -> navigationService.showEnviarFacturacion());
         }
 
         mostrarPanel(panelCargarPaciente);

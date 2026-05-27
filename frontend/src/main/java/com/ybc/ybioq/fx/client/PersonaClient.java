@@ -1,6 +1,6 @@
 package com.ybc.ybioq.fx.client;
 
-import com.ybc.ybioq.fx.client.dto.EspecialidadDto;
+import com.ybc.ybioq.fx.client.dto.PersonaDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -15,17 +15,17 @@ import java.util.Collections;
 import java.util.List;
 
 @Component
-public class EspecialidadClient extends BaseClient{
+public class PersonaClient extends BaseClient {
 
     @Autowired
-    public EspecialidadClient(RestTemplate restTemplate,
-                        @Value("${backend.api.base-url}") String baseUrl) {
-        super(restTemplate, baseUrl, "/especialidades");
+    public PersonaClient(RestTemplate restTemplate,
+                         @Value("${backend.api.base-url}") String baseUrl) {
+        super(restTemplate, baseUrl, "/personas");
     }
 
-    public List<EspecialidadDto> findAll() {
+    public List<PersonaDto> findAll() {
         try {
-            ResponseEntity<List<EspecialidadDto>> response = restTemplate.exchange(
+            ResponseEntity<List<PersonaDto>> response = restTemplate.exchange(
                     serviceUrl,
                     HttpMethod.GET,
                     HttpEntity.EMPTY,
@@ -36,21 +36,7 @@ public class EspecialidadClient extends BaseClient{
         } catch (RestClientResponseException ex) {
             throw toRuntimeException(ex);
         } catch (Exception ex) {
-            throw new RuntimeException("No se pudo obtener especialidades.", ex);
-        }
-    }
-
-    public EspecialidadDto save(EspecialidadDto especialidad) {
-        try {
-            return restTemplate.postForObject(
-                    serviceUrl,
-                    especialidad,
-                    EspecialidadDto.class
-            );
-        } catch (RestClientResponseException ex) {
-            throw toRuntimeException(ex);
-        } catch (Exception ex) {
-            throw new RuntimeException("No se pudo guardar la especialidad.", ex);
+            throw new RuntimeException("No se pudo obtener personas.", ex);
         }
     }
 }

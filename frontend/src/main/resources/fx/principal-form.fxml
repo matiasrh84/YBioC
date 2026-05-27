@@ -378,6 +378,8 @@
                                         <Label text="Monto total:"/>
                                         <Label fx:id="lblMontoTotalOrdenes" text="\$ 0.00"/>
                                         <Region HBox.hgrow="ALWAYS"/>
+                                        <Button fx:id="btnEnviarFacturacion" text="Enviar facturacion"/>
+                                        <Button fx:id="btnDetallePracticasFacturacion" text="Detalle practicas"/>
                                         <Button fx:id="btnImprimirResumen" text="Imprimir resumen"/>
                                     </children>
                                 </HBox>

@@ -176,7 +176,7 @@ public class MedicosFxController {
 
     private void cargarComboEspecialidades() {
         try {
-            List<String> nombres = especialidadClient.findall().stream()
+            List<String> nombres = especialidadClient.findAll().stream()
                     .filter(EspecialidadDto::isEstado) // Solo las activas
                     .map(EspecialidadDto::getNombre)
                     .toList();

@@ -20,7 +20,7 @@ public class AuthClient extends BaseClient{
     public UsuarioSession login(String usuario, String clave) {
         try {
             return restTemplate.postForObject(
-                    serviceUrl + "/auth/login",
+                    serviceUrl,
                     new LoginRequest(usuario, clave),
                     UsuarioSession.class
             );

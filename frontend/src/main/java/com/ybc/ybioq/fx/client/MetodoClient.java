@@ -1,6 +1,6 @@
 package com.ybc.ybioq.fx.client;
 
-import com.ybc.ybioq.fx.client.dto.EspecialidadDto;
+import com.ybc.ybioq.fx.client.dto.MetodoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -15,17 +15,17 @@ import java.util.Collections;
 import java.util.List;
 
 @Component
-public class EspecialidadClient extends BaseClient{
+public class MetodoClient extends BaseClient {
 
     @Autowired
-    public EspecialidadClient(RestTemplate restTemplate,
+    public MetodoClient(RestTemplate restTemplate,
                         @Value("${backend.api.base-url}") String baseUrl) {
-        super(restTemplate, baseUrl, "/especialidades");
+        super(restTemplate, baseUrl, "/metodos");
     }
 
-    public List<EspecialidadDto> findAll() {
+    public List<MetodoDto> findAll() {
         try {
-            ResponseEntity<List<EspecialidadDto>> response = restTemplate.exchange(
+            ResponseEntity<List<MetodoDto>> response = restTemplate.exchange(
                     serviceUrl,
                     HttpMethod.GET,
                     HttpEntity.EMPTY,
@@ -36,21 +36,17 @@ public class EspecialidadClient extends BaseClient{
         } catch (RestClientResponseException ex) {
             throw toRuntimeException(ex);
         } catch (Exception ex) {
-            throw new RuntimeException("No se pudo obtener especialidades.", ex);
+            throw new RuntimeException("No se pudo obtener los metodos.", ex);
         }
     }
 
-    public EspecialidadDto save(EspecialidadDto especialidad) {
+    public MetodoDto save(MetodoDto dto) {
         try {
-            return restTemplate.postForObject(
-                    serviceUrl,
-                    especialidad,
-                    EspecialidadDto.class
-            );
+            return restTemplate.postForObject(serviceUrl, dto, MetodoDto.class);
         } catch (RestClientResponseException ex) {
             throw toRuntimeException(ex);
         } catch (Exception ex) {
-            throw new RuntimeException("No se pudo guardar la especialidad.", ex);
+            throw new RuntimeException("No se pudo guardar el metodo.", ex);
         }
     }
 }

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox minHeight="760.0"
+      minWidth="1260.0"
+      prefHeight="760.0"
+      prefWidth="1260.0"
+      spacing="18.0"
+      styleClass="content"
+      stylesheets="@styles.css"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ybc.ybioq.fx.controller.DerivacionesFxController">
+    <padding>
+        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0"/>
+    </padding>
+
+    <VBox spacing="6.0">
+        <Label styleClass="section-title" text="Derivaciones"/>
+        <Label styleClass="section-subtitle" text="Mantenimiento de laboratorios de derivacion."/>
+    </VBox>
+
+    <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="editor-panel">
+        <TextField fx:id="filtroField" promptText="Buscar por nombre, direccion o mail" HBox.hgrow="ALWAYS"/>
+        <Button onAction="#cargar" styleClass="secondary-button" text="Actualizar"/>
+    </HBox>
+
+    <HBox spacing="18.0" VBox.vgrow="ALWAYS">
+        <TableView fx:id="derivacionesTable" prefWidth="760.0" HBox.hgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="idColumn" maxWidth="90.0" minWidth="80.0" prefWidth="80.0" text="ID"/>
+                <TableColumn fx:id="nombreColumn" prefWidth="180.0" text="Nombre"/>
+                <TableColumn fx:id="direccionColumn" prefWidth="220.0" text="Direccion"/>
+                <TableColumn fx:id="telefonoColumn" prefWidth="140.0" text="Telefono"/>
+                <TableColumn fx:id="mailColumn" prefWidth="240.0" text="Mail"/>
+            </columns>
+        </TableView>
+
+        <VBox minWidth="360.0" prefWidth="380.0" spacing="12.0" styleClass="editor-panel">
+            <Label styleClass="panel-title" text="Datos de derivacion"/>
+
+            <GridPane hgap="10.0" vgap="10.0">
+                <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <Label styleClass="field-label" text="Nombre"/>
+                    <TextField fx:id="nombreField" promptText="Laboratorio"/>
+                </VBox>
+
+                <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                    <Label styleClass="field-label" text="Direccion"/>
+                    <TextField fx:id="direccionField" promptText="Direccion"/>
+                </VBox>
+
+                <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                    <Label styleClass="field-label" text="Telefono"/>
+                    <TextField fx:id="telefonoField" promptText="Telefono"/>
+                </VBox>
+
+                <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                    <Label styleClass="field-label" text="Mail"/>
+                    <TextField fx:id="mailField" promptText="Mail"/>
+                </VBox>
+
+                <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="4">
+                    <Label styleClass="field-label" text="Observaciones"/>
+                    <TextArea fx:id="observacionesArea" prefRowCount="4" promptText="Observaciones" wrapText="true"/>
+                </VBox>
+            </GridPane>
+
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <Label fx:id="mensajeLabel" styleClass="form-message" wrapText="true"/>
+
+            <HBox spacing="8.0">
+                <Button onAction="#nuevo" styleClass="secondary-button" text="Nuevo" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                <Button onAction="#guardar" text="Guardar" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+            </HBox>
+            <Button maxWidth="Infinity" onAction="#salir" styleClass="secondary-button" text="Salir"/>
+        </VBox>
+    </HBox>
+</VBox>

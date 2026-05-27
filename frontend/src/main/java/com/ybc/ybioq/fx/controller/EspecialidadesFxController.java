@@ -123,7 +123,7 @@ public class EspecialidadesFxController {
     private void cargar() {
         String filtro = filtroField.getText() == null ? "" : filtroField.getText().trim().toLowerCase(Locale.ROOT);
         try {
-            List<EspecialidadDto> datos = especialidadClient.findall().stream()
+            List<EspecialidadDto> datos = especialidadClient.findAll().stream()
                     .filter(item -> filtro.isBlank() || nullToEmpty(item.getNombre()).toLowerCase(Locale.ROOT).contains(filtro))
                     .sorted(Comparator.comparing(EspecialidadDto::getNombre, Comparator.nullsLast(String::compareToIgnoreCase)))
                     .toList();

@@ -1,6 +1,6 @@
 package com.ybc.ybioq.fx.controller;
 
-import com.ybc.ybioq.fx.client.BackendApiClient;
+import com.ybc.ybioq.fx.client.AuthClient;
 import com.ybc.ybioq.fx.client.dto.UsuarioSession;
 import com.ybc.ybioq.fx.navigation.FxNavigationService;
 import javafx.concurrent.Task;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class LoginFxController {
 
-    private final BackendApiClient backendApiClient;
+    private final AuthClient authClient;
     private final FxNavigationService navigationService;
 
     @FXML
@@ -36,8 +36,8 @@ public class LoginFxController {
     @FXML
     private ProgressIndicator progressIndicator;
 
-    public LoginFxController(BackendApiClient backendApiClient, FxNavigationService navigationService) {
-        this.backendApiClient = backendApiClient;
+    public LoginFxController(AuthClient authClient, FxNavigationService navigationService) {
+        this.authClient = authClient;
         this.navigationService = navigationService;
     }
 
@@ -60,7 +60,7 @@ public class LoginFxController {
         Task<UsuarioSession> task = new Task<>() {
             @Override
             protected UsuarioSession call() {
-                return backendApiClient.login(usuario, clave);
+                return authClient.login(usuario, clave);
             }
         };
         task.setOnSucceeded(event -> {

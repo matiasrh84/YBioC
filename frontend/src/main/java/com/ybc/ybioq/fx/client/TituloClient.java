@@ -1,6 +1,6 @@
 package com.ybc.ybioq.fx.client;
 
-import com.ybc.ybioq.fx.client.dto.EspecialidadDto;
+import com.ybc.ybioq.fx.client.dto.TituloDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -15,17 +15,17 @@ import java.util.Collections;
 import java.util.List;
 
 @Component
-public class EspecialidadClient extends BaseClient{
+public class TituloClient extends BaseClient {
 
     @Autowired
-    public EspecialidadClient(RestTemplate restTemplate,
+    public TituloClient(RestTemplate restTemplate,
                         @Value("${backend.api.base-url}") String baseUrl) {
-        super(restTemplate, baseUrl, "/especialidades");
+        super(restTemplate, baseUrl, "/titulos");
     }
 
-    public List<EspecialidadDto> findAll() {
+    public List<TituloDto> findAll() {
         try {
-            ResponseEntity<List<EspecialidadDto>> response = restTemplate.exchange(
+            ResponseEntity<List<TituloDto>> response = restTemplate.exchange(
                     serviceUrl,
                     HttpMethod.GET,
                     HttpEntity.EMPTY,
@@ -36,21 +36,27 @@ public class EspecialidadClient extends BaseClient{
         } catch (RestClientResponseException ex) {
             throw toRuntimeException(ex);
         } catch (Exception ex) {
-            throw new RuntimeException("No se pudo obtener especialidades.", ex);
+            throw new RuntimeException("No se pudo obtener los titulos.", ex);
         }
     }
 
-    public EspecialidadDto save(EspecialidadDto especialidad) {
+    public TituloDto save(TituloDto dto) {
         try {
-            return restTemplate.postForObject(
-                    serviceUrl,
-                    especialidad,
-                    EspecialidadDto.class
-            );
+            return restTemplate.postForObject(serviceUrl, dto, TituloDto.class);
         } catch (RestClientResponseException ex) {
             throw toRuntimeException(ex);
         } catch (Exception ex) {
-            throw new RuntimeException("No se pudo guardar la especialidad.", ex);
+            throw new RuntimeException("No se pudo guardar el titulo.", ex);
+        }
+    }
+
+    public void deleteById(Integer id) {
+        try {
+            restTemplate.delete(serviceUrl + "/" + id);
+        } catch (RestClientResponseException ex) {
+            throw toRuntimeException(ex);
+        } catch (Exception ex) {
+            throw new RuntimeException("No se pudo borrar el titulo.", ex);
         }
     }
 }
