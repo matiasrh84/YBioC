@@ -43,14 +43,13 @@ public class FxNavigationService {
 
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.primaryStage.setMinWidth(900);
-        this.primaryStage.setMinHeight(620);
     }
 
     public void showLogin() {
         Parent root = fxmlLoader.load("/fx/login-view.fxml");
-        Scene scene = createScene(root, 900, 620);
+        Scene scene = createScene(root, 420, 460);
         primaryStage.setTitle("YBioC - Ingreso");
+        primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.centerOnScreen();
         primaryStage.show();
@@ -105,7 +104,7 @@ public class FxNavigationService {
             dialogStage.setScene(scene);
             dialogStage.setMinWidth(DIALOG_LARGE_MIN_WIDTH);
             dialogStage.setMinHeight(DIALOG_LARGE_MIN_HEIGHT);
-            dialogStage.setResizable(true);
+            dialogStage.setResizable(false);
             dialogStage.showAndWait(); // El código se detiene aquí hasta que cierres el diálogo
 
         } catch (Exception e) {
@@ -122,13 +121,14 @@ public class FxNavigationService {
             dialogStage.initModality(Modality.APPLICATION_MODAL);
             dialogStage.initOwner(primaryStage);
 
-            Scene scene = new Scene(root, DIALOG_LARGE_WIDTH, DIALOG_LARGE_HEIGHT);
+            Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/fx/styles.css").toExternalForm());
 
             dialogStage.setScene(scene);
-            dialogStage.setMinWidth(DIALOG_LARGE_MIN_WIDTH);
-            dialogStage.setMinHeight(DIALOG_LARGE_MIN_HEIGHT);
-            dialogStage.setResizable(true);
+            dialogStage.setMinWidth(1100);
+            dialogStage.setMinHeight(580);
+            dialogStage.setResizable(false);
+            dialogStage.sizeToScene();
             dialogStage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
@@ -150,7 +150,7 @@ public class FxNavigationService {
             dialogStage.setScene(scene);
             dialogStage.setMinWidth(DIALOG_MEDIUM_MIN_WIDTH);
             dialogStage.setMinHeight(DIALOG_MEDIUM_MIN_HEIGHT);
-            dialogStage.setResizable(true);
+            dialogStage.setResizable(false);
             dialogStage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
@@ -173,7 +173,7 @@ public class FxNavigationService {
             dialogStage.setScene(scene);
             dialogStage.setMinWidth(DIALOG_MEDIUM_MIN_WIDTH);
             dialogStage.setMinHeight(DIALOG_MEDIUM_MIN_HEIGHT);
-            dialogStage.setResizable(true);
+            dialogStage.setResizable(false);
 
             // El programa se detiene aquí hasta que se cierre esta ventana
             dialogStage.showAndWait();
@@ -197,7 +197,7 @@ public class FxNavigationService {
             dialogStage.setScene(scene);
             dialogStage.setMinWidth(DIALOG_MEDIUM_MIN_WIDTH);
             dialogStage.setMinHeight(DIALOG_MEDIUM_MIN_HEIGHT);
-            dialogStage.setResizable(true);
+            dialogStage.setResizable(false);
             dialogStage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
@@ -219,7 +219,7 @@ public class FxNavigationService {
             dialogStage.setScene(scene);
             dialogStage.setMinWidth(DIALOG_MEDIUM_MIN_WIDTH);
             dialogStage.setMinHeight(DIALOG_MEDIUM_MIN_HEIGHT);
-            dialogStage.setResizable(true);
+            dialogStage.setResizable(false);
             dialogStage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
@@ -241,7 +241,49 @@ public class FxNavigationService {
             dialogStage.setScene(scene);
             dialogStage.setMinWidth(DIALOG_MEDIUM_MIN_WIDTH);
             dialogStage.setMinHeight(DIALOG_MEDIUM_MIN_HEIGHT);
-            dialogStage.setResizable(true);
+            dialogStage.setResizable(false);
+            dialogStage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showSecciones() {
+        try {
+            Parent root = fxmlLoader.load("/fx/secciones-view.fxml");
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Secciones - YBioC");
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/fx/styles.css").toExternalForm());
+            dialogStage.setScene(scene);
+            dialogStage.setMinWidth(700);
+            dialogStage.setMinHeight(420);
+            dialogStage.setResizable(false);
+            dialogStage.sizeToScene();
+            dialogStage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showConfiguracionReporte() {
+        try {
+            Parent root = fxmlLoader.load("/fx/configuracion-reporte-view.fxml");
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Configuración del Informe - YBioC");
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.initOwner(primaryStage);
+
+            Scene scene = new Scene(root, DIALOG_MEDIUM_WIDTH, DIALOG_MEDIUM_HEIGHT);
+            scene.getStylesheets().add(getClass().getResource("/fx/styles.css").toExternalForm());
+
+            dialogStage.setScene(scene);
+            dialogStage.setMinWidth(DIALOG_MEDIUM_MIN_WIDTH);
+            dialogStage.setMinHeight(DIALOG_MEDIUM_MIN_HEIGHT);
+            dialogStage.setResizable(false);
             dialogStage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
@@ -263,7 +305,7 @@ public class FxNavigationService {
             dialogStage.setScene(scene);
             dialogStage.setMinWidth(DIALOG_MEDIUM_MIN_WIDTH);
             dialogStage.setMinHeight(DIALOG_MEDIUM_MIN_HEIGHT);
-            dialogStage.setResizable(true);
+            dialogStage.setResizable(false);
             dialogStage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
@@ -285,7 +327,7 @@ public class FxNavigationService {
             dialogStage.setScene(scene);
             dialogStage.setMinWidth(DIALOG_SMALL_MIN_WIDTH);
             dialogStage.setMinHeight(DIALOG_SMALL_MIN_HEIGHT);
-            dialogStage.setResizable(true);
+            dialogStage.setResizable(false);
             dialogStage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
@@ -307,10 +349,106 @@ public class FxNavigationService {
             dialogStage.setScene(scene);
             dialogStage.setMinWidth(DIALOG_SEARCH_MIN_WIDTH);
             dialogStage.setMinHeight(DIALOG_SEARCH_MIN_HEIGHT);
-            dialogStage.setResizable(true);
+            dialogStage.setResizable(false);
             dialogStage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void showAltaDesdePaciente() {
+        showNuevoPaciente();
+    }
+
+    public void showModificarOrden() {
+        try {
+            Parent root = fxmlLoader.load("/fx/modificar-orden-view.fxml");
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Modificar Orden - YBioC");
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(root, 640, 340);
+            scene.getStylesheets().add(getClass().getResource("/fx/styles.css").toExternalForm());
+            dialogStage.setScene(scene);
+            dialogStage.setMinWidth(580);
+            dialogStage.setMinHeight(300);
+            dialogStage.setResizable(false);
+            dialogStage.showAndWait();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void showNuevoPaciente() {
+        try {
+            Parent root = fxmlLoader.load("/fx/nuevo-paciente-view.fxml");
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Nuevo Paciente - YBioC");
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(root, 640, 360);
+            scene.getStylesheets().add(getClass().getResource("/fx/styles.css").toExternalForm());
+            dialogStage.setScene(scene);
+            dialogStage.setMinWidth(580);
+            dialogStage.setMinHeight(320);
+            dialogStage.setResizable(false);
+            dialogStage.showAndWait();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void showCargarOrden() {
+        try {
+            Parent root = fxmlLoader.load("/fx/cargar-orden-view.fxml");
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Cargar Orden - YBioC");
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(root, DIALOG_LARGE_WIDTH, DIALOG_LARGE_HEIGHT);
+            scene.getStylesheets().add(getClass().getResource("/fx/styles.css").toExternalForm());
+            dialogStage.setScene(scene);
+            dialogStage.setMinWidth(DIALOG_LARGE_MIN_WIDTH);
+            dialogStage.setMinHeight(DIALOG_LARGE_MIN_HEIGHT);
+            dialogStage.showAndWait();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void showPracticas() {
+        try {
+            Parent root = fxmlLoader.load("/fx/practicas-view.fxml");
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Prácticas - YBioC");
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(root, DIALOG_LARGE_WIDTH, DIALOG_LARGE_HEIGHT);
+            scene.getStylesheets().add(getClass().getResource("/fx/styles.css").toExternalForm());
+            dialogStage.setScene(scene);
+            dialogStage.setMinWidth(DIALOG_LARGE_MIN_WIDTH);
+            dialogStage.setMinHeight(DIALOG_LARGE_MIN_HEIGHT);
+            dialogStage.showAndWait();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void showCargarResultados() {
+        try {
+            Parent root = fxmlLoader.load("/fx/cargar-resultados-view.fxml");
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Cargar Resultados - YBioC");
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(root, DIALOG_LARGE_WIDTH, DIALOG_LARGE_HEIGHT);
+            scene.getStylesheets().add(getClass().getResource("/fx/styles.css").toExternalForm());
+            dialogStage.setScene(scene);
+            dialogStage.setMinWidth(DIALOG_LARGE_MIN_WIDTH);
+            dialogStage.setMinHeight(DIALOG_LARGE_MIN_HEIGHT);
+            dialogStage.showAndWait();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -329,7 +467,7 @@ public class FxNavigationService {
             dialogStage.setScene(scene);
             dialogStage.setMinWidth(DIALOG_MEDIUM_MIN_WIDTH);
             dialogStage.setMinHeight(DIALOG_MEDIUM_MIN_HEIGHT);
-            dialogStage.setResizable(true);
+            dialogStage.setResizable(false);
             dialogStage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
@@ -351,7 +489,7 @@ public class FxNavigationService {
             dialogStage.setScene(scene);
             dialogStage.setMinWidth(DIALOG_MEDIUM_MIN_WIDTH);
             dialogStage.setMinHeight(DIALOG_MEDIUM_MIN_HEIGHT);
-            dialogStage.setResizable(true);
+            dialogStage.setResizable(false);
             dialogStage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
@@ -373,7 +511,7 @@ public class FxNavigationService {
             dialogStage.setScene(scene);
             dialogStage.setMinWidth(DIALOG_MEDIUM_MIN_WIDTH);
             dialogStage.setMinHeight(DIALOG_MEDIUM_MIN_HEIGHT);
-            dialogStage.setResizable(true);
+            dialogStage.setResizable(false);
             dialogStage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
@@ -395,7 +533,7 @@ public class FxNavigationService {
             dialogStage.setScene(scene);
             dialogStage.setMinWidth(DIALOG_LARGE_MIN_WIDTH);
             dialogStage.setMinHeight(DIALOG_LARGE_MIN_HEIGHT);
-            dialogStage.setResizable(true);
+            dialogStage.setResizable(false);
             dialogStage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
@@ -417,7 +555,7 @@ public class FxNavigationService {
             dialogStage.setScene(scene);
             dialogStage.setMinWidth(DIALOG_MEDIUM_MIN_WIDTH);
             dialogStage.setMinHeight(DIALOG_MEDIUM_MIN_HEIGHT);
-            dialogStage.setResizable(true);
+            dialogStage.setResizable(false);
             dialogStage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
@@ -439,7 +577,7 @@ public class FxNavigationService {
             dialogStage.setScene(scene);
             dialogStage.setMinWidth(DIALOG_MEDIUM_MIN_WIDTH);
             dialogStage.setMinHeight(DIALOG_MEDIUM_MIN_HEIGHT);
-            dialogStage.setResizable(true);
+            dialogStage.setResizable(false);
             dialogStage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
@@ -461,7 +599,7 @@ public class FxNavigationService {
             dialogStage.setScene(scene);
             dialogStage.setMinWidth(DIALOG_SMALL_MIN_WIDTH);
             dialogStage.setMinHeight(DIALOG_SMALL_MIN_HEIGHT);
-            dialogStage.setResizable(true);
+            dialogStage.setResizable(false);
             dialogStage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();

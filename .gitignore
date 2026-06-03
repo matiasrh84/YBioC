@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Deploy artifacts ###
+deploy/*.jar
+deploy/logs/

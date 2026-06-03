@@ -1,5 +1,7 @@
 package com.ybc.ybioq.api.dto;
 
+import java.util.List;
+
 public record MedicoDto(
         Integer id,
         String apellido,
@@ -8,6 +10,6 @@ public record MedicoDto(
         String mail,
         Long telefono,
         String observaciones,
-        Integer estado
-) {
-}
+        Integer estado,
+        List<EspecialidadSimpleDto> especialidades
+) {}

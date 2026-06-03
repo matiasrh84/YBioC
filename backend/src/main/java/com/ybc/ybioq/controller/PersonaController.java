@@ -17,7 +17,7 @@ public class PersonaController extends AbstractCrudController<Persona, Integer> 
     }
 
     public List<Persona> buscarPersonas(String valor) {
-        return personaService.buscarPersonas(valor);
+        return personaService.buscar(valor);
     }
 
     public Persona guardarPersona(Persona persona) {

@@ -102,13 +102,13 @@ public class AgregarOS extends javax.swing.JDialog {
             txtContrato.setText(obraSocial.getNumeroResolucionIngreso());
             txtPorcentajeAfiliado.setText(obraSocial.getPorcentajeAfiliado());
 
-            if (obraSocial.getFacturaAltaComplejidad()) {
+            if (obraSocial.isFacturaAltaComplejidad()) {
                 rsSiAltaComplejidad.setSelected(true);
             } else {
                 rsNoAltaComplejidad.setSelected(true);
             }
 
-            if (obraSocial.getFacturaNoNomenclados()) {
+            if (obraSocial.isFacturaNoNomenclados()) {
                 rsSiFacturaNoNomenclados.setSelected(true);
             } else {
                 rsNoFacturaNoNomenclados.setSelected(true);
@@ -120,7 +120,7 @@ public class AgregarOS extends javax.swing.JDialog {
                 rsPacienteCompleto.setSelected(true);
             }
 
-            if (obraSocial.getFacturaPorPaciente()) {
+            if (obraSocial.isFacturaPorPaciente()) {
                 rsSiFacturaPorPaciente.setSelected(true);
             } else {
                 rsNoFacturaPorPaciente.setSelected(true);
@@ -142,13 +142,13 @@ public class AgregarOS extends javax.swing.JDialog {
                 rsDiscrimina.setSelected(true);
             }
 
-            if (obraSocial.getSubtotalPorPaciente()) {
+            if (obraSocial.isSubtotalPorPaciente()) {
                 rsSiSubtotal.setSelected(true);
             } else {
                 rsNoSubtotal.setSelected(true);
             }
 
-            if (obraSocial.getTieneCategorizacion()) {
+            if (obraSocial.isTieneCategorizacion()) {
                 rsSiCategorizacion.setSelected(true);
             } else {
                 rsNoCategorizacion.setSelected(true);
