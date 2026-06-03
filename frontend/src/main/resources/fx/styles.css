@@ -20,6 +20,13 @@
     -fx-text-fill: #64727d;
 }
 
+.splash-status.error-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #b42318;
+    -fx-wrap-text: true;
+}
+
 .splash-root .progress-bar {
     -fx-background-color: transparent;
     -fx-background-radius: 0;
@@ -27,7 +34,7 @@
 }
 
 .splash-root .progress-bar > .bar {
-    -fx-background-color: #0bdb46;
+    -fx-background-color: #2c7aa6;
     -fx-background-radius: 0;
     -fx-background-insets: 0;
 }
@@ -214,4 +221,66 @@
 
 .check-box {
     -fx-text-fill: #26323b;
+}
+
+/* Ikonli icons */
+.button .ikonli-font-icon {
+    -fx-icon-color: white;
+}
+
+.secondary-button .ikonli-font-icon {
+    -fx-icon-color: #26323b;
+}
+
+/* Modo edición */
+.modo-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #005a84;
+}
+
+.modo-label-editando {
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #b45309;
+}
+
+.danger-button {
+    -fx-background-color: transparent;
+    -fx-border-color: #fca5a5;
+    -fx-border-radius: 6px;
+    -fx-text-fill: #b42318;
+}
+
+.danger-button .ikonli-font-icon {
+    -fx-icon-color: #b42318;
+}
+
+/* Toggle switch — reemplaza CheckBox en formularios */
+.toggle-switch {
+    -fx-background-color: #b8c8d4;
+    -fx-background-radius: 12px;
+    -fx-text-fill: #64727d;
+    -fx-font-size: 12px;
+    -fx-font-weight: 700;
+    -fx-padding: 5px 14px;
+    -fx-cursor: hand;
+    -fx-min-width: 60px;
+}
+
+.toggle-switch:hover {
+    -fx-background-color: #9ab0be;
+}
+
+.toggle-switch:selected {
+    -fx-background-color: #0077a8;
+    -fx-text-fill: #ffffff;
+}
+
+.toggle-switch:selected:hover {
+    -fx-background-color: #005f86;
+}
+
+.toggle-switch:disabled {
+    -fx-opacity: 0.45;
 }
