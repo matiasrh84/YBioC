@@ -15,37 +15,27 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
-
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class BuscarPersonaFxController {
 
+    private static final int MIN_CHARS = 2;
+
     private final PersonaClient personaClient;
     private final ObservableList<PersonaDto> personas = FXCollections.observableArrayList();
-    private List<PersonaDto> cache = new ArrayList<>();
 
     @FXML
     private TextField filtroField;
-
     @FXML
     private TableView<PersonaDto> personasTable;
-
     @FXML
     private TableColumn<PersonaDto, String> idColumn;
-
     @FXML
     private TableColumn<PersonaDto, String> apellidoColumn;
-
     @FXML
     private TableColumn<PersonaDto, String> nombreColumn;
-
     @FXML
     private TableColumn<PersonaDto, String> dniColumn;
-
     @FXML
     private Label mensajeLabel;
 
@@ -55,40 +45,46 @@ public class BuscarPersonaFxController {
 
     @FXML
     private void initialize() {
-        idColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(toText(data.getValue().getId())));
-        apellidoColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(nullToEmpty(data.getValue().getApellido())));
-        nombreColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(nullToEmpty(data.getValue().getNombre())));
-        dniColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(toText(data.getValue().getDni())));
+        idColumn.setCellValueFactory(d -> new ReadOnlyStringWrapper(str(d.getValue().id())));
+        apellidoColumn.setCellValueFactory(d -> new ReadOnlyStringWrapper(safe(d.getValue().apellido())));
+        nombreColumn.setCellValueFactory(d -> new ReadOnlyStringWrapper(safe(d.getValue().nombre())));
+        dniColumn.setCellValueFactory(d -> new ReadOnlyStringWrapper(str(d.getValue().dni())));
         personasTable.setItems(personas);
-        personasTable.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-                aceptar();
-            }
+        personasTable.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 2) aceptar();
         });
-        filtroField.textProperty().addListener((obs, oldValue, newValue) -> filtrar());
-        cargar();
+        mensajeLabel.setText("Ingrese apellido, nombre o DNI y presione Buscar.");
     }
 
     @FXML
-    private void cargar() {
-        try {
-            cache = personaClient.findAll().stream()
-                    .sorted(Comparator.comparing(PersonaDto::getApellido, Comparator.nullsLast(String::compareToIgnoreCase))
-                            .thenComparing(PersonaDto::getNombre, Comparator.nullsLast(String::compareToIgnoreCase)))
-                    .toList();
-            filtrar();
-            mensajeLabel.setText("");
-        } catch (RuntimeException ex) {
-            cache = new ArrayList<>();
+    private void buscar() {
+        String q = filtroField.getText() == null ? "" : filtroField.getText().trim();
+        if (q.length() < MIN_CHARS) {
+            mensajeLabel.setText("Ingrese al menos " + MIN_CHARS + " caracteres.");
             personas.clear();
-            mensajeLabel.setText(ex.getMessage());
+            return;
+        }
+        try {
+            mensajeLabel.setText("Buscando...");
+            var resultado = personaClient.buscar(q);
+            personas.setAll(resultado);
+            if (resultado.isEmpty()) {
+                mensajeLabel.setText("Sin resultados para \"" + q + "\".");
+            } else {
+                mensajeLabel.setText(resultado.size() == 50
+                        ? "Se muestran los primeros 50 resultados. Refine la búsqueda."
+                        : resultado.size() + " resultado(s).");
+            }
+        } catch (RuntimeException ex) {
+            personas.clear();
+            mensajeLabel.setText("Error: " + ex.getMessage());
         }
     }
 
     @FXML
     private void aceptar() {
-        PersonaDto seleccionada = personasTable.getSelectionModel().getSelectedItem();
-        if (seleccionada == null) {
+        PersonaDto sel = personasTable.getSelectionModel().getSelectedItem();
+        if (sel == null) {
             mensajeLabel.setText("Seleccione una persona.");
             return;
         }
@@ -100,36 +96,16 @@ public class BuscarPersonaFxController {
         cerrar();
     }
 
-    private void filtrar() {
-        String filtro = text(filtroField).toLowerCase(Locale.ROOT);
-        personas.setAll(cache.stream()
-                .filter(item -> coincideFiltro(item, filtro))
-                .toList());
-    }
-
-    private boolean coincideFiltro(PersonaDto persona, String filtro) {
-        if (filtro.isBlank()) {
-            return true;
-        }
-        return nullToEmpty(persona.getApellido()).toLowerCase(Locale.ROOT).contains(filtro)
-                || nullToEmpty(persona.getNombre()).toLowerCase(Locale.ROOT).contains(filtro)
-                || toText(persona.getDni()).contains(filtro);
-    }
-
     private void cerrar() {
         Stage stage = (Stage) personasTable.getScene().getWindow();
         stage.close();
     }
 
-    private String text(TextField field) {
-        return field.getText() == null ? "" : field.getText().trim();
+    private String str(Object v) {
+        return v == null ? "" : v.toString();
     }
 
-    private String toText(Object value) {
-        return value == null ? "" : value.toString();
-    }
-
-    private String nullToEmpty(String value) {
-        return value == null ? "" : value;
+    private String safe(String v) {
+        return v == null ? "" : v;
     }
 }

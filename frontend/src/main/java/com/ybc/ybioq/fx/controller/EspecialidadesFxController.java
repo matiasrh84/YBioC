@@ -6,11 +6,7 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -56,9 +52,10 @@ public class EspecialidadesFxController {
 
     @FXML
     private void initialize() {
-        idColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(String.valueOf(data.getValue().getId())));
-        nombreColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(nullToEmpty(data.getValue().getNombre())));
-        estadoColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().isEstado() ? "Activo" : "Inactivo"));
+        idColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(String.valueOf(data.getValue().id())));
+        nombreColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(nullToEmpty(data.getValue().nombre())));
+        estadoColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().estado() ? "Activo" : "Inactivo"));
+
         especialidadesTable.setItems(especialidades);
         especialidadesTable.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, selected) -> seleccionar(selected));
         filtroField.textProperty().addListener((obs, oldValue, newValue) -> cargar());
@@ -83,13 +80,11 @@ public class EspecialidadesFxController {
             return;
         }
 
-        EspecialidadDto especialidad = especialidadesTable.getSelectionModel().getSelectedItem();
-        if (especialidad == null) {
-            especialidad = new EspecialidadDto();
-        }
+        EspecialidadDto seleccionado = especialidadesTable.getSelectionModel().getSelectedItem();
 
-        especialidad.setNombre(nombre);
-        especialidad.setEstado(estadoCheck.isSelected());
+        // CORREGIDO: Como es inmutable, calculamos el ID y creamos una nueva instancia pura
+        Integer idActual = (seleccionado != null) ? seleccionado.id() : null;
+        EspecialidadDto especialidad = new EspecialidadDto(idActual, nombre, estadoCheck.isSelected());
 
         try {
             especialidadClient.save(especialidad);
@@ -103,17 +98,20 @@ public class EspecialidadesFxController {
 
     @FXML
     private void cambiarEstado() {
-        EspecialidadDto especialidad = especialidadesTable.getSelectionModel().getSelectedItem();
-        if (especialidad == null) {
+        EspecialidadDto seleccionado = especialidadesTable.getSelectionModel().getSelectedItem();
+        if (seleccionado == null) {
             mensajeLabel.setText("Seleccione una especialidad.");
             return;
         }
 
-        especialidad.setEstado(!especialidad.isEstado());
+        // CORREGIDO: Se invierte el estado creando una nueva instancia basada en la seleccionada
+        boolean nuevoEstado = !seleccionado.estado();
+        EspecialidadDto especialidadModificada = new EspecialidadDto(seleccionado.id(), seleccionado.nombre(), nuevoEstado);
+
         try {
-            especialidadClient.save(especialidad);
+            especialidadClient.save(especialidadModificada);
             cargar();
-            mensajeLabel.setText(especialidad.isEstado() ? "Especialidad reactivada." : "Especialidad dada de baja.");
+            mensajeLabel.setText(nuevoEstado ? "Especialidad reactivada." : "Especialidad dada de baja.");
         } catch (RuntimeException ex) {
             mensajeLabel.setText(ex.getMessage());
         }
@@ -123,9 +121,10 @@ public class EspecialidadesFxController {
     private void cargar() {
         String filtro = filtroField.getText() == null ? "" : filtroField.getText().trim().toLowerCase(Locale.ROOT);
         try {
+            // CORREGIDO: Cambiado item.getNombre() por item.nombre() e igualmente en el Comparator
             List<EspecialidadDto> datos = especialidadClient.findAll().stream()
-                    .filter(item -> filtro.isBlank() || nullToEmpty(item.getNombre()).toLowerCase(Locale.ROOT).contains(filtro))
-                    .sorted(Comparator.comparing(EspecialidadDto::getNombre, Comparator.nullsLast(String::compareToIgnoreCase)))
+                    .filter(item -> filtro.isBlank() || nullToEmpty(item.nombre()).toLowerCase(Locale.ROOT).contains(filtro))
+                    .sorted(Comparator.comparing(EspecialidadDto::nombre, Comparator.nullsLast(String::compareToIgnoreCase)))
                     .toList();
             especialidades.setAll(datos);
         } catch (RuntimeException ex) {
@@ -137,8 +136,9 @@ public class EspecialidadesFxController {
         if (especialidad == null) {
             return;
         }
-        nombreField.setText(nullToEmpty(especialidad.getNombre()));
-        estadoCheck.setSelected(especialidad.isEstado());
+        // CORREGIDO: Cambiado a métodos del record
+        nombreField.setText(nullToEmpty(especialidad.nombre()));
+        estadoCheck.setSelected(especialidad.estado());
         mensajeLabel.setText("");
     }
 

@@ -1,303 +1,369 @@
 package com.ybc.ybioq.fx.controller;
 
-import javafx.beans.property.SimpleStringProperty;
+import com.ybc.ybioq.fx.client.ObraSocialClient;
+import com.ybc.ybioq.fx.client.dto.ObraSocialDto;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
-import javafx.stage.Stage;
+import javafx.scene.control.*;
+import org.kordamp.ikonli.javafx.FontIcon;
+import org.kordamp.ikonli.materialdesign2.MaterialDesignC;
+import org.kordamp.ikonli.materialdesign2.MaterialDesignP;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Locale;
 
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class ObrasSocialesFxController {
 
-    private final ObservableList<ObraSocialRow> obrasSociales = FXCollections.observableArrayList();
+    private final ObraSocialClient obraSocialClient;
+    private final ObservableList<ObraSocialDto> lista = FXCollections.observableArrayList();
+    private ObraSocialDto seleccionado;
 
+    // --- Lista ---
+    @FXML
+    private TextField filtroField;
+    @FXML
+    private TableView<ObraSocialDto> tablaObrasSociales;
+    @FXML
+    private TableColumn<ObraSocialDto, String> colCodigo;
+    @FXML
+    private TableColumn<ObraSocialDto, String> colRazonSocial;
+    @FXML
+    private TableColumn<ObraSocialDto, String> colEstado;
+    @FXML
+    private Label modoLabel;
+    @FXML
+    private Label mensajeLabel;
+    @FXML
+    private Button guardarBtn;
+    @FXML
+    private Button cancelarBtn;
+
+    // --- Datos principales ---
     @FXML
     private TextField txtRazonSocial;
-
     @FXML
     private TextField txtCodigoOs;
-
+    @FXML
+    private TextField txtNombre;
     @FXML
     private DatePicker dpFechaAlta;
-
     @FXML
     private TextField txtCuit;
-
     @FXML
-    private ComboBox<String> cboNBU;
-
+    private TextField txtPeriodoNbu;
     @FXML
     private TextField txtCodigoFacturacion;
-
     @FXML
     private TextField txtDireccion;
-
-    @FXML
-    private TextField txtLocalidad;
-
     @FXML
     private TextField txtTelefono;
-
     @FXML
-    private TextField txtEmail;
-
+    private TextField txtEmail;        // mail1
+    @FXML
+    private TextField txtMail1;        // mail2
+    @FXML
+    private TextField txtMail2;        // mail3
     @FXML
     private TextField txtPaginaWeb;
-
     @FXML
     private TextField txtReferente;
-
     @FXML
     private TextField txtTelefonoReferente;
-
     @FXML
     private TextField txtUnidadArancel;
-
-    @FXML
-    private TextField txtContrato;
-
     @FXML
     private TextField txtPorcentajeAfiliado;
-
     @FXML
-    private ComboBox<String> cboTipoFacturacion;
+    private TextField txtPorcentajeDescuento;
 
+    // --- CheckBoxes para campos booleanos ---
     @FXML
-    private ComboBox<String> cboTipoIVA;
-
+    private CheckBox cbFacturaAltaComplejidad;
     @FXML
-    private ToggleGroup groupAltaComplejidad;
-
+    private CheckBox cbFacturaNoNomenclados;
     @FXML
-    private ToggleGroup groupNoNomenclados;
+    private CheckBox cbFacturaPorPaciente;
+    @FXML
+    private CheckBox cbSubtotalPorPaciente;
+    @FXML
+    private CheckBox cbTieneCategorizacion;
 
+    // --- ToggleGroups para opciones múltiples ---
     @FXML
     private ToggleGroup groupFacturaPor;
-
-    @FXML
-    private ToggleGroup groupFacturaPorPaciente;
-
     @FXML
     private ToggleGroup groupImprimeDobleInforme;
-
     @FXML
     private ToggleGroup groupD998;
-
-    @FXML
-    private ToggleGroup groupSubtotal;
-
-    @FXML
-    private ToggleGroup groupCategorizacion;
-
     @FXML
     private ToggleGroup groupTipoFacturacionDirectaColegio;
 
-    @FXML
-    private RadioButton rbSiAltaComplejidad;
-
-    @FXML
-    private RadioButton rbSiFacturaNoNomenclados;
-
+    // RadioButtons para defaults en resetOptions
     @FXML
     private RadioButton rbCupon;
-
-    @FXML
-    private RadioButton rbSiFacturaPorPaciente;
-
     @FXML
     private RadioButton rbNunca;
-
     @FXML
     private RadioButton rbIncluye;
-
-    @FXML
-    private RadioButton rbSiSubtotal;
-
-    @FXML
-    private RadioButton rbSiCategorizacion;
-
     @FXML
     private RadioButton rbDirecta;
 
     @FXML
-    private TableView<ObraSocialRow> tablaObrasSociales;
-
+    private ComboBox<String> cboTipoFacturacion;
     @FXML
-    private TableColumn<ObraSocialRow, String> colCodigo;
+    private ComboBox<String> cboTipoIVA;
 
-    @FXML
-    private TableColumn<ObraSocialRow, String> colRazonSocial;
-
-    @FXML
-    private Button btnAgregar;
-
-    @FXML
-    private Button btnModificar;
-
-    @FXML
-    private Label mensajeLabel;
+    public ObrasSocialesFxController(ObraSocialClient obraSocialClient) {
+        this.obraSocialClient = obraSocialClient;
+    }
 
     @FXML
     public void initialize() {
-        initCombo(cboNBU, "NBU");
+        colCodigo.setCellValueFactory(c -> new ReadOnlyStringWrapper(str(c.getValue().codigo())));
+        colRazonSocial.setCellValueFactory(c -> new ReadOnlyStringWrapper(str(c.getValue().razonSocial())));
+        colEstado.setCellValueFactory(c -> new ReadOnlyStringWrapper(c.getValue().estado() ? "Activa" : "Baja"));
+        tablaObrasSociales.setItems(lista);
+        tablaObrasSociales.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+        tablaObrasSociales.getSelectionModel().selectedItemProperty()
+                .addListener((obs, old, item) -> seleccionar(item));
+        filtroField.textProperty().addListener((obs, old, val) -> cargar());
+
         initCombo(cboTipoFacturacion, "Importes", "NBU", "Convenio", "CONV+DCTO", "S/Detalle");
         initCombo(cboTipoIVA, "Exento", "10.5 %", "21 %", "Responsable Inscripto");
 
-        dpFechaAlta.setValue(LocalDate.now());
-        resetOptions();
-
-        colCodigo.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().codigo()));
-        colRazonSocial.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().razonSocial()));
-        tablaObrasSociales.setItems(obrasSociales);
-
-        tablaObrasSociales.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, selected) -> {
-            if (selected == null) {
-                return;
-            }
-            txtCodigoOs.setText(selected.codigo());
-            txtRazonSocial.setText(selected.razonSocial());
-            btnModificar.setDisable(false);
-            btnAgregar.setDisable(true);
-            mensajeLabel.setText("Obra social seleccionada. Lista para modificar.");
-        });
-
-        limpiarCampos();
+        cargar();
+        modoNuevo();
     }
 
     @FXML
     private void guardar() {
-        if (isBlank(txtCodigoOs) || isBlank(txtRazonSocial)) {
-            mensajeLabel.setText("Complete Codigo OS y Razon Social.");
+        String codigo = trim(txtCodigoOs);
+        String razonSocial = trim(txtRazonSocial);
+        if (codigo.isBlank() || razonSocial.isBlank()) {
+            mensajeLabel.setText("Código OS y Razón Social son obligatorios.");
             return;
         }
-
-        ObraSocialRow row = new ObraSocialRow(txtCodigoOs.getText().trim(), txtRazonSocial.getText().trim());
-        int existingIndex = findIndexByCodigo(row.codigo());
-        if (existingIndex >= 0) {
-            obrasSociales.set(existingIndex, row);
-            mensajeLabel.setText("Obra social actualizada en pantalla.");
-        } else {
-            obrasSociales.add(row);
-            mensajeLabel.setText("Obra social agregada en pantalla.");
+        boolean esNuevo = seleccionado == null;
+        ObraSocialDto dto = new ObraSocialDto(
+                esNuevo ? null : seleccionado.id(),
+                codigo,
+                razonSocial,
+                emptyToNull(trim(txtNombre)),
+                emptyToNull(trim(txtCuit)),
+                emptyToNull(trim(txtCodigoFacturacion)),
+                emptyToNull(trim(txtTelefono)),
+                emptyToNull(trim(txtEmail)),
+                emptyToNull(trim(txtMail1)),
+                emptyToNull(trim(txtMail2)),
+                emptyToNull(trim(txtPaginaWeb)),
+                emptyToNull(trim(txtDireccion)),
+                dpFechaAlta.getValue() != null ? dpFechaAlta.getValue().toString() : null,
+                emptyToNull(trim(txtReferente)),
+                emptyToNull(trim(txtTelefonoReferente)),
+                emptyToNull(trim(txtPeriodoNbu)),
+                parseBigDecimal(trim(txtUnidadArancel)),
+                emptyToNull(trim(txtPorcentajeAfiliado)),
+                emptyToNull(trim(txtPorcentajeDescuento)),
+                cbFacturaAltaComplejidad.isSelected(),
+                cbFacturaNoNomenclados.isSelected(),
+                getRadio(groupFacturaPor),
+                cbFacturaPorPaciente.isSelected(),
+                getRadio(groupImprimeDobleInforme),
+                getRadio(groupD998),
+                cbSubtotalPorPaciente.isSelected(),
+                cbTieneCategorizacion.isSelected(),
+                cboTipoFacturacion.getValue(),
+                getRadio(groupTipoFacturacionDirectaColegio),
+                cboTipoIVA.getValue(),
+                true
+        );
+        try {
+            obraSocialClient.save(dto);
+            cargar();
+            modoNuevo();
+            mensajeLabel.setText(esNuevo ? "Obra social agregada." : "Obra social guardada.");
+        } catch (RuntimeException ex) {
+            mensajeLabel.setText(ex.getMessage());
         }
-        tablaObrasSociales.getSelectionModel().select(row);
-        btnModificar.setDisable(false);
-        btnAgregar.setDisable(true);
     }
 
     @FXML
-    private void modificar() {
-        if (tablaObrasSociales.getSelectionModel().getSelectedItem() == null) {
-            mensajeLabel.setText("Seleccione una obra social.");
-            return;
-        }
-        guardar();
+    private void cancelar() {
+        modoNuevo();
     }
 
-    @FXML
+    private void cargar() {
+        String filtro = filtroField.getText() == null ? "" : filtroField.getText().trim().toLowerCase(Locale.ROOT);
+        try {
+            List<ObraSocialDto> datos = obraSocialClient.findAll().stream()
+                    .filter(os -> filtro.isBlank()
+                            || str(os.razonSocial()).toLowerCase(Locale.ROOT).contains(filtro)
+                            || str(os.codigo()).toLowerCase(Locale.ROOT).contains(filtro))
+                    .toList();
+            lista.setAll(datos);
+        } catch (RuntimeException ex) {
+            mensajeLabel.setText(ex.getMessage());
+        }
+    }
+
+    private void seleccionar(ObraSocialDto os) {
+        seleccionado = os;
+        if (os == null) return;
+
+        txtCodigoOs.setText(str(os.codigo()));
+        txtRazonSocial.setText(str(os.razonSocial()));
+        txtNombre.setText(str(os.nombre()));
+        txtCuit.setText(str(os.cuit()));
+        txtCodigoFacturacion.setText(str(os.codigoFacturacion()));
+        txtTelefono.setText(str(os.telefono()));
+        txtEmail.setText(str(os.mail1()));
+        txtMail1.setText(str(os.mail2()));
+        txtMail2.setText(str(os.mail3()));
+        txtPaginaWeb.setText(str(os.web()));
+        txtDireccion.setText(str(os.direccion()));
+        dpFechaAlta.setValue(parseDate(os.fechaDeAlta()));
+        txtReferente.setText(str(os.nombreReferente()));
+        txtTelefonoReferente.setText(str(os.celularReferente()));
+        txtPeriodoNbu.setText(str(os.periodoNbu()));
+        txtUnidadArancel.setText(os.importeUnidadDeArancel() != null ? os.importeUnidadDeArancel().toPlainString() : "");
+        txtPorcentajeAfiliado.setText(str(os.porcentajeAfiliado()));
+        txtPorcentajeDescuento.setText(str(os.porcentajeDescuento()));
+
+        cbFacturaAltaComplejidad.setSelected(os.facturaAltaComplejidad());
+        cbFacturaNoNomenclados.setSelected(os.facturaNoNomenclados());
+        cbFacturaPorPaciente.setSelected(os.facturaPorPaciente());
+        cbSubtotalPorPaciente.setSelected(os.subtotalPorPaciente());
+        cbTieneCategorizacion.setSelected(os.tieneCategorizacion());
+        selectByText(groupFacturaPor, os.facturaPor());
+        selectByText(groupImprimeDobleInforme, os.imprimeDobleInforme());
+        selectByText(groupD998, os.d998());
+        selectCombo(cboTipoFacturacion, os.tipoDeFacturacion());
+        selectByText(groupTipoFacturacionDirectaColegio, os.tipoDeFacturacionDirectaOColegio());
+        selectCombo(cboTipoIVA, os.tipoIva());
+
+        mensajeLabel.setText("");
+        modoEdicion(os);
+    }
+
+    private void modoNuevo() {
+        seleccionado = null;
+        tablaObrasSociales.getSelectionModel().clearSelection();
+        limpiarCampos();
+        modoLabel.setText("Nueva obra social");
+        modoLabel.getStyleClass().setAll("modo-label");
+        guardarBtn.setText("Agregar");
+        guardarBtn.setGraphic(icon(MaterialDesignP.PLUS, 18));
+        cancelarBtn.setVisible(false);
+        cancelarBtn.setManaged(false);
+    }
+
+    private void modoEdicion(ObraSocialDto os) {
+        modoLabel.setText("Editando: " + str(os.razonSocial()));
+        modoLabel.getStyleClass().setAll("modo-label-editando");
+        guardarBtn.setText("Guardar");
+        guardarBtn.setGraphic(icon(MaterialDesignC.CONTENT_SAVE, 18));
+        cancelarBtn.setVisible(true);
+        cancelarBtn.setManaged(true);
+    }
+
     private void limpiarCampos() {
-        txtRazonSocial.clear();
         txtCodigoOs.clear();
-        dpFechaAlta.setValue(LocalDate.now());
+        txtRazonSocial.clear();
+        txtNombre.clear();
         txtCuit.clear();
         txtCodigoFacturacion.clear();
         txtDireccion.clear();
-        txtLocalidad.clear();
         txtTelefono.clear();
         txtEmail.clear();
+        txtMail1.clear();
+        txtMail2.clear();
         txtPaginaWeb.clear();
         txtReferente.clear();
         txtTelefonoReferente.clear();
         txtUnidadArancel.clear();
-        txtContrato.clear();
         txtPorcentajeAfiliado.clear();
-
-        resetOptions();
-        initCombo(cboNBU, "NBU");
+        txtPorcentajeDescuento.clear();
+        txtPeriodoNbu.clear();
+        dpFechaAlta.setValue(LocalDate.now());
+        cbFacturaAltaComplejidad.setSelected(true);
+        cbFacturaNoNomenclados.setSelected(true);
+        cbFacturaPorPaciente.setSelected(true);
+        cbSubtotalPorPaciente.setSelected(true);
+        cbTieneCategorizacion.setSelected(true);
+        if (rbCupon != null) rbCupon.setSelected(true);
+        if (rbNunca != null) rbNunca.setSelected(true);
+        if (rbIncluye != null) rbIncluye.setSelected(true);
+        if (rbDirecta != null) rbDirecta.setSelected(true);
         initCombo(cboTipoFacturacion, "Importes", "NBU", "Convenio", "CONV+DCTO", "S/Detalle");
         initCombo(cboTipoIVA, "Exento", "10.5 %", "21 %", "Responsable Inscripto");
-
-        tablaObrasSociales.getSelectionModel().clearSelection();
-        btnModificar.setDisable(true);
-        btnAgregar.setDisable(false);
-        mensajeLabel.setText("Formulario limpio.");
     }
 
-    @FXML
-    private void cerrar() {
-        if (btnAgregar == null || btnAgregar.getScene() == null) {
-            return;
-        }
-        Stage stage = (Stage) btnAgregar.getScene().getWindow();
-        stage.close();
+    private String getRadio(ToggleGroup group) {
+        Toggle t = group.getSelectedToggle();
+        return (t instanceof RadioButton rb) ? rb.getText() : null;
+    }
+
+    private void selectByText(ToggleGroup group, String value) {
+        if (value == null) return;
+        group.getToggles().stream()
+                .filter(t -> t instanceof RadioButton rb && rb.getText().equalsIgnoreCase(value.trim()))
+                .findFirst()
+                .ifPresent(t -> t.setSelected(true));
+    }
+
+    private void selectCombo(ComboBox<String> combo, String value) {
+        if (value == null) return;
+        combo.getItems().stream()
+                .filter(item -> item.equalsIgnoreCase(value.trim()))
+                .findFirst()
+                .ifPresent(combo::setValue);
     }
 
     private void initCombo(ComboBox<String> combo, String... values) {
         combo.getItems().setAll(values);
-        if (!combo.getItems().isEmpty()) {
-            combo.getSelectionModel().selectFirst();
+        if (!combo.getItems().isEmpty()) combo.getSelectionModel().selectFirst();
+    }
+
+    private LocalDate parseDate(String s) {
+        try {
+            return (s == null || s.isBlank()) ? null : LocalDate.parse(s);
+        } catch (Exception e) {
+            return null;
         }
     }
 
-    private void resetOptions() {
-        if (rbSiAltaComplejidad != null) {
-            rbSiAltaComplejidad.setSelected(true);
-        }
-        if (rbSiFacturaNoNomenclados != null) {
-            rbSiFacturaNoNomenclados.setSelected(true);
-        }
-        if (rbCupon != null) {
-            rbCupon.setSelected(true);
-        }
-        if (rbSiFacturaPorPaciente != null) {
-            rbSiFacturaPorPaciente.setSelected(true);
-        }
-        if (rbNunca != null) {
-            rbNunca.setSelected(true);
-        }
-        if (rbIncluye != null) {
-            rbIncluye.setSelected(true);
-        }
-        if (rbSiSubtotal != null) {
-            rbSiSubtotal.setSelected(true);
-        }
-        if (rbSiCategorizacion != null) {
-            rbSiCategorizacion.setSelected(true);
-        }
-        if (rbDirecta != null) {
-            rbDirecta.setSelected(true);
+    private BigDecimal parseBigDecimal(String s) {
+        try {
+            return (s == null || s.isBlank()) ? null : new BigDecimal(s.replace(",", "."));
+        } catch (Exception e) {
+            return null;
         }
     }
 
-    private boolean isBlank(TextField field) {
-        return field.getText() == null || field.getText().trim().isEmpty();
+    private FontIcon icon(org.kordamp.ikonli.Ikon ikon, int size) {
+        FontIcon fi = new FontIcon(ikon);
+        fi.setIconSize(size);
+        return fi;
     }
 
-    private int findIndexByCodigo(String codigo) {
-        for (int i = 0; i < obrasSociales.size(); i++) {
-            ObraSocialRow row = obrasSociales.get(i);
-            if (row.codigo().equalsIgnoreCase(codigo)) {
-                return i;
-            }
-        }
-        return -1;
+    private String trim(TextField f) {
+        return f.getText() == null ? "" : f.getText().trim();
     }
 
-    private record ObraSocialRow(String codigo, String razonSocial) {
+    private String str(Object v) {
+        return v == null ? "" : v.toString();
+    }
+
+    private String emptyToNull(String s) {
+        return s.isBlank() ? null : s;
     }
 }

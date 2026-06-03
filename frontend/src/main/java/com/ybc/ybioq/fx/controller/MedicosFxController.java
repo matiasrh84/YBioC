@@ -4,13 +4,12 @@ import com.ybc.ybioq.fx.client.EspecialidadClient;
 import com.ybc.ybioq.fx.client.MedicoClient;
 import com.ybc.ybioq.fx.client.dto.EspecialidadDto;
 import com.ybc.ybioq.fx.client.dto.MedicoDto;
-import com.ybc.ybioq.fx.navigation.FxNavigationService;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.util.Callback;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -26,75 +25,77 @@ public class MedicosFxController {
     private final MedicoClient medicoClient;
     private final EspecialidadClient especialidadClient;
     private final ObservableList<MedicoDto> medicos = FXCollections.observableArrayList();
-    private final FxNavigationService navigationService;
 
     @FXML
     private TextField filtroField;
-
     @FXML
     private TextField apellidoField;
-
     @FXML
     private TextField nombreField;
-
     @FXML
     private TextField matriculaField;
-
     @FXML
     private TextField mailField;
-
     @FXML
     private TextField telefonoField;
-
     @FXML
     private TextArea observacionesField;
-
     @FXML
     private CheckBox estadoCheck;
 
     @FXML
     private TableView<MedicoDto> medicosTable;
-
     @FXML
     private TableColumn<MedicoDto, String> matriculaColumn;
-
     @FXML
     private TableColumn<MedicoDto, String> apellidoColumn;
-
     @FXML
     private TableColumn<MedicoDto, String> nombreColumn;
-
     @FXML
     private TableColumn<MedicoDto, String> mailColumn;
-
     @FXML
     private TableColumn<MedicoDto, String> telefonoColumn;
-
     @FXML
     private TableColumn<MedicoDto, String> estadoColumn;
 
     @FXML
+    private ComboBox<EspecialidadDto> especialidadCombo;
+    @FXML
+    private ListView<EspecialidadDto> especialidadesListView;
+
+    @FXML
     private Label mensajeLabel;
 
-    @FXML private ComboBox<String> especialidadCombo;
-
-    public MedicosFxController(MedicoClient medicoClient, EspecialidadClient especialidadClient, FxNavigationService navigationService) {
+    public MedicosFxController(MedicoClient medicoClient, EspecialidadClient especialidadClient) {
         this.medicoClient = medicoClient;
         this.especialidadClient = especialidadClient;
-        this.navigationService = navigationService;
     }
 
     @FXML
     private void initialize() {
-        matriculaColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(toText(data.getValue().getMatricula())));
-        apellidoColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(nullToEmpty(data.getValue().getApellido())));
-        nombreColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(nullToEmpty(data.getValue().getNombre())));
-        mailColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(nullToEmpty(data.getValue().getMail())));
-        telefonoColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(toText(data.getValue().getTelefono())));
+        matriculaColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(toText(data.getValue().matricula())));
+        apellidoColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(nullToEmpty(data.getValue().apellido())));
+        nombreColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(nullToEmpty(data.getValue().nombre())));
+        mailColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(nullToEmpty(data.getValue().mail())));
+        telefonoColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(toText(data.getValue().telefono())));
         estadoColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(isActivo(data.getValue()) ? "Activo" : "Inactivo"));
+
         medicosTable.setItems(medicos);
         medicosTable.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, selected) -> seleccionar(selected));
         filtroField.textProperty().addListener((obs, oldValue, newValue) -> cargar());
+
+        Callback<ListView<EspecialidadDto>, ListCell<EspecialidadDto>> cellFactory = lv -> new ListCell<>() {
+            @Override
+            protected void updateItem(EspecialidadDto item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? null : item.nombre());
+            }
+        };
+        especialidadCombo.setCellFactory(cellFactory);
+        especialidadCombo.setButtonCell(cellFactory.call(null));
+        especialidadesListView.setCellFactory(cellFactory);
+
+        cargarComboEspecialidades();
         nuevo();
         cargar();
     }
@@ -109,6 +110,8 @@ public class MedicosFxController {
         telefonoField.clear();
         observacionesField.clear();
         estadoCheck.setSelected(true);
+        especialidadesListView.getItems().clear();
+        especialidadCombo.setValue(null);
         mensajeLabel.setText("");
         apellidoField.requestFocus();
     }
@@ -119,7 +122,7 @@ public class MedicosFxController {
         String nombre = text(nombreField);
         Integer matricula = parseInteger(text(matriculaField));
         Long telefono = text(telefonoField).isBlank() ? null : parseLong(text(telefonoField));
-        if (matricula == null || telefonoField.getText() != null && !telefonoField.getText().isBlank() && telefono == null) {
+        if (matricula == null || (!text(telefonoField).isBlank() && telefono == null)) {
             return;
         }
         if (apellido.isBlank() || nombre.isBlank()) {
@@ -127,21 +130,29 @@ public class MedicosFxController {
             return;
         }
 
-        MedicoDto medico = medicosTable.getSelectionModel().getSelectedItem();
-        if (medico == null) {
-            medico = new MedicoDto();
-        }
+        MedicoDto seleccionado = medicosTable.getSelectionModel().getSelectedItem();
+        Integer idActual = (seleccionado != null) ? seleccionado.id() : null;
 
-        medico.setApellido(apellido);
-        medico.setNombre(nombre);
-        medico.setMatricula(matricula);
-        medico.setMail(text(mailField));
-        medico.setTelefono(telefono);
-        medico.setObservaciones(observacionesField.getText());
-        medico.setEstado(estadoCheck.isSelected() ? 1 : 0);
+        MedicoDto medico = new MedicoDto(
+                idActual,
+                apellido,
+                nombre,
+                matricula,
+                text(mailField),
+                telefono,
+                observacionesField.getText(),
+                estadoCheck.isSelected() ? 1 : 0,
+                List.of()
+        );
 
         try {
-            medicoClient.save(medico);
+            MedicoDto guardado = medicoClient.save(medico);
+            if (guardado != null && guardado.id() != null) {
+                List<Integer> ids = especialidadesListView.getItems().stream()
+                        .map(EspecialidadDto::id)
+                        .toList();
+                medicoClient.actualizarEspecialidades(guardado.id(), ids);
+            }
             cargar();
             nuevo();
             mensajeLabel.setText("Medico guardado.");
@@ -152,37 +163,67 @@ public class MedicosFxController {
 
     @FXML
     private void cambiarEstado() {
-        MedicoDto medico = medicosTable.getSelectionModel().getSelectedItem();
-        if (medico == null) {
+        MedicoDto seleccionado = medicosTable.getSelectionModel().getSelectedItem();
+        if (seleccionado == null) {
             mensajeLabel.setText("Seleccione un medico.");
             return;
         }
 
-        medico.setEstado(isActivo(medico) ? 0 : 1);
+        int nuevoEstado = isActivo(seleccionado) ? 0 : 1;
+        MedicoDto medicoModificado = new MedicoDto(
+                seleccionado.id(),
+                seleccionado.apellido(),
+                seleccionado.nombre(),
+                seleccionado.matricula(),
+                seleccionado.mail(),
+                seleccionado.telefono(),
+                seleccionado.observaciones(),
+                nuevoEstado,
+                List.of()
+        );
+
         try {
-            medicoClient.save(medico);
+            medicoClient.save(medicoModificado);
             cargar();
-            mensajeLabel.setText(isActivo(medico) ? "Medico reactivado." : "Medico dado de baja.");
+            mensajeLabel.setText(nuevoEstado == 1 ? "Medico reactivado." : "Medico dado de baja.");
         } catch (RuntimeException ex) {
             mensajeLabel.setText(ex.getMessage());
         }
     }
 
     @FXML
-    private void agregarEspecialidad(ActionEvent event) {
-        navigationService.showEspecialidades();
-        cargarComboEspecialidades();
+    private void agregarEspecialidad() {
+        EspecialidadDto sel = especialidadCombo.getValue();
+        if (sel == null) {
+            mensajeLabel.setText("Seleccione una especialidad del combo.");
+            return;
+        }
+        boolean yaAsignada = especialidadesListView.getItems().stream()
+                .anyMatch(e -> e.id().equals(sel.id()));
+        if (!yaAsignada) {
+            especialidadesListView.getItems().add(sel);
+        }
+        especialidadCombo.setValue(null);
+        mensajeLabel.setText("");
+    }
+
+    @FXML
+    private void quitarEspecialidad() {
+        EspecialidadDto sel = especialidadesListView.getSelectionModel().getSelectedItem();
+        if (sel != null) {
+            especialidadesListView.getItems().remove(sel);
+        }
     }
 
     private void cargarComboEspecialidades() {
         try {
-            List<String> nombres = especialidadClient.findAll().stream()
-                    .filter(EspecialidadDto::isEstado) // Solo las activas
-                    .map(EspecialidadDto::getNombre)
+            List<EspecialidadDto> activas = especialidadClient.findAll().stream()
+                    .filter(EspecialidadDto::estado)
+                    .sorted(Comparator.comparing(EspecialidadDto::nombre, String::compareToIgnoreCase))
                     .toList();
-            especialidadCombo.getItems().setAll(nombres);
+            especialidadCombo.getItems().setAll(activas);
         } catch (Exception e) {
-            mensajeLabel.setText("Error al refrescar especialidades.");
+            mensajeLabel.setText("Error al cargar especialidades.");
         }
     }
 
@@ -192,8 +233,8 @@ public class MedicosFxController {
         try {
             List<MedicoDto> datos = medicoClient.findAll().stream()
                     .filter(item -> coincideFiltro(item, filtro))
-                    .sorted(Comparator.comparing(MedicoDto::getApellido, Comparator.nullsLast(String::compareToIgnoreCase))
-                            .thenComparing(MedicoDto::getNombre, Comparator.nullsLast(String::compareToIgnoreCase)))
+                    .sorted(Comparator.comparing(MedicoDto::apellido, Comparator.nullsLast(String::compareToIgnoreCase))
+                            .thenComparing(MedicoDto::nombre, Comparator.nullsLast(String::compareToIgnoreCase)))
                     .toList();
             medicos.setAll(datos);
         } catch (RuntimeException ex) {
@@ -201,39 +242,43 @@ public class MedicosFxController {
         }
     }
 
-
     private void seleccionar(MedicoDto medico) {
-        if (medico == null) {
-            return;
-        }
-        apellidoField.setText(nullToEmpty(medico.getApellido()));
-        nombreField.setText(nullToEmpty(medico.getNombre()));
-        matriculaField.setText(toText(medico.getMatricula()));
-        mailField.setText(nullToEmpty(medico.getMail()));
-        telefonoField.setText(toText(medico.getTelefono()));
-        observacionesField.setText(nullToEmpty(medico.getObservaciones()));
+        if (medico == null) return;
+        apellidoField.setText(nullToEmpty(medico.apellido()));
+        nombreField.setText(nullToEmpty(medico.nombre()));
+        matriculaField.setText(toText(medico.matricula()));
+        mailField.setText(nullToEmpty(medico.mail()));
+        telefonoField.setText(toText(medico.telefono()));
+        observacionesField.setText(nullToEmpty(medico.observaciones()));
         estadoCheck.setSelected(isActivo(medico));
         mensajeLabel.setText("");
+
+        List<EspecialidadDto> especialidades = medico.especialidades() == null
+                ? List.of()
+                : medico.especialidades().stream()
+                .map(e -> new EspecialidadDto(e.id(), e.nombre(), e.estado()))
+                .sorted(Comparator.comparing(EspecialidadDto::nombre, Comparator.nullsLast(String::compareToIgnoreCase)))
+                .toList();
+        especialidadesListView.getItems().setAll(especialidades);
+        especialidadCombo.setValue(null);
     }
 
     private boolean coincideFiltro(MedicoDto medico, String filtro) {
-        if (filtro.isBlank()) {
-            return true;
-        }
-        return nullToEmpty(medico.getApellido()).toLowerCase(Locale.ROOT).contains(filtro)
-                || nullToEmpty(medico.getNombre()).toLowerCase(Locale.ROOT).contains(filtro)
-                || toText(medico.getMatricula()).contains(filtro);
+        if (filtro.isBlank()) return true;
+        return nullToEmpty(medico.apellido()).toLowerCase(Locale.ROOT).contains(filtro)
+                || nullToEmpty(medico.nombre()).toLowerCase(Locale.ROOT).contains(filtro)
+                || toText(medico.matricula()).contains(filtro);
     }
 
     private boolean isActivo(MedicoDto medico) {
-        return medico.getEstado() != null && medico.getEstado() == 1;
+        return medico.estado() != null && medico.estado() == 1;
     }
 
     private Integer parseInteger(String value) {
         try {
             return Integer.valueOf(value);
         } catch (NumberFormatException e) {
-            mensajeLabel.setText("El campo " + "matricula" + " debe ser numerico.");
+            mensajeLabel.setText("El campo matricula debe ser numerico.");
             return null;
         }
     }
@@ -242,7 +287,7 @@ public class MedicosFxController {
         try {
             return Long.valueOf(value);
         } catch (NumberFormatException e) {
-            mensajeLabel.setText("El campo " + "telefono" + " debe ser numerico.");
+            mensajeLabel.setText("El campo telefono debe ser numerico.");
             return null;
         }
     }

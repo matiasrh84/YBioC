@@ -6,17 +6,14 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import javafx.scene.control.*;
+import org.kordamp.ikonli.javafx.FontIcon;
+import org.kordamp.ikonli.materialdesign2.MaterialDesignC;
+import org.kordamp.ikonli.materialdesign2.MaterialDesignP;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -26,45 +23,38 @@ public class DerivacionesFxController {
 
     private final DerivacionClient derivacionClient;
     private final ObservableList<DerivacionDto> derivaciones = FXCollections.observableArrayList();
+    private DerivacionDto seleccionado;
 
     @FXML
     private TextField filtroField;
-
     @FXML
     private TextField nombreField;
-
     @FXML
     private TextField direccionField;
-
     @FXML
     private TextField telefonoField;
-
     @FXML
     private TextField mailField;
-
     @FXML
     private TextArea observacionesArea;
-
     @FXML
     private TableView<DerivacionDto> derivacionesTable;
-
-    @FXML
-    private TableColumn<DerivacionDto, String> idColumn;
-
     @FXML
     private TableColumn<DerivacionDto, String> nombreColumn;
-
     @FXML
     private TableColumn<DerivacionDto, String> direccionColumn;
-
     @FXML
     private TableColumn<DerivacionDto, String> telefonoColumn;
-
     @FXML
     private TableColumn<DerivacionDto, String> mailColumn;
-
+    @FXML
+    private Label modoLabel;
     @FXML
     private Label mensajeLabel;
+    @FXML
+    private Button guardarBtn;
+    @FXML
+    private Button cancelarBtn;
 
     public DerivacionesFxController(DerivacionClient derivacionClient) {
         this.derivacionClient = derivacionClient;
@@ -72,20 +62,87 @@ public class DerivacionesFxController {
 
     @FXML
     private void initialize() {
-        idColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(toText(data.getValue().getId())));
-        nombreColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(nullToEmpty(data.getValue().getNombre())));
-        direccionColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(nullToEmpty(data.getValue().getDireccion())));
-        telefonoColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(toText(data.getValue().getTelefono())));
-        mailColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(nullToEmpty(data.getValue().getMail())));
+        nombreColumn.setCellValueFactory(c -> new ReadOnlyStringWrapper(str(c.getValue().nombre())));
+        direccionColumn.setCellValueFactory(c -> new ReadOnlyStringWrapper(str(c.getValue().direccion())));
+        telefonoColumn.setCellValueFactory(c -> new ReadOnlyStringWrapper(str(c.getValue().telefono())));
+        mailColumn.setCellValueFactory(c -> new ReadOnlyStringWrapper(str(c.getValue().mail())));
         derivacionesTable.setItems(derivaciones);
-        derivacionesTable.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, selected) -> seleccionar(selected));
-        filtroField.textProperty().addListener((obs, oldValue, newValue) -> cargar());
-        nuevo();
+        derivacionesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+        derivacionesTable.getSelectionModel().selectedItemProperty()
+                .addListener((obs, old, item) -> seleccionar(item));
+        filtroField.textProperty().addListener((obs, old, val) -> cargar());
         cargar();
+        modoNuevo();
     }
 
     @FXML
-    private void nuevo() {
+    private void guardar() {
+        String nombre = trim(nombreField);
+        if (nombre.isBlank()) {
+            mensajeLabel.setText("El nombre es obligatorio.");
+            return;
+        }
+        String telefonoStr = trim(telefonoField);
+        Long telefono = null;
+        if (!telefonoStr.isBlank()) {
+            try {
+                telefono = Long.valueOf(telefonoStr);
+            } catch (NumberFormatException ex) {
+                mensajeLabel.setText("El teléfono debe ser numérico.");
+                return;
+            }
+        }
+        boolean esNuevo = seleccionado == null;
+        DerivacionDto dto = new DerivacionDto(
+                esNuevo ? null : seleccionado.id(),
+                nombre,
+                emptyToNull(trim(direccionField)),
+                telefono,
+                emptyToNull(trim(mailField)),
+                emptyToNull(trim(observacionesArea))
+        );
+        try {
+            derivacionClient.save(dto);
+            cargar();
+            modoNuevo();
+            mensajeLabel.setText(esNuevo ? "Derivación agregada." : "Derivación guardada.");
+        } catch (RuntimeException ex) {
+            mensajeLabel.setText(ex.getMessage());
+        }
+    }
+
+    @FXML
+    private void cancelar() {
+        modoNuevo();
+    }
+
+    @FXML
+    private void cargar() {
+        String filtro = trim(filtroField).toLowerCase(Locale.ROOT);
+        try {
+            List<DerivacionDto> datos = derivacionClient.findAll().stream()
+                    .filter(d -> coincide(d, filtro))
+                    .toList();
+            derivaciones.setAll(datos);
+        } catch (RuntimeException ex) {
+            mensajeLabel.setText(ex.getMessage());
+        }
+    }
+
+    private void seleccionar(DerivacionDto d) {
+        seleccionado = d;
+        if (d == null) return;
+        nombreField.setText(str(d.nombre()));
+        direccionField.setText(str(d.direccion()));
+        telefonoField.setText(str(d.telefono()));
+        mailField.setText(str(d.mail()));
+        observacionesArea.setText(str(d.observaciones()));
+        mensajeLabel.setText("");
+        modoEdicion(d);
+    }
+
+    private void modoNuevo() {
+        seleccionado = null;
         derivacionesTable.getSelectionModel().clearSelection();
         nombreField.clear();
         direccionField.clear();
@@ -94,108 +151,49 @@ public class DerivacionesFxController {
         observacionesArea.clear();
         mensajeLabel.setText("");
         nombreField.requestFocus();
+        modoLabel.setText("Nueva derivación");
+        modoLabel.getStyleClass().setAll("modo-label");
+        guardarBtn.setText("Agregar");
+        guardarBtn.setGraphic(icon(MaterialDesignP.PLUS, 18));
+        cancelarBtn.setVisible(false);
+        cancelarBtn.setManaged(false);
     }
 
-    @FXML
-    private void guardar() {
-        String nombre = text(nombreField);
-        if (nombre.isBlank()) {
-            mensajeLabel.setText("Ingrese el nombre de la derivacion.");
-            return;
-        }
-
-        Long telefono = parseLong(text(telefonoField));
-        if (!text(telefonoField).isBlank() && telefono == null) {
-            return;
-        }
-
-        DerivacionDto derivacion = derivacionesTable.getSelectionModel().getSelectedItem();
-        if (derivacion == null) {
-            derivacion = new DerivacionDto();
-        }
-
-        derivacion.setNombre(nombre);
-        derivacion.setDireccion(text(direccionField));
-        derivacion.setTelefono(telefono);
-        derivacion.setMail(text(mailField));
-        derivacion.setObservaciones(textArea(observacionesArea));
-
-        try {
-            derivacionClient.save(derivacion);
-            cargar();
-            nuevo();
-            mensajeLabel.setText("Derivacion guardada.");
-        } catch (RuntimeException ex) {
-            mensajeLabel.setText(ex.getMessage());
-        }
+    private void modoEdicion(DerivacionDto d) {
+        modoLabel.setText("Editando: " + str(d.nombre()));
+        modoLabel.getStyleClass().setAll("modo-label-editando");
+        guardarBtn.setText("Guardar");
+        guardarBtn.setGraphic(icon(MaterialDesignC.CONTENT_SAVE, 18));
+        cancelarBtn.setVisible(true);
+        cancelarBtn.setManaged(true);
     }
 
-    @FXML
-    private void salir() {
-        Stage stage = (Stage) nombreField.getScene().getWindow();
-        stage.close();
+    private boolean coincide(DerivacionDto d, String filtro) {
+        if (filtro.isBlank()) return true;
+        return str(d.nombre()).toLowerCase(Locale.ROOT).contains(filtro)
+                || str(d.direccion()).toLowerCase(Locale.ROOT).contains(filtro)
+                || str(d.mail()).toLowerCase(Locale.ROOT).contains(filtro);
     }
 
-    @FXML
-    private void cargar() {
-        String filtro = text(filtroField).toLowerCase(Locale.ROOT);
-        try {
-            List<DerivacionDto> datos = derivacionClient.findAll().stream()
-                    .filter(item -> coincideFiltro(item, filtro))
-                    .sorted(Comparator.comparing(DerivacionDto::getNombre, Comparator.nullsLast(String::compareToIgnoreCase)))
-                    .toList();
-            derivaciones.setAll(datos);
-        } catch (RuntimeException ex) {
-            mensajeLabel.setText(ex.getMessage());
-        }
+    private FontIcon icon(org.kordamp.ikonli.Ikon ikon, int size) {
+        FontIcon fi = new FontIcon(ikon);
+        fi.setIconSize(size);
+        return fi;
     }
 
-    private void seleccionar(DerivacionDto derivacion) {
-        if (derivacion == null) {
-            return;
-        }
-        nombreField.setText(nullToEmpty(derivacion.getNombre()));
-        direccionField.setText(nullToEmpty(derivacion.getDireccion()));
-        telefonoField.setText(toText(derivacion.getTelefono()));
-        mailField.setText(nullToEmpty(derivacion.getMail()));
-        observacionesArea.setText(nullToEmpty(derivacion.getObservaciones()));
-        mensajeLabel.setText("");
+    private String trim(TextField f) {
+        return f.getText() == null ? "" : f.getText().trim();
     }
 
-    private boolean coincideFiltro(DerivacionDto item, String filtro) {
-        if (filtro.isBlank()) {
-            return true;
-        }
-        return nullToEmpty(item.getNombre()).toLowerCase(Locale.ROOT).contains(filtro)
-                || nullToEmpty(item.getDireccion()).toLowerCase(Locale.ROOT).contains(filtro)
-                || nullToEmpty(item.getMail()).toLowerCase(Locale.ROOT).contains(filtro);
+    private String trim(TextArea a) {
+        return a.getText() == null ? "" : a.getText().trim();
     }
 
-    private Long parseLong(String value) {
-        if (value.isBlank()) {
-            return null;
-        }
-        try {
-            return Long.valueOf(value);
-        } catch (NumberFormatException ex) {
-            mensajeLabel.setText("El telefono debe ser numerico.");
-            return null;
-        }
+    private String str(Object v) {
+        return v == null ? "" : v.toString();
     }
 
-    private String text(TextField field) {
-        return field.getText() == null ? "" : field.getText().trim();
-    }
-
-    private String textArea(TextArea area) {
-        return area.getText() == null ? "" : area.getText().trim();
-    }
-
-    private String toText(Object value) {
-        return value == null ? "" : value.toString();
-    }
-
-    private String nullToEmpty(String value) {
-        return value == null ? "" : value;
+    private String emptyToNull(String s) {
+        return s.isBlank() ? null : s;
     }
 }

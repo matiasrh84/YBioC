@@ -55,12 +55,14 @@ public class AnticipoFxController {
             return;
         }
 
-        AnticipoDto dto = new AnticipoDto();
-        dto.setAnticipo(monto);
-        dto.setIdOrden(idOrden);
-        dto.setEstado(1);
-        dto.setFecha(LocalDate.now());
-        dto.setObservacion(textArea(observacionArea));
+        AnticipoDto dto = new AnticipoDto(
+                null,
+                monto,
+                idOrden,
+                1,
+                LocalDate.now().toString(),
+                textArea(observacionArea)
+        );
 
         try {
             anticipoClient.save(dto);

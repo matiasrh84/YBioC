@@ -6,17 +6,16 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import javafx.scene.control.*;
+import org.kordamp.ikonli.javafx.FontIcon;
+import org.kordamp.ikonli.materialdesign2.MaterialDesignC;
+import org.kordamp.ikonli.materialdesign2.MaterialDesignP;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
@@ -28,24 +27,26 @@ public class TitulosFxController {
 
     @FXML
     private TableView<TituloDto> tablaTitulos;
-
-    @FXML
-    private TableColumn<TituloDto, String> idColumn;
-
     @FXML
     private TableColumn<TituloDto, String> nombreColumn;
-
     @FXML
     private TableColumn<TituloDto, String> estadoColumn;
-
     @FXML
     private TableColumn<TituloDto, String> prioridadColumn;
-
+    @FXML
+    private TextField filtroField;
     @FXML
     private TextField txtTitulo;
-
+    @FXML
+    private Label modoLabel;
     @FXML
     private Label mensajeLabel;
+    @FXML
+    private Button guardarBtn;
+    @FXML
+    private Button cancelarBtn;
+    @FXML
+    private Button bajaBtn;
 
     public TitulosFxController(TituloClient tituloClient) {
         this.tituloClient = tituloClient;
@@ -53,79 +54,66 @@ public class TitulosFxController {
 
     @FXML
     public void initialize() {
-        idColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(toText(data.getValue().getId())));
-        nombreColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(toText(data.getValue().getNombre())));
-        estadoColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(toEstado(data.getValue().getEstado())));
-        prioridadColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(toText(data.getValue().getPrioridad())));
+        nombreColumn.setCellValueFactory(c -> new ReadOnlyStringWrapper(str(c.getValue().nombre())));
+        estadoColumn.setCellValueFactory(c -> new ReadOnlyStringWrapper(c.getValue().estado() ? "Activo" : "Inactivo"));
+        prioridadColumn.setCellValueFactory(c -> new ReadOnlyStringWrapper(str(c.getValue().prioridad())));
         tablaTitulos.setItems(titulos);
-        tablaTitulos.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, item) -> seleccionar(item));
+        tablaTitulos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+        tablaTitulos.getSelectionModel().selectedItemProperty()
+                .addListener((obs, old, item) -> seleccionar(item));
         cargar();
-        nuevo();
-    }
-
-    @FXML
-    private void nuevo() {
-        seleccionado = null;
-        tablaTitulos.getSelectionModel().clearSelection();
-        txtTitulo.clear();
-        mensajeLabel.setText("");
-        txtTitulo.requestFocus();
+        modoNuevo();
     }
 
     @FXML
     private void guardar() {
-        String nombre = text(txtTitulo);
+        String nombre = txtTitulo.getText() == null ? "" : txtTitulo.getText().trim();
         if (nombre.isBlank()) {
-            mensajeLabel.setText("Ingrese el nombre del titulo.");
+            mensajeLabel.setText("Ingrese el nombre del título.");
             return;
         }
-
-        TituloDto dto = seleccionado == null ? new TituloDto() : seleccionado;
-        dto.setNombre(nombre);
-        if (dto.getEstado() == null) {
-            dto.setEstado(1);
-        }
-        if (dto.getPrioridad() == null) {
-            dto.setPrioridad(siguientePrioridad());
-        }
-
+        boolean esNuevo = seleccionado == null;
+        TituloDto dto = new TituloDto(
+                esNuevo ? null : seleccionado.id(),
+                nombre,
+                seleccionado != null ? seleccionado.estado() : true,
+                seleccionado != null ? seleccionado.prioridad() : null
+        );
         try {
             tituloClient.save(dto);
             cargar();
-            nuevo();
-            mensajeLabel.setText("Titulo guardado.");
+            modoNuevo();
+            mensajeLabel.setText(esNuevo ? "Título agregado." : "Título guardado.");
         } catch (RuntimeException ex) {
             mensajeLabel.setText(ex.getMessage());
         }
     }
 
     @FXML
-    private void borrar() {
-        if (seleccionado == null || seleccionado.getId() == null) {
-            mensajeLabel.setText("Seleccione un titulo para borrar.");
-            return;
-        }
-
+    private void cambiarEstado() {
+        if (seleccionado == null) return;
+        TituloDto dto = new TituloDto(seleccionado.id(), seleccionado.nombre(), !seleccionado.estado(), seleccionado.prioridad());
         try {
-            tituloClient.deleteById(seleccionado.getId());
+            tituloClient.save(dto);
             cargar();
-            nuevo();
-            mensajeLabel.setText("Titulo borrado.");
+            modoNuevo();
+            mensajeLabel.setText(dto.estado() ? "Título reactivado." : "Título dado de baja.");
         } catch (RuntimeException ex) {
             mensajeLabel.setText(ex.getMessage());
         }
     }
 
     @FXML
-    private void salir() {
-        Stage stage = (Stage) txtTitulo.getScene().getWindow();
-        stage.close();
+    private void cancelar() {
+        modoNuevo();
     }
 
+    @FXML
     private void cargar() {
+        String filtro = filtroField.getText() == null ? "" : filtroField.getText().trim().toLowerCase(Locale.ROOT);
         try {
             List<TituloDto> datos = tituloClient.findAll().stream()
-                    .sorted(Comparator.comparing(t -> toText(t.getNombre()), String.CASE_INSENSITIVE_ORDER))
+                    .filter(t -> filtro.isBlank() || t.nombre() != null && t.nombre().toLowerCase(Locale.ROOT).contains(filtro))
                     .toList();
             titulos.setAll(datos);
         } catch (RuntimeException ex) {
@@ -135,30 +123,47 @@ public class TitulosFxController {
 
     private void seleccionar(TituloDto item) {
         seleccionado = item;
-        if (item == null) {
-            return;
-        }
-        txtTitulo.setText(toText(item.getNombre()));
+        if (item == null) return;
+        txtTitulo.setText(str(item.nombre()));
         mensajeLabel.setText("");
+        modoEdicion(item);
     }
 
-    private int siguientePrioridad() {
-        return titulos.stream()
-                .map(TituloDto::getPrioridad)
-                .filter(v -> v != null)
-                .max(Integer::compareTo)
-                .orElse(0) + 1;
+    private void modoNuevo() {
+        seleccionado = null;
+        tablaTitulos.getSelectionModel().clearSelection();
+        txtTitulo.clear();
+        mensajeLabel.setText("");
+        txtTitulo.requestFocus();
+        modoLabel.setText("Nuevo título");
+        modoLabel.getStyleClass().setAll("modo-label");
+        guardarBtn.setText("Agregar");
+        guardarBtn.setGraphic(icon(MaterialDesignP.PLUS, 18));
+        cancelarBtn.setVisible(false);
+        cancelarBtn.setManaged(false);
+        bajaBtn.setVisible(false);
+        bajaBtn.setManaged(false);
     }
 
-    private String text(TextField field) {
-        return field.getText() == null ? "" : field.getText().trim();
+    private void modoEdicion(TituloDto item) {
+        modoLabel.setText("Editando: " + str(item.nombre()));
+        modoLabel.getStyleClass().setAll("modo-label-editando");
+        guardarBtn.setText("Guardar");
+        guardarBtn.setGraphic(icon(MaterialDesignC.CONTENT_SAVE, 18));
+        cancelarBtn.setVisible(true);
+        cancelarBtn.setManaged(true);
+        bajaBtn.setVisible(true);
+        bajaBtn.setManaged(true);
+        bajaBtn.setText(item.estado() ? "Dar de baja" : "Reactivar");
     }
 
-    private String toText(Object value) {
-        return value == null ? "" : value.toString();
+    private FontIcon icon(org.kordamp.ikonli.Ikon ikon, int size) {
+        FontIcon fi = new FontIcon(ikon);
+        fi.setIconSize(size);
+        return fi;
     }
 
-    private String toEstado(Integer estado) {
-        return estado != null && estado == 1 ? "Activo" : "Inactivo";
+    private String str(Object v) {
+        return v == null ? "" : v.toString();
     }
 }

@@ -3,13 +3,10 @@ package com.ybc.ybioq.fx.controller;
 import com.ybc.ybioq.fx.client.AuthClient;
 import com.ybc.ybioq.fx.client.dto.UsuarioSession;
 import com.ybc.ybioq.fx.navigation.FxNavigationService;
+import com.ybc.ybioq.fx.session.SessionContext;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -20,6 +17,7 @@ public class LoginFxController {
 
     private final AuthClient authClient;
     private final FxNavigationService navigationService;
+    private final SessionContext sessionContext;
 
     @FXML
     private TextField usuarioField;
@@ -36,9 +34,12 @@ public class LoginFxController {
     @FXML
     private ProgressIndicator progressIndicator;
 
-    public LoginFxController(AuthClient authClient, FxNavigationService navigationService) {
+    public LoginFxController(AuthClient authClient,
+                             FxNavigationService navigationService,
+                             SessionContext sessionContext) {
         this.authClient = authClient;
         this.navigationService = navigationService;
+        this.sessionContext = sessionContext;
     }
 
     @FXML
@@ -65,6 +66,7 @@ public class LoginFxController {
         };
         task.setOnSucceeded(event -> {
             setLoading(false);
+            sessionContext.iniciar(task.getValue());
             navigationService.showMain(task.getValue());
         });
         task.setOnFailed(event -> {
