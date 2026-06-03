@@ -26,17 +26,14 @@ public class MetodoClient extends BaseClient {
     public List<MetodoDto> findAll() {
         try {
             ResponseEntity<List<MetodoDto>> response = restTemplate.exchange(
-                    serviceUrl,
-                    HttpMethod.GET,
-                    HttpEntity.EMPTY,
+                    serviceUrl, HttpMethod.GET, HttpEntity.EMPTY,
                     new ParameterizedTypeReference<>() {
-                    }
-            );
+                    });
             return response.getBody() == null ? Collections.emptyList() : response.getBody();
         } catch (RestClientResponseException ex) {
             throw toRuntimeException(ex);
         } catch (Exception ex) {
-            throw new RuntimeException("No se pudo obtener los metodos.", ex);
+            throw new RuntimeException("No se pudo obtener los métodos.", ex);
         }
     }
 
@@ -46,7 +43,7 @@ public class MetodoClient extends BaseClient {
         } catch (RestClientResponseException ex) {
             throw toRuntimeException(ex);
         } catch (Exception ex) {
-            throw new RuntimeException("No se pudo guardar el metodo.", ex);
+            throw new RuntimeException("No se pudo guardar el método.", ex);
         }
     }
 }

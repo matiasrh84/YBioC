@@ -26,17 +26,14 @@ public class DerivacionClient extends BaseClient {
     public List<DerivacionDto> findAll() {
         try {
             ResponseEntity<List<DerivacionDto>> response = restTemplate.exchange(
-                    serviceUrl,
-                    HttpMethod.GET,
-                    HttpEntity.EMPTY,
+                    serviceUrl, HttpMethod.GET, HttpEntity.EMPTY,
                     new ParameterizedTypeReference<>() {
-                    }
-            );
+                    });
             return response.getBody() == null ? Collections.emptyList() : response.getBody();
         } catch (RestClientResponseException ex) {
             throw toRuntimeException(ex);
         } catch (Exception ex) {
-            throw new RuntimeException("No se pudo obtener derivaciones.", ex);
+            throw new RuntimeException("No se pudo obtener las derivaciones.", ex);
         }
     }
 
@@ -46,7 +43,7 @@ public class DerivacionClient extends BaseClient {
         } catch (RestClientResponseException ex) {
             throw toRuntimeException(ex);
         } catch (Exception ex) {
-            throw new RuntimeException("No se pudo guardar la derivacion.", ex);
+            throw new RuntimeException("No se pudo guardar la derivación.", ex);
         }
     }
 }

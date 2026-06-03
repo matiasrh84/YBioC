@@ -26,17 +26,14 @@ public class TituloClient extends BaseClient {
     public List<TituloDto> findAll() {
         try {
             ResponseEntity<List<TituloDto>> response = restTemplate.exchange(
-                    serviceUrl,
-                    HttpMethod.GET,
-                    HttpEntity.EMPTY,
+                    serviceUrl, HttpMethod.GET, HttpEntity.EMPTY,
                     new ParameterizedTypeReference<>() {
-                    }
-            );
+                    });
             return response.getBody() == null ? Collections.emptyList() : response.getBody();
         } catch (RestClientResponseException ex) {
             throw toRuntimeException(ex);
         } catch (Exception ex) {
-            throw new RuntimeException("No se pudo obtener los titulos.", ex);
+            throw new RuntimeException("No se pudo obtener los títulos.", ex);
         }
     }
 
@@ -46,17 +43,7 @@ public class TituloClient extends BaseClient {
         } catch (RestClientResponseException ex) {
             throw toRuntimeException(ex);
         } catch (Exception ex) {
-            throw new RuntimeException("No se pudo guardar el titulo.", ex);
-        }
-    }
-
-    public void deleteById(Integer id) {
-        try {
-            restTemplate.delete(serviceUrl + "/" + id);
-        } catch (RestClientResponseException ex) {
-            throw toRuntimeException(ex);
-        } catch (Exception ex) {
-            throw new RuntimeException("No se pudo borrar el titulo.", ex);
+            throw new RuntimeException("No se pudo guardar el título.", ex);
         }
     }
 }
