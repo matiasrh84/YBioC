@@ -28,7 +28,7 @@
             styleClass="content" stylesheets="@styles.css"
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.ybc.ybioq.fx.controller.AnalisisControllerNewFx">
+            fx:controller="com.ybc.ybioq.fx.controller.AnalisisFxController">
 
     <!-- ── Barra superior ─────────────────────────────────────── -->
     <top>

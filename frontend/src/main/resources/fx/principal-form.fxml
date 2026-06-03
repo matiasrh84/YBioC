@@ -25,7 +25,7 @@
 <BorderPane prefHeight="860.0" prefWidth="1360.0"
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.ybc.ybioq.fx.controller.PrincipalController">
+            fx:controller="com.ybc.ybioq.fx.controller.PrincipalFxController">
 
     <!-- ═══════════════════════════════════════════════════════════ -->
     <!-- Menú lateral                                                -->
