@@ -4,6 +4,13 @@ import com.ybc.ybioq.entity.local.Practica;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface PracticaRepository extends JpaRepository<Practica, Integer> {
+
+    List<Practica> findAllByOrderByDeterminacionAsc();
+
+    Optional<Practica> findByCodigo(Integer codigo);
 }

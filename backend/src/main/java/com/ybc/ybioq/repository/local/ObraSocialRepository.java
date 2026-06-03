@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface ObraSocialRepository extends JpaRepository<ObraSocial, Integer> {
 
     Optional<ObraSocial> findObraSocialByIntCodigoAndNombre(String intCodigoObraSocial, String nombreObraSocial);
+
+    boolean existsByCodigoAndIdNot(String codigo, Integer id);
 }
