@@ -40,8 +40,20 @@ public class ConfiguracionReporte {
     private String observacion2;
 
     @Lob
-    @Column(name = "logo")
+    @Column(name = "logo", columnDefinition = "LONGBLOB")
     private byte[] logo;
+
+    @Lob
+    @Column(name = "firma", columnDefinition = "LONGBLOB")
+    private byte[] firma;
+
+    @Lob
+    @Column(name = "portada", columnDefinition = "LONGBLOB")
+    private byte[] portada;
+
+    @Lob
+    @Column(name = "membrete", columnDefinition = "LONGBLOB")
+    private byte[] membrete;
 
     @Column(name = "formato", length = 20)
     private String formato;

@@ -3,7 +3,6 @@ package com.ybc.ybioq.entity.local;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -18,8 +17,7 @@ public class Persona {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @NaturalId
-    @Column(name = "dni", nullable = false, unique = true)
+    @Column(name = "dni", unique = true)
     private Integer dni;
 
     @Column(name = "apellido", length = 45)
@@ -34,13 +32,13 @@ public class Persona {
     @Column(name = "sexo", length = 1)
     private String sexo;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "id_localidad", nullable = false)
+    @JoinColumn(name = "id_localidad", nullable = true)
     private Localidad idLocalidad;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "id_provincia", nullable = false)
+    @JoinColumn(name = "id_provincia", nullable = true)
     private Provincia idProvincia;
 }

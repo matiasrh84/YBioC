@@ -18,9 +18,9 @@ public class Titulo {
     @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
 
-    @Column(name = "estado", nullable = false)
-    private Integer estado;
+    @Column(name = "estado", nullable = false, columnDefinition = "tinyint(1) DEFAULT 1")
+    private boolean estado = true;
 
-    @Column(name = "prioridad", nullable = false)
+    @Column(name = "prioridad")
     private Integer prioridad;
 }

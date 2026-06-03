@@ -50,20 +50,20 @@ public class ObraSocial {
     @Column(name = "direccion", length = 45)
     private String direccion;
 
-    @Column(name = "factura_alta_complejidad")
-    private Boolean facturaAltaComplejidad;
+    @Column(name = "factura_alta_complejidad", nullable = false, columnDefinition = "tinyint(1) DEFAULT 0")
+    private boolean facturaAltaComplejidad;
 
-    @Column(name = "factura_no_nomenclados")
-    private Boolean facturaNoNomenclados;
+    @Column(name = "factura_no_nomenclados", nullable = false, columnDefinition = "tinyint(1) DEFAULT 0")
+    private boolean facturaNoNomenclados;
 
-    @Column(name = "factura_por_paciente")
-    private Boolean facturaPorPaciente;
+    @Column(name = "factura_por_paciente", nullable = false, columnDefinition = "tinyint(1) DEFAULT 0")
+    private boolean facturaPorPaciente;
 
-    @Column(name = "subtotal_por_paciente")
-    private Boolean subtotalPorPaciente;
+    @Column(name = "subtotal_por_paciente", nullable = false, columnDefinition = "tinyint(1) DEFAULT 0")
+    private boolean subtotalPorPaciente;
 
-    @Column(name = "tiene_categorizacion")
-    private Boolean tieneCategorizacion;
+    @Column(name = "tiene_categorizacion", nullable = false, columnDefinition = "tinyint(1) DEFAULT 0")
+    private boolean tieneCategorizacion;
 
     @Column(name = "factura_por", length = 45)
     private String facturaPor;
@@ -128,8 +128,8 @@ public class ObraSocial {
     @Column(name = "periodo_nbu", length = 4)
     private String periodoNbu;
 
-    @Column(name = "estado")
-    private Integer estado;
+    @Column(name = "estado", nullable = false, columnDefinition = "tinyint(1) DEFAULT 0")
+    private boolean estado;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

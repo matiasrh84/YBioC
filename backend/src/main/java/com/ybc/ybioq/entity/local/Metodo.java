@@ -17,4 +17,7 @@ public class Metodo {
 
     @Column(name = "nombre", length = 1000)
     private String nombre;
+
+    @Column(name = "estado", nullable = false, columnDefinition = "tinyint(1) DEFAULT 1")
+    private boolean estado = true;
 }

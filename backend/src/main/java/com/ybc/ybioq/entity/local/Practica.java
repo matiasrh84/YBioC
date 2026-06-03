@@ -20,10 +20,10 @@ public class Practica {
     private Integer id;
 
     @Column(name = "codigo", nullable = false)
-    private Integer codigoPractica;
+    private Integer codigo;
 
     @Column(name = "determinacion")
-    private String determinacionPractica;
+    private String determinacion;
 
     @Column(name = "instrucciones")
     private String instrucciones;
@@ -48,8 +48,9 @@ public class Practica {
 
     @Column(name = "tiempo_procesamiento", nullable = false)
     private Integer tiempoProcesamiento;
-    @Column(name = "tipo_informe", nullable = false)
-    private Integer tipoInforme;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_informe", nullable = false, length = 30)
+    private TipoInforme tipoInforme;
 
     @Column(name = "precio1", nullable = false, precision = 10, scale = 2)
     private BigDecimal precio1;

@@ -16,5 +16,8 @@ public class Unidad {
     private Integer id;
 
     @Column(name = "nombre", length = 45)
-    private String nombreUni;
+    private String nombre;
+
+    @Column(name = "estado", nullable = false, columnDefinition = "tinyint(1) DEFAULT 1")
+    private boolean estado = true;
 }
