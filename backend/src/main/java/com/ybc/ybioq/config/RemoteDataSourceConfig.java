@@ -14,6 +14,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.util.Map;
 
 @Configuration
 @EnableTransactionManagement
@@ -36,8 +37,12 @@ public class RemoteDataSourceConfig {
             @Qualifier("remoteDataSource") DataSource dataSource) {
         return builder
                 .dataSource(dataSource)
-                .packages("com.ybc.ybioq.entity.remote") // Paquete donde están las entidades de la base remota
+                .packages("com.ybc.ybioq.entity.remote")
                 .persistenceUnit("remote")
+                .properties(Map.of(
+                        "hibernate.hbm2ddl.auto", "update",
+                        "hibernate.show_sql", "true"
+                ))
                 .build();
     }
 

@@ -15,6 +15,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.util.Map;
 
 @Configuration
 @EnableTransactionManagement
@@ -39,8 +40,12 @@ public class LocalDataSourceConfig {
             @Qualifier("localDataSource") DataSource dataSource) {
         return builder
                 .dataSource(dataSource)
-                .packages("com.ybc.ybioq.entity.local") // Paquete donde están las entidades de la base local
+                .packages("com.ybc.ybioq.entity.local")
                 .persistenceUnit("local")
+                .properties(Map.of(
+                        "hibernate.hbm2ddl.auto", "update",
+                        "hibernate.show_sql", "true"
+                ))
                 .build();
     }
 
