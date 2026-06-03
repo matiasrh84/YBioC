@@ -30,6 +30,10 @@ public class MedicoService extends AbstractCrudService<Medico, Integer> {
         return medicoRepository.findMedicosConEspecialidades();
     }
 
+    public Optional<Medico> findByIdConEspecialidades(Integer id) {
+        return medicoRepository.findByIdConEspecialidades(id);
+    }
+
     public Medico guardarMedico(Medico medico) {
         return save(medico);
     }
