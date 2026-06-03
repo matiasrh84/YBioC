@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<HBox spacing="14.0"
+      styleClass="content"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ybc.ybioq.fx.controller.PracticasFxController">
+    <padding>
+        <Insets bottom="14.0" left="14.0" right="14.0" top="14.0"/>
+    </padding>
+
+    <!-- ====== IZQUIERDA: tabla ====== -->
+    <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+
+        <HBox alignment="CENTER_LEFT" spacing="8.0" styleClass="editor-panel" style="-fx-padding: 8px 12px;">
+            <FontIcon iconLiteral="mdi2m-magnify" iconSize="18" iconColor="#64727d"/>
+            <TextField fx:id="filtroField" promptText="Buscar por código o nombre..." HBox.hgrow="ALWAYS"/>
+        </HBox>
+
+        <TableView fx:id="tablaPracticas" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colCodigo"  text="Código"  minWidth="60.0"/>
+                <TableColumn fx:id="colNombre"  text="Nombre"/>
+                <TableColumn fx:id="colSeccion" text="Sección" minWidth="100.0"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+    <!-- ====== DERECHA: formulario ====== -->
+    <VBox minWidth="340.0" prefWidth="380.0" spacing="10.0" styleClass="editor-panel">
+
+        <Label styleClass="panel-title" text="Datos de práctica"/>
+
+        <!-- Código y Nombre -->
+        <GridPane hgap="10.0" vgap="8.0">
+            <VBox spacing="4.0" GridPane.columnIndex="0" GridPane.rowIndex="0" minWidth="100.0">
+                <Label styleClass="field-label" text="Código *"/>
+                <TextField fx:id="txtCodigo" onAction="#guardar" promptText="Ej: 475"/>
+            </VBox>
+            <VBox spacing="4.0" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.hgrow="ALWAYS">
+                <Label styleClass="field-label" text="Nombre *"/>
+                <TextField fx:id="txtNombre" onAction="#guardar" promptText="En mayúsculas"/>
+            </VBox>
+        </GridPane>
+
+        <!-- Sección y Tiempo procesamiento -->
+        <GridPane hgap="10.0" vgap="8.0">
+            <VBox spacing="4.0" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.hgrow="ALWAYS">
+                <Label styleClass="field-label" text="Sección"/>
+                <ComboBox fx:id="cboSeccion" maxWidth="Infinity"/>
+            </VBox>
+            <VBox spacing="4.0" GridPane.columnIndex="1" GridPane.rowIndex="0" minWidth="100.0">
+                <Label styleClass="field-label" text="Tiempo (días)"/>
+                <ComboBox fx:id="cboTiempo" maxWidth="Infinity"/>
+            </VBox>
+        </GridPane>
+
+        <!-- Tipo de informe -->
+        <VBox spacing="4.0">
+            <Label styleClass="field-label" text="Tipo de informe"/>
+            <ComboBox fx:id="cboTipoInforme" maxWidth="Infinity"/>
+        </VBox>
+
+        <!-- Derivación -->
+        <VBox spacing="4.0">
+            <Label styleClass="field-label" text="Derivación"/>
+            <HBox spacing="8.0" alignment="CENTER_LEFT">
+                <ToggleButton fx:id="tglDeriva" text="Deriva"/>
+                <ComboBox fx:id="cboDerivacion" disable="true" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+            </HBox>
+        </VBox>
+
+        <!-- Instrucciones -->
+        <VBox spacing="4.0">
+            <Label styleClass="field-label" text="Instrucciones para el paciente"/>
+            <TextArea fx:id="txtInstrucciones" prefHeight="60.0" promptText="Instrucciones previas..." wrapText="true"/>
+        </VBox>
+
+        <Separator/>
+
+        <!-- Precios -->
+        <Label styleClass="field-label" text="Precios"/>
+        <GridPane hgap="8.0" vgap="6.0">
+            <VBox spacing="4.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <Label styleClass="field-label" text="Particular"/>
+                <TextField fx:id="txtPrecio1" promptText="0.00"/>
+            </VBox>
+            <VBox spacing="4.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <Label styleClass="field-label" text="Precio 2"/>
+                <TextField fx:id="txtPrecio2" promptText="0.00"/>
+            </VBox>
+            <VBox spacing="4.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                <Label styleClass="field-label" text="Precio 3"/>
+                <TextField fx:id="txtPrecio3" promptText="0.00"/>
+            </VBox>
+            <VBox spacing="4.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <Label styleClass="field-label" text="Precio 4"/>
+                <TextField fx:id="txtPrecio4" promptText="0.00"/>
+            </VBox>
+        </GridPane>
+
+        <Region VBox.vgrow="ALWAYS"/>
+
+        <Label fx:id="mensajeLabel" styleClass="form-message" wrapText="true"/>
+
+        <HBox spacing="8.0">
+            <Button maxWidth="Infinity" onAction="#nuevo" styleClass="secondary-button"
+                    text="Nuevo" HBox.hgrow="ALWAYS"/>
+            <Button maxWidth="Infinity" onAction="#guardar" text="Guardar" HBox.hgrow="ALWAYS">
+                <graphic><FontIcon iconLiteral="mdi2p-plus" iconSize="16" iconColor="white"/></graphic>
+            </Button>
+        </HBox>
+
+    </VBox>
+</HBox>

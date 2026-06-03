@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -30,6 +31,12 @@
         <Label styleClass="section-title" text="Detalle de Practicas por Orden"/>
         <Label styleClass="section-subtitle" text="Practicas asociadas al protocolo seleccionado y su numero de orden."/>
     </VBox>
+
+    <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="editor-panel">
+        <TextField fx:id="txtBuscarOrdenDetalle" promptText="Número de orden" HBox.hgrow="ALWAYS"/>
+        <Button onAction="#buscarOrden" text="Buscar"/>
+        <Label fx:id="lblMensajeDetalle" textFill="#c92525"/>
+    </HBox>
 
     <GridPane hgap="10.0" vgap="10.0" styleClass="editor-panel">
         <columnConstraints>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
+                  http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="informe_seccion_columnas"
+              pageWidth="595" pageHeight="421" orientation="Landscape"
+              columnCount="2" columnWidth="267" columnSpacing="10"
+              leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0"
+              uuid="aa000002-0000-0000-0000-000000000002">
+
+    <!-- Análisis en dos columnas. JasperReports distribuye automáticamente
+         los registros del datasource llenando primero la columna izquierda
+         y luego la derecha. El bioquímico agrupa los análisis de dos columnas
+         (ej: hemograma diferencial) asignando tipo_informe=COLUMNAS a esas prácticas. -->
+
+    <parameter name="laboratorio"     class="java.lang.String"/>
+    <parameter name="paciente"        class="java.lang.String"/>
+    <parameter name="protocolo"       class="java.lang.String"/>
+    <parameter name="fecha"           class="java.lang.String"/>
+    <parameter name="medico"          class="java.lang.String"/>
+    <parameter name="logo"            class="java.lang.Object"/>
+    <parameter name="membrete"        class="java.lang.Object"/>
+    <parameter name="observacion_lab" class="java.lang.String"/>
+
+    <field name="seccion"    class="java.lang.String"/>
+    <field name="analisis"   class="java.lang.String"/>
+    <field name="resultado"  class="java.lang.String"/>
+    <field name="unidad"     class="java.lang.String"/>
+    <field name="referencia" class="java.lang.String"/>
+    <field name="metodo"     class="java.lang.String"/>
+    <field name="observacion" class="java.lang.String"/>
+
+    <group name="seccion" keepTogether="true">
+        <groupExpression><![CDATA[$F{seccion}]]></groupExpression>
+        <groupHeader>
+            <band height="16" splitType="Prevent">
+                <textField isBlankWhenNull="true">
+                    <reportElement x="0" y="2" width="267" height="12"
+                                   isRemoveLineWhenBlank="true"
+                                   uuid="aa000002-0001-0000-0000-000000000002"/>
+                    <textElement><font size="9" isBold="true"/></textElement>
+                    <textFieldExpression><![CDATA[$F{seccion}]]></textFieldExpression>
+                </textField>
+            </band>
+        </groupHeader>
+        <groupFooter>
+            <band height="16">
+                <textField isStretchWithOverflow="true" isBlankWhenNull="true">
+                    <reportElement x="0" y="2" width="267" height="12"
+                                   isRemoveLineWhenBlank="true"
+                                   uuid="aa000002-0002-0000-0000-000000000002"/>
+                    <textElement><font size="8" isItalic="true"/></textElement>
+                    <textFieldExpression><![CDATA[$F{observacion}]]></textFieldExpression>
+                </textField>
+                <line>
+                    <reportElement x="0" y="14" width="267" height="1"
+                                   uuid="aa000002-0003-0000-0000-000000000002"/>
+                    <graphicElement><pen lineWidth="0.5" lineColor="#cccccc"/></graphicElement>
+                </line>
+            </band>
+        </groupFooter>
+    </group>
+
+    <background><band splitType="Stretch"/></background>
+
+    <pageHeader>
+        <band height="44" splitType="Stretch">
+            <image onErrorType="Blank">
+                <reportElement x="0" y="0" width="555" height="40"
+                               uuid="aa000002-0010-0000-0000-000000000002">
+                    <printWhenExpression><![CDATA[$P{membrete} != null]]></printWhenExpression>
+                </reportElement>
+                <imageExpression><![CDATA[$P{membrete}]]></imageExpression>
+            </image>
+            <textField isBlankWhenNull="true">
+                <reportElement x="0" y="0" width="400" height="16"
+                               uuid="aa000002-0011-0000-0000-000000000002">
+                    <printWhenExpression><![CDATA[$P{membrete} == null]]></printWhenExpression>
+                </reportElement>
+                <textElement><font size="11" isBold="true"/></textElement>
+                <textFieldExpression><![CDATA[$P{laboratorio}]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement x="0" y="42" width="555" height="1"
+                               uuid="aa000002-0012-0000-0000-000000000002"/>
+                <graphicElement><pen lineWidth="0.5"/></graphicElement>
+            </line>
+        </band>
+    </pageHeader>
+
+    <columnHeader>
+        <band height="13">
+            <staticText>
+                <reportElement x="0" y="0" width="110" height="11"
+                               uuid="aa000002-0020-0000-0000-000000000002"/>
+                <box><bottomPen lineWidth="0.5"/></box>
+                <textElement><font fontName="Arial" size="9"/></textElement>
+                <text><![CDATA[Determinación]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="110" y="0" width="80" height="11"
+                               uuid="aa000002-0021-0000-0000-000000000002"/>
+                <box><bottomPen lineWidth="0.5"/></box>
+                <textElement textAlignment="Right"><font fontName="Arial" size="9"/></textElement>
+                <text><![CDATA[Resultado]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="192" y="0" width="75" height="11"
+                               uuid="aa000002-0022-0000-0000-000000000002"/>
+                <box><bottomPen lineWidth="0.5"/></box>
+                <textElement><font fontName="Arial" size="9"/></textElement>
+                <text><![CDATA[Referencia]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+
+    <detail>
+        <band height="13" splitType="Stretch">
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true">
+                <reportElement x="0" y="1" width="108" height="12"
+                               isRemoveLineWhenBlank="true"
+                               uuid="aa000002-0030-0000-0000-000000000002"/>
+                <textElement><font size="9"/></textElement>
+                <textFieldExpression><![CDATA[$F{analisis}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true">
+                <reportElement x="110" y="1" width="80" height="12"
+                               isRemoveLineWhenBlank="true"
+                               uuid="aa000002-0031-0000-0000-000000000002"/>
+                <textElement textAlignment="Right"><font size="9" isBold="true"/></textElement>
+                <textFieldExpression><![CDATA[$F{resultado} + ($F{unidad} != null && !$F{unidad}.isBlank() ? "  " + $F{unidad} : "")]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true">
+                <reportElement x="192" y="1" width="75" height="12"
+                               isRemoveLineWhenBlank="true"
+                               uuid="aa000002-0032-0000-0000-000000000002"/>
+                <textElement><font size="8"/></textElement>
+                <textFieldExpression><![CDATA[$F{referencia}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+
+    <lastPageFooter>
+        <band height="20">
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true">
+                <reportElement x="0" y="3" width="555" height="15"
+                               isRemoveLineWhenBlank="true"
+                               uuid="aa000002-0040-0000-0000-000000000002"/>
+                <textElement><font size="8" isItalic="true"/></textElement>
+                <textFieldExpression><![CDATA[$P{observacion_lab}]]></textFieldExpression>
+            </textField>
+        </band>
+    </lastPageFooter>
+
+</jasperReport>

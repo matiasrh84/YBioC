@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
+                  http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="informe_portada_imagen"
+              pageWidth="595" pageHeight="842"
+              columnWidth="595" leftMargin="0" rightMargin="0"
+              topMargin="0" bottomMargin="0"
+              uuid="aa000005-0000-0000-0000-000000000005">
+
+    <!-- Portada personalizada: muestra la imagen cargada por el laboratorio
+         a página completa. Se usa cuando ConfiguracionReporte.portada != null. -->
+
+    <parameter name="portada" class="java.lang.Object"/>
+
+    <background><band splitType="Stretch"/></background>
+
+    <title>
+        <band height="421">
+            <image onErrorType="Blank" scaleImage="FillFrame">
+                <reportElement x="0" y="0" width="595" height="421"
+                               uuid="aa000005-0001-0000-0000-000000000005"/>
+                <imageExpression><![CDATA[$P{portada}]]></imageExpression>
+            </image>
+        </band>
+    </title>
+
+</jasperReport>

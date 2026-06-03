@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
@@ -15,24 +14,26 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.ComboBox?>
 <BorderPane prefHeight="860.0" prefWidth="1360.0"
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.ybc.ybioq.fx.controller.PrincipalController">
 
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- Menú lateral                                                -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
     <left>
-        <VBox prefWidth="248.0" spacing="8.0" style="-fx-background-color: #004d73;">
+        <VBox prefWidth="248.0" spacing="6.0" style="-fx-background-color: #004d73;">
             <children>
-                <VBox alignment="CENTER" prefHeight="164.0" style="-fx-background-color: #003a57;">
+                <VBox alignment="CENTER" prefHeight="130.0" style="-fx-background-color: #003a57;">
                     <children>
                         <Label text="YBIOQ" textFill="WHITE">
                             <font><Font name="System Bold" size="30.0"/></font>
@@ -45,272 +46,289 @@
 
                 <Label text="MENU PRINCIPAL" textFill="#9fc5d5">
                     <font><Font name="System Bold" size="12.0"/></font>
-                    <VBox.margin><Insets left="18.0" top="12.0"/></VBox.margin>
+                    <VBox.margin><Insets left="18.0" top="8.0"/></VBox.margin>
                 </Label>
 
-                <Button fx:id="btnMenuCargarPaciente"
-                        prefHeight="44.0"
+                <Button fx:id="btnMenuRecepcion" prefHeight="40.0"
                         style="-fx-background-color: transparent; -fx-text-fill: white; -fx-alignment: center-left; -fx-padding: 0 0 0 18; -fx-font-size: 14px;"
-                        text="> Cargar paciente"/>
-                <Button fx:id="btnMenuTurnos"
-                        prefHeight="44.0"
+                        text="> Recepcion"/>
+                <Button fx:id="btnMenuOrdenes" prefHeight="40.0"
                         style="-fx-background-color: transparent; -fx-text-fill: white; -fx-alignment: center-left; -fx-padding: 0 0 0 18; -fx-font-size: 14px;"
-                        text="> Turnos"/>
-                <Button fx:id="btnMenuInformes"
-                        prefHeight="44.0"
+                        text="> Ordenes"/>
+                <Button fx:id="btnMenuResultados" prefHeight="40.0"
                         style="-fx-background-color: transparent; -fx-text-fill: white; -fx-alignment: center-left; -fx-padding: 0 0 0 18; -fx-font-size: 14px;"
-                        text="> Informes"/>
-                <Button fx:id="btnMenuFacturacion"
-                        prefHeight="44.0"
+                        text="> Resultados"/>
+                <Button fx:id="btnMenuFacturacion" prefHeight="40.0"
                         style="-fx-background-color: transparent; -fx-text-fill: white; -fx-alignment: center-left; -fx-padding: 0 0 0 18; -fx-font-size: 14px;"
                         text="> Facturacion"/>
-                <Button fx:id="btnMenuUtilitarios"
-                        prefHeight="44.0"
-                        style="-fx-background-color: transparent; -fx-text-fill: white; -fx-alignment: center-left; -fx-padding: 0 0 0 18; -fx-font-size: 14px;"
-                        text="> Utilitarios"/>
+
+                <Separator style="-fx-background-color: #006294; -fx-opacity: 0.4;">
+                    <VBox.margin><Insets top="4.0" bottom="2.0"/></VBox.margin>
+                </Separator>
+
+                <Label text="CONFIGURACION" textFill="#9fc5d5">
+                    <font><Font name="System Bold" size="11.0"/></font>
+                    <VBox.margin><Insets left="18.0"/></VBox.margin>
+                </Label>
+
+                <Button fx:id="btnAnalisis" prefHeight="36.0"
+                        style="-fx-background-color: transparent; -fx-text-fill: #c8e6f5; -fx-alignment: center-left; -fx-padding: 0 0 0 26; -fx-font-size: 13px;"
+                        text="- Analisis"/>
+                <Button fx:id="btnMedicos" prefHeight="36.0"
+                        style="-fx-background-color: transparent; -fx-text-fill: #c8e6f5; -fx-alignment: center-left; -fx-padding: 0 0 0 26; -fx-font-size: 13px;"
+                        text="- Medicos"/>
+                <Button fx:id="btnSecciones" prefHeight="36.0"
+                        style="-fx-background-color: transparent; -fx-text-fill: #c8e6f5; -fx-alignment: center-left; -fx-padding: 0 0 0 26; -fx-font-size: 13px;"
+                        text="- Secciones"/>
+                <Button fx:id="btnPracticas" prefHeight="36.0"
+                        style="-fx-background-color: transparent; -fx-text-fill: #c8e6f5; -fx-alignment: center-left; -fx-padding: 0 0 0 26; -fx-font-size: 13px;"
+                        text="- Practicas"/>
+                <Button fx:id="btnObrasSociales" prefHeight="36.0"
+                        style="-fx-background-color: transparent; -fx-text-fill: #c8e6f5; -fx-alignment: center-left; -fx-padding: 0 0 0 26; -fx-font-size: 13px;"
+                        text="- Obras Sociales"/>
+                <Button fx:id="btnConfigReporte" prefHeight="36.0"
+                        style="-fx-background-color: transparent; -fx-text-fill: #c8e6f5; -fx-alignment: center-left; -fx-padding: 0 0 0 26; -fx-font-size: 13px;"
+                        text="- Config. Informe"/>
 
                 <Region VBox.vgrow="ALWAYS"/>
-
-                <Button fx:id="btnSalir"
-                        prefHeight="52.0"
-                        style="-fx-background-color: #c92525; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold;"
-                        text="SALIR"/>
+                <Separator style="-fx-background-color: #006294; -fx-opacity: 0.5;"/>
+                <Button fx:id="btnSalir" prefHeight="40.0"
+                        style="-fx-background-color: transparent; -fx-text-fill: white; -fx-alignment: center-left; -fx-padding: 0 0 0 18; -fx-font-size: 13px;"
+                        text="> Salir"/>
             </children>
         </VBox>
     </left>
 
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- Área central                                               -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
     <center>
         <StackPane style="-fx-background-color: #e9edf1;">
             <children>
 
-                <ScrollPane fx:id="panelCargarPaciente" fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #e9edf1;">
+                <!-- ═══════════════════════════════════════════════ -->
+                <!-- PANEL RECEPCIÓN                                  -->
+                <!-- ═══════════════════════════════════════════════ -->
+                <ScrollPane fx:id="panelRecepcion" fitToHeight="true" fitToWidth="true"
+                            style="-fx-background-color: transparent; -fx-background: #e9edf1;">
                     <content>
-                        <VBox spacing="16.0">
-                            <padding><Insets bottom="24.0" left="24.0" right="24.0" top="24.0"/></padding>
-                            <children>
-                                <Label text="Carga de pacientes" textFill="#004d73">
-                                    <font><Font name="System Bold" size="26.0"/></font>
-                                </Label>
+                        <VBox spacing="10.0">
+                            <padding><Insets bottom="16.0" left="24.0" right="24.0" top="16.0"/></padding>
 
-                                <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: white; -fx-padding: 12; -fx-background-radius: 8;">
-                                    <children>
-                                        <TextField fx:id="txtBuscar" promptText="Buscar paciente" HBox.hgrow="ALWAYS"/>
-                                        <DatePicker fx:id="dcFechaPacienteDesde" promptText="Desde"/>
-                                        <DatePicker fx:id="dcFechaPacienteHasta" promptText="Hasta"/>
-                                        <Button fx:id="btnBuscar" text="Buscar"/>
-                                        <Button fx:id="btnSinDNI" style="-fx-background-color: #2f80ed; -fx-text-fill: white;" text="Sin DNI"/>
-                                    </children>
-                                </HBox>
+                            <!-- Barra de búsqueda con etiqueta, filtro OS y botón -->
+                            <HBox alignment="CENTER_LEFT" spacing="8.0"
+                                  style="-fx-background-color: white; -fx-padding: 14 16; -fx-background-radius: 8;">
+                                <Label text="Buscar paciente:"
+                                       style="-fx-font-weight: 700; -fx-font-size: 13px; -fx-text-fill: #374151;"/>
+                                <TextField fx:id="txtBuscarRecepcion"
+                                           promptText="DNI, apellido o nombre..."
+                                           style="-fx-font-size: 14px;"
+                                           HBox.hgrow="ALWAYS"/>
+                                <Label text="Obra Social:"
+                                       style="-fx-font-size: 13px; -fx-text-fill: #374151;"/>
+                                <ComboBox fx:id="cboFiltroRecepcionOs"
+                                          promptText="Todas"
+                                          prefWidth="200.0"/>
+                                <Button onAction="#ejecutarBusquedaRecepcion" text="Buscar"
+                                        style="-fx-font-weight: 700;"/>
+                            </HBox>
 
-                                <HBox alignment="CENTER_LEFT" spacing="8.0" style="-fx-background-color: white; -fx-padding: 12; -fx-background-radius: 8;">
-                                    <children>
-                                        <Button fx:id="btnModificar" text="Modificar"/>
-                                        <Button fx:id="btnBorrar" style="-fx-background-color: #d64545; -fx-text-fill: white;" text="Borrar"/>
-                                        <Button fx:id="btnPatologias" text="Patologias"/>
-                                        <Button fx:id="btnCargarConsulta" style="-fx-background-color: #1f8f45; -fx-text-fill: white;" text="Cargar consulta"/>
-                                    </children>
-                                </HBox>
+                            <!-- Tabla resultados -->
+                            <TableView fx:id="tablaRecepcion"
+                                       fixedCellSize="24.0" VBox.vgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn fx:id="colRecepcionTipo"   text="Tipo"             prefWidth="140.0" minWidth="120.0"/>
+                                    <TableColumn fx:id="colRecepcionDni"    text="DNI"              prefWidth="120.0" minWidth="100.0"/>
+                                    <TableColumn fx:id="colRecepcionNombre" text="Apellido y Nombre" prefWidth="500.0"/>
+                                </columns>
+                            </TableView>
 
-                                <GridPane hgap="12.0" vgap="10.0" style="-fx-background-color: white; -fx-padding: 16; -fx-background-radius: 8;">
-                                    <columnConstraints>
-                                        <ColumnConstraints minWidth="120.0"/>
-                                        <ColumnConstraints hgrow="ALWAYS"/>
-                                        <ColumnConstraints minWidth="120.0"/>
-                                        <ColumnConstraints hgrow="ALWAYS"/>
-                                        <ColumnConstraints minWidth="120.0"/>
-                                        <ColumnConstraints hgrow="ALWAYS"/>
-                                    </columnConstraints>
-                                    <children>
-                                        <Label text="DNI" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                                        <TextField fx:id="txtDNI" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                                        <Label text="Nombre" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-                                        <TextField fx:id="txtNombre" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
-                                        <Label text="Apellido" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
-                                        <TextField fx:id="txtApellido" GridPane.columnIndex="5" GridPane.rowIndex="0"/>
+                            <!-- Paginación recepción -->
+                            <HBox alignment="CENTER" spacing="14.0"
+                                  style="-fx-background-color: white; -fx-padding: 8 14; -fx-background-radius: 8;">
+                                <Button fx:id="btnRecepcionPrev" onAction="#recepcionPaginaAnterior"
+                                        styleClass="secondary-button" text="&lt; Anterior" disable="true"/>
+                                <Label fx:id="lblRecepcionPagina" text="Página 1 de 1"
+                                       style="-fx-font-size: 13px; -fx-text-fill: #374151;"/>
+                                <Button fx:id="btnRecepcionSig" onAction="#recepcionPaginaSiguiente"
+                                        styleClass="secondary-button" text="Siguiente &gt;" disable="true"/>
+                            </HBox>
 
-                                        <Label text="Direccion" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                                        <TextField fx:id="txtDireccion" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1"/>
-                                        <Label text="Localidad" GridPane.columnIndex="4" GridPane.rowIndex="1"/>
-                                        <TextField fx:id="txtLocalidad" GridPane.columnIndex="5" GridPane.rowIndex="1"/>
-
-                                        <Label text="Telefono" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                                        <TextField fx:id="txtTelefono" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                                        <Label text="Celular" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
-                                        <TextField fx:id="txtCelular" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
-                                        <Label text="Mail" GridPane.columnIndex="4" GridPane.rowIndex="2"/>
-                                        <TextField fx:id="txtMail" GridPane.columnIndex="5" GridPane.rowIndex="2"/>
-
-                                        <Label text="Obra social" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-                                        <TextField fx:id="txtObraSocial" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3"/>
-                                        <Label text="Nro afiliado" GridPane.columnIndex="4" GridPane.rowIndex="3"/>
-                                        <TextField fx:id="txtNumeroAfiliado" GridPane.columnIndex="5" GridPane.rowIndex="3"/>
-
-                                        <Label text="Sexo" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-                                        <ComboBox fx:id="cboSexo" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-                                        <Label text="Nacimiento" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
-                                        <DatePicker fx:id="dcFechaNacimiento" GridPane.columnIndex="3" GridPane.rowIndex="4"/>
-                                        <Label text="Edad" GridPane.columnIndex="4" GridPane.rowIndex="4"/>
-                                        <Label fx:id="lblEdad" text="0 anios" textFill="#004d73" GridPane.columnIndex="5" GridPane.rowIndex="4">
-                                            <font><Font name="System Bold" size="13.0"/></font>
-                                        </Label>
-                                    </children>
-                                </GridPane>
-
-                                <TableView fx:id="tablaPacientes" prefHeight="320.0" VBox.vgrow="ALWAYS">
-                                    <columns>
-                                        <TableColumn prefWidth="120.0" text="Nro Historia"/>
-                                        <TableColumn prefWidth="120.0" text="DNI"/>
-                                        <TableColumn prefWidth="260.0" text="Apellido y Nombre"/>
-                                        <TableColumn prefWidth="220.0" text="Obra social"/>
-                                        <TableColumn prefWidth="150.0" text="Fecha alta"/>
-                                    </columns>
-                                </TableView>
-                            </children>
+                            <!-- Barra de acciones -->
+                            <HBox alignment="CENTER_LEFT" spacing="10.0"
+                                  style="-fx-background-color: white; -fx-padding: 13 16; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);">
+                                <Label fx:id="lblInfoRecepcion"
+                                       text="Ingrese un DNI o nombre para buscar."
+                                       style="-fx-text-fill: #6b7280; -fx-font-size: 13px;"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Button fx:id="btnRecepcionCrearPersona" onAction="#crearPersona"
+                                        styleClass="secondary-button" text="Crear Persona" disable="true"/>
+                                <Button fx:id="btnRecepcionDarDeAlta" onAction="#darDeAlta"
+                                        styleClass="secondary-button" text="Dar de Alta" disable="true"/>
+                                <Button fx:id="btnRecepcionVerOrdenes" onAction="#verOrdenesDelPaciente"
+                                        styleClass="secondary-button" text="Ver Ordenes" disable="true"/>
+                                <Button fx:id="btnRecepcionNuevaOrden" onAction="#nuevaOrdenDesdeRecepcion"
+                                        text="Nueva Orden" disable="true" style="-fx-font-weight: 700;"/>
+                            </HBox>
                         </VBox>
                     </content>
                 </ScrollPane>
 
-                <ScrollPane fx:id="panelCargarOrden" fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #e9edf1;" visible="false">
+                <!-- ═══════════════════════════════════════════════ -->
+                <!-- PANEL ÓRDENES                                    -->
+                <!-- ═══════════════════════════════════════════════ -->
+                <ScrollPane fx:id="panelOrdenes" fitToHeight="true" fitToWidth="true"
+                            style="-fx-background-color: transparent; -fx-background: #e9edf1;" visible="false">
                     <content>
-                        <VBox spacing="16.0">
-                            <padding><Insets bottom="24.0" left="24.0" right="24.0" top="24.0"/></padding>
-                            <children>
-                                <Label text="Turnos y ordenes" textFill="#004d73">
-                                    <font><Font name="System Bold" size="26.0"/></font>
-                                </Label>
+                        <VBox spacing="10.0" prefHeight="820.0">
+                            <padding><Insets bottom="20.0" left="24.0" right="24.0" top="20.0"/></padding>
 
-                                <GridPane hgap="10.0" style="-fx-background-color: white; -fx-padding: 12; -fx-background-radius: 8;">
-                                    <columnConstraints>
-                                        <ColumnConstraints minWidth="130.0"/>
-                                        <ColumnConstraints hgrow="ALWAYS"/>
-                                        <ColumnConstraints minWidth="80.0"/>
-                                        <ColumnConstraints hgrow="ALWAYS"/>
-                                        <ColumnConstraints minWidth="80.0"/>
-                                        <ColumnConstraints hgrow="ALWAYS"/>
-                                        <ColumnConstraints minWidth="80.0"/>
-                                        <ColumnConstraints hgrow="ALWAYS"/>
-                                    </columnConstraints>
-                                    <children>
-                                        <Label text="Nro protocolo" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                                        <Label fx:id="lblNumeroProtocolo" text="-" textFill="#1f2e44" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                                        <Label text="Fecha" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-                                        <Label fx:id="lblFecha" text="-" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
-                                        <Label text="Hora" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
-                                        <Label fx:id="lblHora" text="-" GridPane.columnIndex="5" GridPane.rowIndex="0"/>
-                                        <Label text="Paciente" GridPane.columnIndex="6" GridPane.rowIndex="0"/>
-                                        <Label fx:id="lblPaciente" text="-" GridPane.columnIndex="7" GridPane.rowIndex="0"/>
-                                    </children>
-                                </GridPane>
+                            <!-- Contexto: paciente o titulo -->
+                            <HBox alignment="CENTER_LEFT" spacing="10.0"
+                                  style="-fx-background-color: white; -fx-padding: 10 14; -fx-background-radius: 8;">
+                                <Label fx:id="lblOrdenesContexto"
+                                       text="Todas las ordenes"
+                                       style="-fx-font-size: 14px; -fx-font-weight: 700; -fx-text-fill: #004d73;"
+                                       HBox.hgrow="ALWAYS"/>
+                                <Button fx:id="btnOrdenesVolver" onAction="#volverARecepcion"
+                                        styleClass="secondary-button" text="&lt; Volver" visible="false"/>
+                            </HBox>
 
-                                <GridPane hgap="10.0" vgap="10.0" style="-fx-background-color: white; -fx-padding: 12; -fx-background-radius: 8;">
-                                    <columnConstraints>
-                                        <ColumnConstraints hgrow="ALWAYS"/>
-                                        <ColumnConstraints minWidth="150.0"/>
-                                        <ColumnConstraints minWidth="120.0"/>
-                                        <ColumnConstraints hgrow="ALWAYS"/>
-                                        <ColumnConstraints minWidth="140.0"/>
-                                    </columnConstraints>
-                                    <children>
-                                        <TextField fx:id="txtMedico" promptText="Medico" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                                        <ComboBox fx:id="cboServicio" prefWidth="160.0" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                                        <TextField fx:id="txtCama" promptText="Cama" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-                                        <TextField fx:id="txtNumeroOrden" promptText="Numero de orden" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
-                                        <Button fx:id="btnSiguienteBono" text="Siguiente bono" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
+                            <!-- Filtros órdenes -->
+                            <HBox alignment="CENTER_LEFT" spacing="8.0"
+                                  style="-fx-background-color: white; -fx-padding: 10 14; -fx-background-radius: 8;">
+                                <Label text="Filtrar:"
+                                       style="-fx-font-weight: 700; -fx-font-size: 13px; -fx-text-fill: #374151;"/>
+                                <TextField fx:id="txtFiltroOrdenQ"
+                                           promptText="Paciente (DNI / nombre) o N° orden"
+                                           HBox.hgrow="ALWAYS"/>
+                                <Label text="Obra Social:"
+                                       style="-fx-font-size: 13px; -fx-text-fill: #374151;"/>
+                                <ComboBox fx:id="cboFiltroOrdenOs" promptText="Todas" prefWidth="180.0"/>
+                                <Label text="Desde:"
+                                       style="-fx-font-size: 13px; -fx-text-fill: #374151;"/>
+                                <DatePicker fx:id="dpFiltroOrdenDesde" promptText="Desde" prefWidth="140.0"/>
+                                <Label text="Hasta:"
+                                       style="-fx-font-size: 13px; -fx-text-fill: #374151;"/>
+                                <DatePicker fx:id="dpFiltroOrdenHasta" promptText="Hasta" prefWidth="140.0"/>
+                                <Button onAction="#filtrarOrdenes" text="Filtrar"
+                                        style="-fx-font-weight: 700;"/>
+                                <Button onAction="#limpiarFiltrosOrdenes" styleClass="secondary-button" text="Limpiar"/>
+                            </HBox>
 
-                                        <DatePicker fx:id="dcFechaOrden" promptText="Fecha de orden" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                                        <TextField fx:id="txtMotivo" promptText="Motivo" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1"/>
-                                        <CheckBox fx:id="chkCoseguro" text="Coseguro" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
-                                        <TextField fx:id="txtPrecioCoseguro" promptText="Precio coseguro" GridPane.columnIndex="4" GridPane.rowIndex="1"/>
+                            <!-- Tabla órdenes -->
+                            <TableView fx:id="tablaOrdenes" VBox.vgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn fx:id="colOrdenNumero"   text="N° Orden"    prefWidth="150.0" minWidth="120.0"/>
+                                    <TableColumn fx:id="colOrdenPaciente" text="Paciente"    prefWidth="280.0"/>
+                                    <TableColumn fx:id="colOrdenOs"       text="Obra Social" prefWidth="210.0"/>
+                                    <TableColumn fx:id="colOrdenFecha"    text="Fecha"       prefWidth="160.0"/>
+                                    <TableColumn fx:id="colOrdenEstado"   text="Estado"      prefWidth="100.0"/>
+                                </columns>
+                            </TableView>
 
-                                        <TextField fx:id="txtRecienNacido" promptText="Recien nacido / Observacion breve" GridPane.columnIndex="0" GridPane.columnSpan="5" GridPane.rowIndex="2"/>
-                                    </children>
-                                </GridPane>
+                            <!-- Paginación -->
+                            <HBox alignment="CENTER" spacing="14.0"
+                                  style="-fx-background-color: white; -fx-padding: 8 14; -fx-background-radius: 8;">
+                                <Button fx:id="btnOrdenesPrev" onAction="#ordenesPaginaAnterior"
+                                        styleClass="secondary-button" text="&lt; Anterior" disable="true"/>
+                                <Label fx:id="lblOrdenesPagina" text="Página 1 de 1"
+                                       style="-fx-font-size: 13px; -fx-text-fill: #374151;"/>
+                                <Button fx:id="btnOrdenesSig" onAction="#ordenesPaginaSiguiente"
+                                        styleClass="secondary-button" text="Siguiente &gt;" disable="true"/>
+                            </HBox>
 
-                                <FlowPane hgap="8.0" vgap="8.0" style="-fx-background-color: white; -fx-padding: 12; -fx-background-radius: 8;">
-                                    <children>
-                                        <Button fx:id="btnGrabar" text="Grabar"/>
-                                        <Button fx:id="btnGrabarImprimir" text="Grabar e imprimir"/>
-                                        <Button fx:id="btnResultados" text="Resultados"/>
-                                        <Button fx:id="btnAnticipos" text="Anticipos"/>
-                                        <Button fx:id="btnReimprimir" text="Reimprimir"/>
-                                        <Button fx:id="btnPresupuesto" text="Presupuesto"/>
-                                        <Button fx:id="btnCertificadoAsistencia" text="Certificado asistencia"/>
-                                        <Button fx:id="btnImprimirListado" text="Imprimir listado"/>
-                                        <Button fx:id="btnCancelar" style="-fx-background-color: #d64545; -fx-text-fill: white;" text="Cancelar"/>
-                                    </children>
-                                </FlowPane>
-
-                                <VBox spacing="8.0" style="-fx-background-color: white; -fx-padding: 12; -fx-background-radius: 8;" VBox.vgrow="ALWAYS">
-                                    <children>
-                                        <HBox spacing="10.0">
-                                            <children>
-                                                <TextField fx:id="txtBuscarPractica" promptText="Buscar o agregar practica" HBox.hgrow="ALWAYS"/>
-                                            </children>
-                                        </HBox>
-
-                                        <TableView fx:id="tablaPracticas" prefHeight="260.0" VBox.vgrow="ALWAYS">
-                                            <columns>
-                                                <TableColumn prefWidth="100.0" text="Codigo"/>
-                                                <TableColumn prefWidth="400.0" text="Practica"/>
-                                                <TableColumn prefWidth="120.0" text="Importe OS"/>
-                                                <TableColumn prefWidth="120.0" text="Importe part."/>
-                                            </columns>
-                                        </TableView>
-                                    </children>
-                                </VBox>
-
-                                <HBox alignment="CENTER_RIGHT" spacing="18.0" style="-fx-background-color: white; -fx-padding: 12; -fx-background-radius: 8;">
-                                    <children>
-                                        <Label fx:id="lblInstrucciones" text="Seleccione practica para continuar." textFill="#4a5a70"/>
-                                        <Region HBox.hgrow="ALWAYS"/>
-                                        <Label text="Total particular"/>
-                                        <Label fx:id="lblTotalParticular" text="\$ 0.00"/>
-                                        <Separator orientation="VERTICAL"/>
-                                        <Label text="Total OS"/>
-                                        <Label fx:id="lblTotalOS" text="\$ 0.00"/>
-                                        <Separator orientation="VERTICAL"/>
-                                        <Label text="Anticipo"/>
-                                        <Label fx:id="lblAnticipo" text="\$ 0.00"/>
-                                        <Separator orientation="VERTICAL"/>
-                                        <Label text="Total"/>
-                                        <Label fx:id="lblTotal" text="\$ 0.00" textFill="#1f8f45">
-                                            <font><Font name="System Bold" size="18.0"/></font>
-                                        </Label>
-                                    </children>
-                                </HBox>
-                            </children>
+                            <!-- Acciones órdenes -->
+                            <HBox alignment="CENTER_LEFT" spacing="10.0"
+                                  style="-fx-background-color: white; -fx-padding: 13 16; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);">
+                                <Label fx:id="lblInfoOrdenes" text="Seleccione una orden."
+                                       style="-fx-text-fill: #6b7280; -fx-font-size: 13px;"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Button fx:id="btnOrdenesNuevaOrden" onAction="#nuevaOrdenDesdeOrdenes"
+                                        styleClass="secondary-button" text="Nueva Orden"/>
+                                <Button fx:id="btnOrdenesModificar" onAction="#modificarOrden"
+                                        styleClass="secondary-button" text="Modificar" disable="true"/>
+                                <Button fx:id="btnOrdenesInformar" onAction="#informarOrden"
+                                        text="Informar" disable="true" style="-fx-font-weight: 700;"/>
+                            </HBox>
                         </VBox>
                     </content>
                 </ScrollPane>
 
-                <ScrollPane fx:id="panelInformes" fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #e9edf1;" visible="false">
+                <!-- ═══════════════════════════════════════════════ -->
+                <!-- PANEL RESULTADOS                                 -->
+                <!-- ═══════════════════════════════════════════════ -->
+                <ScrollPane fx:id="panelResultados" fitToHeight="true" fitToWidth="true"
+                            style="-fx-background-color: transparent; -fx-background: #e9edf1;" visible="false">
                     <content>
-                        <VBox spacing="16.0">
-                            <padding><Insets bottom="24.0" left="24.0" right="24.0" top="24.0"/></padding>
-                            <children>
-                                <Label text="Informes" textFill="#004d73">
-                                    <font><Font name="System Bold" size="26.0"/></font>
-                                </Label>
+                        <VBox spacing="10.0" prefHeight="820.0">
+                            <padding><Insets bottom="20.0" left="24.0" right="24.0" top="20.0"/></padding>
 
-                                <HBox style="-fx-background-color: white; -fx-padding: 14; -fx-background-radius: 8;">
-                                    <children>
-                                        <Label text="Panel preparado para conectar reportes e impresion desde backend."/>
-                                    </children>
-                                </HBox>
+                            <!-- Filtros resultados -->
+                            <HBox alignment="CENTER_LEFT" spacing="8.0"
+                                  style="-fx-background-color: white; -fx-padding: 10 14; -fx-background-radius: 8;">
+                                <Label text="Buscar:"
+                                       style="-fx-font-weight: 700; -fx-font-size: 13px; -fx-text-fill: #374151;"/>
+                                <TextField fx:id="txtFiltroResQ"
+                                           promptText="Paciente (DNI / nombre) o N° orden"
+                                           HBox.hgrow="ALWAYS"/>
+                                <Label text="Obra Social:"
+                                       style="-fx-font-size: 13px; -fx-text-fill: #374151;"/>
+                                <ComboBox fx:id="cboFiltroResOs" promptText="Todas" prefWidth="160.0"/>
+                                <Label text="Estado:"
+                                       style="-fx-font-size: 13px; -fx-text-fill: #374151;"/>
+                                <ComboBox fx:id="cboFiltroResEstado" promptText="Todos" prefWidth="180.0"/>
+                                <Label text="Desde:"
+                                       style="-fx-font-size: 13px; -fx-text-fill: #374151;"/>
+                                <DatePicker fx:id="dpFiltroResDesde" promptText="Desde" prefWidth="140.0"/>
+                                <Label text="Hasta:"
+                                       style="-fx-font-size: 13px; -fx-text-fill: #374151;"/>
+                                <DatePicker fx:id="dpFiltroResHasta" promptText="Hasta" prefWidth="140.0"/>
+                                <Button onAction="#filtrarResultados" text="Filtrar"
+                                        style="-fx-font-weight: 700;"/>
+                                <Button onAction="#limpiarFiltrosResultados" styleClass="secondary-button" text="Limpiar"/>
+                            </HBox>
 
-                                <TilePane hgap="12.0" prefColumns="3" style="-fx-background-color: white; -fx-padding: 14; -fx-background-radius: 8;" vgap="12.0">
-                                    <children>
-                                        <Button fx:id="btnInformes" prefWidth="220.0" text="Informes"/>
-                                        <Button fx:id="btnHistorico" prefWidth="220.0" text="Historico"/>
-                                        <Button fx:id="btnDescargarDDJJ" prefWidth="220.0" text="Descargar DDJJ"/>
-                                    </children>
-                                </TilePane>
-                            </children>
+                            <!-- Tabla resultados -->
+                            <TableView fx:id="tablaResultados" VBox.vgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn fx:id="colResNumero"    text="N° Orden"          prefWidth="150.0" minWidth="120.0"/>
+                                    <TableColumn fx:id="colResPaciente"  text="Paciente"          prefWidth="250.0"/>
+                                    <TableColumn fx:id="colResOs"        text="Obra Social"       prefWidth="190.0"/>
+                                    <TableColumn fx:id="colResFecha"     text="Fecha"             prefWidth="150.0"/>
+                                    <TableColumn fx:id="colResEstadoRes" text="Estado Resultados" prefWidth="180.0"/>
+                                </columns>
+                            </TableView>
+
+                            <!-- Paginación -->
+                            <HBox alignment="CENTER" spacing="14.0"
+                                  style="-fx-background-color: white; -fx-padding: 8 14; -fx-background-radius: 8;">
+                                <Button fx:id="btnResultadosPrev" onAction="#resultadosPaginaAnterior"
+                                        styleClass="secondary-button" text="&lt; Anterior" disable="true"/>
+                                <Label fx:id="lblResultadosPagina" text="Página 1 de 1"
+                                       style="-fx-font-size: 13px; -fx-text-fill: #374151;"/>
+                                <Button fx:id="btnResultadosSig" onAction="#resultadosPaginaSiguiente"
+                                        styleClass="secondary-button" text="Siguiente &gt;" disable="true"/>
+                            </HBox>
+
+                            <!-- Acciones resultados -->
+                            <HBox alignment="CENTER_LEFT" spacing="10.0"
+                                  style="-fx-background-color: white; -fx-padding: 13 16; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);">
+                                <Label fx:id="lblInfoResultados" text="Seleccione una orden para informar."
+                                       style="-fx-text-fill: #6b7280; -fx-font-size: 13px;"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Button fx:id="btnResultadosInformar" onAction="#informarDesdeResultados"
+                                        text="Informar Resultados" disable="true" style="-fx-font-weight: 700;"/>
+                            </HBox>
                         </VBox>
                     </content>
                 </ScrollPane>
 
-                <ScrollPane fx:id="panelFacturacion" fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #e9edf1;" visible="false">
+                <!-- ─────────────────────────────────────────────── -->
+                <!-- PANEL FACTURACIÓN                                -->
+                <!-- ─────────────────────────────────────────────── -->
+                <ScrollPane fx:id="panelFacturacion" fitToHeight="true" fitToWidth="true"
+                            style="-fx-background-color: transparent; -fx-background: #e9edf1;" visible="false">
                     <content>
                         <VBox spacing="16.0">
                             <padding><Insets bottom="24.0" left="24.0" right="24.0" top="24.0"/></padding>
@@ -329,12 +347,18 @@
                                         <ColumnConstraints minWidth="170.0"/>
                                     </columnConstraints>
                                     <children>
-                                        <TextField fx:id="txtBuscarOrden" promptText="Buscar orden" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                                        <DatePicker fx:id="dcFechaDesde" promptText="Desde" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                                        <DatePicker fx:id="dcFechaHasta" promptText="Hasta" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-                                        <CheckBox fx:id="chkObrasocial" text="Obra social" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
-                                        <Button fx:id="btnFiltrar" text="Filtrar" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
-                                        <Button fx:id="btnLimpiar" text="Limpiar" GridPane.columnIndex="5" GridPane.rowIndex="0"/>
+                                        <TextField fx:id="txtBuscarOrden" promptText="Buscar orden"
+                                                   GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                                        <DatePicker fx:id="dcFechaDesde" promptText="Desde"
+                                                    GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                                        <DatePicker fx:id="dcFechaHasta" promptText="Hasta"
+                                                    GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                                        <CheckBox fx:id="chkObrasocial" text="Obra social"
+                                                  GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+                                        <Button fx:id="btnFiltrar" text="Filtrar"
+                                                GridPane.columnIndex="4" GridPane.rowIndex="0"/>
+                                        <Button fx:id="btnLimpiar" text="Limpiar"
+                                                GridPane.columnIndex="5" GridPane.rowIndex="0"/>
                                     </children>
                                 </GridPane>
 
@@ -343,7 +367,7 @@
                                         <VBox spacing="8.0" style="-fx-background-color: white; -fx-padding: 12; -fx-background-radius: 8;">
                                             <children>
                                                 <Label text="Ordenes"/>
-                                                <TableView fx:id="tablaOrdenes" prefHeight="220.0" VBox.vgrow="ALWAYS">
+                                                <TableView fx:id="tablaOrdenesFact" prefHeight="220.0" VBox.vgrow="ALWAYS">
                                                     <columns>
                                                         <TableColumn prefWidth="120.0" text="Nro orden"/>
                                                         <TableColumn prefWidth="280.0" text="Paciente"/>
@@ -378,50 +402,17 @@
                                         <Label text="Monto total:"/>
                                         <Label fx:id="lblMontoTotalOrdenes" text="\$ 0.00"/>
                                         <Region HBox.hgrow="ALWAYS"/>
-                                        <Button fx:id="btnEnviarFacturacion" text="Enviar facturacion"/>
+                                        <Button fx:id="btnEnviarFacturacion"         text="Enviar facturacion"/>
                                         <Button fx:id="btnDetallePracticasFacturacion" text="Detalle practicas"/>
-                                        <Button fx:id="btnImprimirResumen" text="Imprimir resumen"/>
+                                        <Button fx:id="btnImprimirResumen"           text="Imprimir resumen"/>
                                     </children>
                                 </HBox>
-
                                 <ProgressBar fx:id="progresoOrdenes" prefHeight="18.0" progress="0.0"/>
                             </children>
                         </VBox>
                     </content>
                 </ScrollPane>
 
-                <ScrollPane fx:id="panelUtilitarios" fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #e9edf1;" visible="false">
-                    <content>
-                        <VBox spacing="16.0">
-                            <padding><Insets bottom="24.0" left="24.0" right="24.0" top="24.0"/></padding>
-                            <children>
-                                <Label text="Utilitarios" textFill="#004d73">
-                                    <font><Font name="System Bold" size="26.0"/></font>
-                                </Label>
-
-                                <TilePane hgap="12.0" prefColumns="3" style="-fx-background-color: white; -fx-padding: 14; -fx-background-radius: 8;" vgap="12.0">
-                                    <children>
-                                        <Button fx:id="btnAnalisis" prefWidth="220.0" text="Analisis"/>
-                                        <Button fx:id="btnMedicos" prefWidth="220.0" text="Medicos"/>
-                                        <Button fx:id="btnPacientes" prefWidth="220.0" text="Pacientes"/>
-                                        <Button fx:id="btnSecciones" prefWidth="220.0" text="Secciones"/>
-                                        <Button fx:id="btnPracticas" prefWidth="220.0" text="Practicas"/>
-                                        <Button fx:id="btnUsuarios" prefWidth="220.0" text="Usuarios"/>
-                                        <Button fx:id="btnObrasSociales" prefWidth="220.0" text="Obras sociales"/>
-                                        <Button fx:id="btnNomenclador" prefWidth="220.0" text="Nomenclador"/>
-                                        <Button fx:id="btnHistoriasClinicas" prefWidth="220.0" text="Historias clinicas"/>
-                                        <Button fx:id="btnBioquimicos" prefWidth="220.0" text="Bioquimicos"/>
-                                        <Button fx:id="btnActualizarPrecio" prefWidth="220.0" text="Actualizar precio"/>
-                                        <Button fx:id="btnActualizarBD" prefWidth="220.0" text="Actualizar BD"/>
-                                        <Button fx:id="btnDescargas" prefWidth="220.0" text="Descargas"/>
-                                        <Button fx:id="btnExportarDatos" prefWidth="220.0" text="Exportar datos"/>
-                                        <Button fx:id="btnAyuda" prefWidth="220.0" text="Ayuda"/>
-                                    </children>
-                                </TilePane>
-                            </children>
-                        </VBox>
-                    </content>
-                </ScrollPane>
 
             </children>
         </StackPane>

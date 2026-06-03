@@ -7,49 +7,49 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Priority?>
-<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<VBox minHeight="620.0"
-      minWidth="920.0"
-      prefHeight="620.0"
-      prefWidth="920.0"
-      spacing="14.0"
+<VBox spacing="12.0"
       styleClass="content"
-      stylesheets="@styles.css"
       xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.ybc.ybioq.fx.controller.MetodosFxController">
     <padding>
-        <Insets bottom="24.0" left="24.0" right="24.0" top="24.0"/>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
 
-    <VBox spacing="6.0">
-        <Label styleClass="section-title" text="Metodos"/>
-        <Label styleClass="section-subtitle" text="Administracion de metodos para analisis."/>
-    </VBox>
+    <HBox alignment="CENTER_LEFT" spacing="8.0" styleClass="editor-panel">
+        <FontIcon iconLiteral="mdi2m-magnify" iconSize="18" iconColor="#64727d"/>
+        <TextField fx:id="filtroField" promptText="Buscar método..." HBox.hgrow="ALWAYS"/>
+    </HBox>
 
-    <VBox spacing="10.0" styleClass="editor-panel" VBox.vgrow="ALWAYS">
-        <children>
-            <TableView fx:id="tablaMetodos" VBox.vgrow="ALWAYS">
-                <columns>
-                    <TableColumn fx:id="idColumn" maxWidth="90.0" minWidth="80.0" prefWidth="80.0" text="ID"/>
-                    <TableColumn fx:id="nombreColumn" prefWidth="700.0" text="Metodo"/>
-                </columns>
-            </TableView>
+    <TableView fx:id="tablaMetodos" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="nombreColumn" text="Método"/>
+            <TableColumn fx:id="estadoColumn" maxWidth="120.0" minWidth="110.0" prefWidth="110.0" text="Estado"/>
+        </columns>
+    </TableView>
 
-            <TextField fx:id="txtMetodo" onAction="#agregar" promptText="Metodo"/>
-
-            <Label fx:id="mensajeLabel" styleClass="form-message" wrapText="true"/>
-
-            <HBox spacing="8.0">
-                <children>
-                    <Button maxWidth="Infinity" onAction="#agregar" text="Agregar" HBox.hgrow="ALWAYS"/>
-                    <Region HBox.hgrow="ALWAYS"/>
-                    <Button maxWidth="Infinity" onAction="#salir" styleClass="secondary-button" text="Salir" HBox.hgrow="ALWAYS"/>
-                </children>
-            </HBox>
-        </children>
+    <VBox spacing="8.0" styleClass="editor-panel">
+        <Label fx:id="modoLabel" styleClass="modo-label" text="Nuevo método"/>
+        <TextField fx:id="txtMetodo" onAction="#guardar" promptText="Nombre del método"/>
+        <Label fx:id="mensajeLabel" styleClass="form-message" wrapText="true"/>
+        <HBox spacing="8.0">
+            <Button fx:id="cancelarBtn" styleClass="secondary-button" onAction="#cancelar"
+                    visible="false" managed="false" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                <graphic><FontIcon iconLiteral="mdi2c-close" iconSize="16"/></graphic>
+                <text>Cancelar</text>
+            </Button>
+            <Button fx:id="bajaBtn" styleClass="secondary-button" onAction="#cambiarEstado"
+                    visible="false" managed="false" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                <graphic><FontIcon iconLiteral="mdi2p-power" iconSize="16"/></graphic>
+                <text>Dar de baja</text>
+            </Button>
+            <Button fx:id="guardarBtn" onAction="#guardar" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                <graphic><FontIcon iconLiteral="mdi2p-plus" iconSize="18" iconColor="white"/></graphic>
+                <text>Agregar</text>
+            </Button>
+        </HBox>
     </VBox>
 </VBox>

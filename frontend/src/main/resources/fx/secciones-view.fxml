@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<HBox spacing="14.0"
+      styleClass="content"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ybc.ybioq.fx.controller.SeccionesFxController">
+    <padding>
+        <Insets bottom="14.0" left="14.0" right="14.0" top="14.0"/>
+    </padding>
+
+    <!-- ====== IZQUIERDA: tabla ====== -->
+    <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+
+        <HBox alignment="CENTER_LEFT" spacing="8.0" styleClass="editor-panel" style="-fx-padding: 8px 12px;">
+            <FontIcon iconLiteral="mdi2m-magnify" iconSize="18" iconColor="#64727d"/>
+            <TextField fx:id="filtroField" promptText="Buscar sección..." HBox.hgrow="ALWAYS"/>
+        </HBox>
+
+        <TableView fx:id="tablaSeccion" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colId"       prefWidth="60.0"  minWidth="50.0"  text="ID"/>
+                <TableColumn fx:id="colNombre"   prefWidth="280.0"                  text="Nombre"/>
+                <TableColumn fx:id="colPrioridad" prefWidth="90.0" minWidth="80.0"  text="Prioridad"/>
+                <TableColumn fx:id="colEstado"   prefWidth="80.0"  minWidth="70.0"  text="Estado"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+    <!-- ====== DERECHA: formulario ====== -->
+    <VBox minWidth="300.0" prefWidth="320.0" spacing="12.0" styleClass="editor-panel">
+
+        <Label styleClass="panel-title" text="Datos de sección"/>
+
+        <VBox spacing="6.0">
+            <Label styleClass="field-label" text="Nombre *"/>
+            <TextField fx:id="txtNombre" onAction="#guardar" promptText="Nombre (en mayúsculas)"/>
+        </VBox>
+
+        <VBox spacing="6.0">
+            <Label styleClass="field-label" text="Prioridad"/>
+            <TextField fx:id="txtPrioridad" onAction="#guardar" promptText="0"/>
+        </VBox>
+
+        <Region VBox.vgrow="ALWAYS"/>
+
+        <Label fx:id="mensajeLabel" styleClass="form-message" wrapText="true"/>
+
+        <HBox spacing="8.0">
+            <Button maxWidth="Infinity" onAction="#nuevo" styleClass="secondary-button" text="Nuevo" HBox.hgrow="ALWAYS"/>
+            <Button maxWidth="Infinity" onAction="#guardar" text="Guardar" HBox.hgrow="ALWAYS">
+                <graphic><FontIcon iconLiteral="mdi2p-plus" iconSize="16" iconColor="white"/></graphic>
+            </Button>
+        </HBox>
+
+        <Button maxWidth="Infinity" onAction="#borrar" styleClass="secondary-button" text="Baja (desactivar)"/>
+    </VBox>
+</HBox>

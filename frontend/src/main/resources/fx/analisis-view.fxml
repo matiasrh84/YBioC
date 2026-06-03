@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.ybc.ybioq.fx.util.ToggleSwitchControl?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
@@ -18,565 +18,359 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Priority?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane minHeight="930.0"
-            minWidth="1500.0"
-            prefHeight="930.0"
-            prefWidth="1500.0"
-            styleClass="content"
-            stylesheets="@styles.css"
+<BorderPane minHeight="930.0" minWidth="1500.0"
+            prefHeight="930.0" prefWidth="1500.0"
+            styleClass="content" stylesheets="@styles.css"
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.ybc.ybioq.fx.controller.AnalisisControllerNewFx">
 
+    <!-- ── Barra superior ─────────────────────────────────────── -->
     <top>
-        <HBox alignment="CENTER_LEFT"
-              spacing="10.0"
+        <HBox alignment="CENTER_LEFT" spacing="10.0"
               style="-fx-background-color: #005a84; -fx-padding: 10 14 10 14;">
-            <children>
-                <TextField fx:id="txtPractica"
-                           onAction="#actualizarPractica"
-                           prefWidth="280.0"
-                           promptText="Practica"/>
-                <Label style="-fx-text-fill: #d8edf7; -fx-font-size: 12px;"
-                       text="Practica seleccionada:"/>
-                <Label fx:id="lblPractica"
-                       style="-fx-text-fill: #ffffff; -fx-font-size: 14px; -fx-font-weight: 700;"
-                       text="-"/>
-                <Region HBox.hgrow="ALWAYS"/>
-                <Button fx:id="btnCerrar"
-                        onAction="#cerrarVentana"
-                        styleClass="secondary-button"
-                        text="Cerrar"/>
-            </children>
+            <TextField fx:id="txtPractica" onAction="#actualizarPractica"
+                       prefWidth="340.0" promptText="Código o nombre (ej: 475 o HEMOGRAMA)"/>
+            <Label style="-fx-text-fill: #d8edf7; -fx-font-size: 12px;" text="Seleccionada:"/>
+            <Label fx:id="lblPractica"
+                   style="-fx-text-fill: #ffffff; -fx-font-size: 14px; -fx-font-weight: 700;" text="-"/>
         </HBox>
     </top>
 
+    <!-- ── Sidebar ─────────────────────────────────────────────── -->
     <left>
-        <VBox prefWidth="210.0"
-              spacing="12.0"
+        <VBox prefWidth="200.0" spacing="10.0"
               style="-fx-background-color: #004d73; -fx-padding: 16;">
-            <children>
-                <Label style="-fx-text-fill: #ffffff; -fx-font-size: 22px; -fx-font-weight: 700;"
-                       text="ANALISIS"/>
-                <Label style="-fx-text-fill: #b7d4e5;" text="Configuracion"/>
-                <Separator style="-fx-opacity: 0.35;"/>
-
-                <Button fx:id="btnGeneral"
-                        maxWidth="Infinity"
-                        onAction="#mostrarGeneral"
-                        style="-fx-background-color: #ffffff; -fx-text-fill: #005a84; -fx-font-weight: 700;"
-                        text="General"/>
-                <Button fx:id="btnAnalisis"
-                        maxWidth="Infinity"
-                        onAction="#mostrarAnalisis"
-                        style="-fx-background-color: #ffffff; -fx-text-fill: #005a84; -fx-font-weight: 700;"
-                        text="Analisis"/>
-                <Button fx:id="btnInforme"
-                        maxWidth="Infinity"
-                        onAction="#mostrarInforme"
-                        style="-fx-background-color: #ffffff; -fx-text-fill: #005a84; -fx-font-weight: 700;"
-                        text="Informe"/>
-
-                <Region VBox.vgrow="ALWAYS"/>
-
-                <Button fx:id="btnSalir"
-                        maxWidth="Infinity"
-                        onAction="#cerrarVentana"
-                        style="-fx-background-color: #ffffff; -fx-text-fill: #005a84; -fx-font-weight: 700;"
-                        text="Salir"/>
-            </children>
+            <Label style="-fx-text-fill: #ffffff; -fx-font-size: 20px; -fx-font-weight: 700;" text="ANALISIS"/>
+            <Label style="-fx-text-fill: #b7d4e5; -fx-font-size: 12px;" text="Configuracion de practica"/>
+            <Separator style="-fx-opacity: 0.35;"/>
+            <Button fx:id="btnGeneral"  disable="true" maxWidth="Infinity" onAction="#mostrarGeneral"
+                    style="-fx-background-color: #00394f; -fx-text-fill: #88b8d0; -fx-font-weight: 700;" text="General"/>
+            <Button fx:id="btnAnalisis" disable="true" maxWidth="Infinity" onAction="#mostrarAnalisis"
+                    style="-fx-background-color: #00394f; -fx-text-fill: #88b8d0; -fx-font-weight: 700;" text="Parámetros"/>
+            <Button fx:id="btnInforme"  disable="true" maxWidth="Infinity" onAction="#mostrarInforme"
+                    style="-fx-background-color: #00394f; -fx-text-fill: #88b8d0; -fx-font-weight: 700;" text="Informe"/>
+            <Region VBox.vgrow="ALWAYS"/>
+            <Button fx:id="btnSalir" maxWidth="Infinity" onAction="#cerrarVentana"
+                    style="-fx-background-color: #ffffff; -fx-text-fill: #005a84; -fx-font-weight: 700;" text="Salir"/>
         </VBox>
     </left>
 
+    <!-- ── Centro ─────────────────────────────────────────────── -->
     <center>
         <StackPane fx:id="panelContenedor" style="-fx-background-color: #f4f7f9;">
-            <children>
-                <VBox fx:id="panelGeneral" spacing="16.0">
-                    <padding>
-                        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
-                    </padding>
-                    <children>
-                        <VBox spacing="10.0" styleClass="editor-panel">
-                            <children>
-                                <Label styleClass="panel-title" text="General"/>
-                                <GridPane hgap="12.0" vgap="10.0">
-                                    <columnConstraints>
-                                        <ColumnConstraints minWidth="170.0"/>
-                                        <ColumnConstraints hgrow="ALWAYS"/>
-                                        <ColumnConstraints minWidth="170.0"/>
-                                        <ColumnConstraints hgrow="ALWAYS"/>
-                                    </columnConstraints>
-                                    <children>
-                                        <Label styleClass="field-label" text="Instrucciones" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                                        <TextArea fx:id="txtInstrucciones"
-                                                  prefHeight="74.0"
-                                                  promptText="Instrucciones"
-                                                  wrapText="true"
-                                                  GridPane.columnIndex="1"
-                                                  GridPane.columnSpan="3"
-                                                  GridPane.rowIndex="0"/>
 
-                                        <Label styleClass="field-label" text="Seccion" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                                        <ComboBox fx:id="cboSeccion"
-                                                  maxWidth="Infinity"
-                                                  GridPane.columnIndex="1"
-                                                  GridPane.rowIndex="1"/>
+            <!-- Pantalla inicial -->
+            <VBox fx:id="panelHint" alignment="CENTER" spacing="16.0" StackPane.alignment="CENTER">
+                <Label style="-fx-font-size: 22px; -fx-font-weight: 700; -fx-text-fill: #005a84;"
+                       text="Seleccione una práctica"/>
+                <Label style="-fx-font-size: 14px; -fx-text-fill: #64727d;"
+                       text="Use el campo superior para buscar por código (ej: 475) o por nombre."/>
+            </VBox>
 
-                                        <Label styleClass="field-label" text="Tipo" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
-                                        <ComboBox fx:id="cboTipo"
-                                                  maxWidth="Infinity"
-                                                  GridPane.columnIndex="3"
-                                                  GridPane.rowIndex="1"/>
+            <!-- ════════════════ PANEL GENERAL ════════════════ -->
+            <VBox fx:id="panelGeneral" managed="false" visible="false" spacing="14.0"
+                  maxWidth="Infinity" maxHeight="Infinity" StackPane.alignment="TOP_LEFT">
+                <padding><Insets bottom="14.0" left="14.0" right="14.0" top="14.0"/></padding>
 
-                                        <Label styleClass="field-label" text="Tiempo de proceso (dias)" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                                        <ComboBox fx:id="cboTiempoProcesamiento"
-                                                  maxWidth="Infinity"
-                                                  GridPane.columnIndex="1"
-                                                  GridPane.rowIndex="2"/>
+                <!-- Configuración general de la práctica -->
+                <VBox spacing="10.0" styleClass="editor-panel">
+                    <Label styleClass="panel-title" text="Configuración general"/>
+                    <GridPane hgap="12.0" vgap="10.0">
+                        <columnConstraints>
+                            <ColumnConstraints minWidth="150.0"/>
+                            <ColumnConstraints hgrow="ALWAYS"/>
+                            <ColumnConstraints minWidth="150.0"/>
+                            <ColumnConstraints hgrow="ALWAYS"/>
+                        </columnConstraints>
 
-                                        <Label styleClass="field-label" text="Derivacion" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
-                                        <HBox spacing="8.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                                            <children>
-                                                <CheckBox fx:id="swDerivacion" text="Activa"/>
-                                                <ComboBox fx:id="cboDerivaciones" HBox.hgrow="ALWAYS"/>
-                                                <Button fx:id="btnDerivaciones"
-                                                        onAction="#accionDerivaciones"
-                                                        styleClass="secondary-button"
-                                                        text="Derivaciones"/>
-                                            </children>
-                                        </HBox>
-                                    </children>
-                                </GridPane>
-                            </children>
-                        </VBox>
+                        <Label styleClass="field-label" text="Instrucciones"
+                               GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                        <TextArea fx:id="txtInstrucciones" prefHeight="60.0" promptText="Instrucciones"
+                                  wrapText="true"
+                                  GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="0"/>
 
-                        <SplitPane dividerPositions="0.5" VBox.vgrow="ALWAYS">
-                            <items>
-                                <VBox spacing="10.0" styleClass="editor-panel">
-                                    <children>
-                                        <Label styleClass="panel-title" text="Arbol de practicas"/>
-                                        <TreeView fx:id="arbolPracticas" VBox.vgrow="ALWAYS"/>
-                                        <Button fx:id="btnActualizarInformacion"
-                                                onAction="#actualizarInformacion"
-                                                styleClass="secondary-button"
-                                                text="Actualizar informacion"/>
-                                    </children>
-                                </VBox>
-                                <VBox spacing="10.0" styleClass="editor-panel">
-                                    <children>
-                                        <Label styleClass="panel-title" text="Prioridad por practica"/>
-                                        <HBox alignment="CENTER_LEFT" spacing="8.0">
-                                            <children>
-                                                <Label styleClass="field-label" text="Prioridad actual:"/>
-                                                <Label fx:id="lblPrioridadGeneral"
-                                                       style="-fx-text-fill: #005a84; -fx-font-size: 16px; -fx-font-weight: 700;"
-                                                       text="-"/>
-                                            </children>
-                                        </HBox>
-                                        <TableView fx:id="tablaPioridadPractica" VBox.vgrow="ALWAYS">
-                                            <columns>
-                                                <TableColumn fx:id="colNombrePrioridad" prefWidth="280.0" text="Nombre"/>
-                                                <TableColumn fx:id="colValorPrioridad" prefWidth="160.0" text="Prioridad"/>
-                                            </columns>
-                                        </TableView>
-                                    </children>
-                                </VBox>
-                            </items>
-                        </SplitPane>
-
-                        <HBox alignment="CENTER_RIGHT" spacing="8.0">
-                            <children>
-                                <Button fx:id="btnSiguienteGeneral"
-                                        onAction="#siguienteDesdeGeneral"
-                                        text="Siguiente"/>
-                            </children>
+                        <Label styleClass="field-label" text="Sección"
+                               GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                        <HBox spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <ComboBox fx:id="cboSeccion" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                            <Button onAction="#accionSecciones" styleClass="secondary-button" text="Secciones"/>
                         </HBox>
-                    </children>
+
+                        <Label styleClass="field-label" text="Tipo de informe"
+                               GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                        <ComboBox fx:id="cboTipo" maxWidth="Infinity"
+                                  GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+
+                        <Label styleClass="field-label" text="Tiempo de proceso (días)"
+                               GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                        <ComboBox fx:id="cboTiempoProcesamiento" maxWidth="Infinity"
+                                  GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                        <Label styleClass="field-label" text="Derivación"
+                               GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0"
+                              GridPane.columnIndex="3" GridPane.rowIndex="2">
+                            <ToggleSwitchControl fx:id="swDerivacion"/>
+                            <ComboBox fx:id="cboDerivaciones" disable="true" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="btnDerivaciones" onAction="#accionDerivaciones"
+                                    styleClass="secondary-button" text="Gestionar"/>
+                        </HBox>
+                    </GridPane>
                 </VBox>
 
-                <HBox fx:id="panelAnalisis" managed="false" spacing="16.0" visible="false">
-                    <padding>
-                        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
-                    </padding>
-                    <children>
-                        <VBox prefWidth="620.0" spacing="12.0" styleClass="editor-panel" HBox.hgrow="ALWAYS">
-                            <children>
-                                <Label styleClass="panel-title" text="Analisis"/>
-                                <CheckBox fx:id="chkUnSoloMetodo" text="Un solo metodo para todos los parametros"/>
+                <!-- Lista de parámetros -->
+                <VBox spacing="10.0" styleClass="editor-panel" VBox.vgrow="ALWAYS">
+                    <Label styleClass="panel-title" text="Parámetros de la práctica"/>
+                    <HBox spacing="10.0" VBox.vgrow="ALWAYS">
 
-                                <GridPane hgap="10.0" vgap="10.0">
-                                    <columnConstraints>
-                                        <ColumnConstraints hgrow="ALWAYS"/>
-                                        <ColumnConstraints minWidth="110.0"/>
-                                    </columnConstraints>
-                                    <children>
-                                        <TextField fx:id="txtMetodo" promptText="Metodo" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                                        <Button fx:id="btnMetodo"
-                                                onAction="#accionMetodo"
-                                                styleClass="secondary-button"
-                                                text="Metodos"
-                                                GridPane.columnIndex="1"
-                                                GridPane.rowIndex="0"/>
+                        <TableView fx:id="tablaPioridadPractica" HBox.hgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="colNombrePrioridad" text="Análisis / Parámetro"/>
+                                <TableColumn fx:id="colValorPrioridad" text="Prioridad"/>
+                            </columns>
+                        </TableView>
 
-                                        <TextField fx:id="txtTitulo" promptText="Titulo" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                                        <Button fx:id="btnTitulo"
-                                                onAction="#accionTitulo"
-                                                styleClass="secondary-button"
-                                                text="Titulos"
-                                                GridPane.columnIndex="1"
-                                                GridPane.rowIndex="1"/>
-
-                                        <TextField fx:id="txtFormatoMesada"
-                                                   promptText="Formato de mesada"
-                                                   GridPane.columnIndex="0"
-                                                   GridPane.columnSpan="2"
-                                                   GridPane.rowIndex="2"/>
-
-                                        <TextField fx:id="txtNombreInforme"
-                                                   promptText="Nombre en informe"
-                                                   GridPane.columnIndex="0"
-                                                   GridPane.columnSpan="2"
-                                                   GridPane.rowIndex="3"/>
-                                    </children>
-                                </GridPane>
-
-                                <VBox spacing="10.0" styleClass="editor-panel">
-                                    <fx:define>
-                                        <ToggleGroup fx:id="grupoTipoResultado"/>
-                                    </fx:define>
-                                    <children>
-                                        <Label styleClass="panel-title" text="Tipo de Resultado"/>
-
-                                        <GridPane hgap="10.0" vgap="10.0">
-                                            <columnConstraints>
-                                                <ColumnConstraints minWidth="165.0"/>
-                                                <ColumnConstraints hgrow="ALWAYS"/>
-                                                <ColumnConstraints minWidth="130.0"/>
-                                            </columnConstraints>
-                                            <children>
-                                                <RadioButton fx:id="radionum"
-                                                             onAction="#seleccionarResultadoNumerico"
-                                                             selected="true"
-                                                             text="Numerico"
-                                                             toggleGroup="$grupoTipoResultado"
-                                                             GridPane.columnIndex="0"
-                                                             GridPane.rowIndex="0"/>
-                                                <ComboBox fx:id="cbounidad"
-                                                          maxWidth="Infinity"
-                                                          promptText="Unidad"
-                                                          GridPane.columnIndex="1"
-                                                          GridPane.rowIndex="0"/>
-                                                <Button fx:id="btnAgregarUnidad"
-                                                        onAction="#abrirUnidades"
-                                                        styleClass="secondary-button"
-                                                        text="Agregar unidad"
-                                                        GridPane.columnIndex="2"
-                                                        GridPane.rowIndex="0"/>
-
-                                                <RadioButton fx:id="radioposneg"
-                                                             onAction="#seleccionarResultadoPosNeg"
-                                                             text="Positivo/Negativo"
-                                                             toggleGroup="$grupoTipoResultado"
-                                                             GridPane.columnIndex="0"
-                                                             GridPane.rowIndex="1"/>
-                                                <ComboBox fx:id="cboPosneg"
-                                                          maxWidth="Infinity"
-                                                          GridPane.columnIndex="1"
-                                                          GridPane.columnSpan="2"
-                                                          GridPane.rowIndex="1"/>
-
-                                                <Button fx:id="btnTipoResultado"
-                                                        maxWidth="Infinity"
-                                                        onAction="#agregarTipoResultado"
-                                                        styleClass="secondary-button"
-                                                        text="Tipo de Resultado"
-                                                        GridPane.columnIndex="0"
-                                                        GridPane.rowIndex="2"/>
-                                                <ComboBox fx:id="cboTexto"
-                                                          maxWidth="Infinity"
-                                                          GridPane.columnIndex="1"
-                                                          GridPane.columnSpan="2"
-                                                          GridPane.rowIndex="2"/>
-
-                                                <RadioButton fx:id="radioposnegnum"
-                                                             onAction="#seleccionarResultadoPosNegNumerico"
-                                                             text="+/- y Numerico"
-                                                             toggleGroup="$grupoTipoResultado"
-                                                             GridPane.columnIndex="0"
-                                                             GridPane.rowIndex="3"/>
-                                                <ComboBox fx:id="cboUnidadPositivoNegativo"
-                                                          maxWidth="Infinity"
-                                                          promptText="Unidad"
-                                                          GridPane.columnIndex="1"
-                                                          GridPane.rowIndex="3"/>
-                                                <TextField fx:id="txtPositivoNegativoNumerico"
-                                                           promptText="Valor"
-                                                           GridPane.columnIndex="2"
-                                                           GridPane.rowIndex="3"/>
-
-                                                <CheckBox fx:id="chkFormula"
-                                                          onAction="#toggleFormula"
-                                                          text="Formula"
-                                                          GridPane.columnIndex="0"
-                                                          GridPane.rowIndex="4"/>
-                                                <Button fx:id="btnCargarFormula"
-                                                        onAction="#cargarFormula"
-                                                        styleClass="secondary-button"
-                                                        text="Cargar formula"
-                                                        GridPane.columnIndex="1"
-                                                        GridPane.rowIndex="4"/>
-                                                <TextField fx:id="txtformula"
-                                                           editable="false"
-                                                           promptText="Formula seleccionada"
-                                                           GridPane.columnIndex="0"
-                                                           GridPane.columnSpan="3"
-                                                           GridPane.rowIndex="5"/>
-                                            </children>
-                                        </GridPane>
-                                    </children>
-                                </VBox>
-
-                                <Separator/>
-
-                                <GridPane hgap="10.0" vgap="10.0" VBox.vgrow="ALWAYS">
-                                    <columnConstraints>
-                                        <ColumnConstraints minWidth="150.0"/>
-                                        <ColumnConstraints hgrow="ALWAYS"/>
-                                    </columnConstraints>
-                                    <rowConstraints>
-                                        <RowConstraints minHeight="28.0"/>
-                                        <RowConstraints minHeight="28.0"/>
-                                        <RowConstraints minHeight="28.0"/>
-                                        <RowConstraints vgrow="ALWAYS"/>
-                                    </rowConstraints>
-                                    <children>
-                                        <Label styleClass="field-label" text="Nombre del parametro" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                                        <TextField fx:id="txtNombreParametro"
-                                                   promptText="Parametro"
-                                                   GridPane.columnIndex="1"
-                                                   GridPane.rowIndex="0"/>
-
-                                        <Label styleClass="field-label" text="Unidad" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                                        <TextField fx:id="txtUnidad"
-                                                   promptText="Unidad"
-                                                   GridPane.columnIndex="1"
-                                                   GridPane.rowIndex="1"/>
-
-                                        <Label styleClass="field-label" text="Sexo" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                                        <ComboBox fx:id="cboSexo4"
-                                                  maxWidth="Infinity"
-                                                  GridPane.columnIndex="1"
-                                                  GridPane.rowIndex="2"/>
-
-                                        <Label styleClass="field-label" text="Valores de referencia" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-                                        <TextArea fx:id="txtValoresReferencia"
-                                                  promptText="Valores de referencia"
-                                                  wrapText="true"
-                                                  GridPane.columnIndex="1"
-                                                  GridPane.rowIndex="3"/>
-                                    </children>
-                                </GridPane>
-
-                                <HBox alignment="CENTER_RIGHT" spacing="8.0">
-                                    <children>
-                                        <Button fx:id="btnEditarResultados"
-                                                onAction="#editarResultados"
-                                                styleClass="secondary-button"
-                                                text="Editar resultados"/>
-                                    </children>
-                                </HBox>
-                            </children>
+                        <VBox spacing="8.0" minWidth="130.0">
+                            <Button maxWidth="Infinity" onAction="#subirPrioridad"
+                                    styleClass="secondary-button" text="↑ Subir"/>
+                            <Button maxWidth="Infinity" onAction="#bajarPrioridad"
+                                    styleClass="secondary-button" text="↓ Bajar"/>
+                            <Separator/>
+                            <Button maxWidth="Infinity" onAction="#nuevoParametro"  text="+ Nuevo"/>
+                            <Button maxWidth="Infinity" onAction="#editarParametroSeleccionado"
+                                    styleClass="secondary-button" text="Editar"/>
+                            <Button maxWidth="Infinity" onAction="#borrarParametro"
+                                    styleClass="danger-button" text="Borrar"/>
                         </VBox>
+                    </HBox>
+                </VBox>
+            </VBox>
 
-                        <VBox minWidth="430.0" prefWidth="460.0" spacing="12.0">
-                            <VBox spacing="10.0" styleClass="editor-panel" VBox.vgrow="ALWAYS">
-                                <children>
-                                    <Label styleClass="panel-title" text="Estructura del analisis"/>
-                                    <TreeView fx:id="jTree1" VBox.vgrow="ALWAYS"/>
-                                </children>
-                            </VBox>
+            <!-- ════════════════ PANEL PARÁMETROS ════════════════ -->
+            <VBox fx:id="panelAnalisis" managed="false" visible="false" spacing="14.0"
+                  maxWidth="Infinity" maxHeight="Infinity" StackPane.alignment="TOP_LEFT">
+                <padding><Insets bottom="14.0" left="14.0" right="14.0" top="14.0"/></padding>
 
-                            <VBox spacing="8.0" styleClass="editor-panel">
-                                <children>
-                                    <Label styleClass="field-label"
-                                           text="Seleccione el analisis y modifique la prioridad"/>
-                                    <HBox spacing="8.0">
-                                        <children>
-                                            <Button fx:id="btnSubirPrioridad"
-                                                    maxWidth="Infinity"
-                                                    onAction="#subirPrioridad"
-                                                    styleClass="secondary-button"
-                                                    text="Subir"
-                                                    HBox.hgrow="ALWAYS"/>
-                                            <Button fx:id="btnBajarPrioridad"
-                                                    maxWidth="Infinity"
-                                                    onAction="#bajarPrioridad"
-                                                    styleClass="secondary-button"
-                                                    text="Bajar"
-                                                    HBox.hgrow="ALWAYS"/>
-                                        </children>
-                                    </HBox>
-                                </children>
-                            </VBox>
-
-                            <VBox spacing="8.0" styleClass="editor-panel">
-                                <children>
-                                    <HBox spacing="8.0">
-                                        <children>
-                                            <Button fx:id="btnAgregar"
-                                                    maxWidth="Infinity"
-                                                    onAction="#agregarParametro"
-                                                    text="Agregar"
-                                                    HBox.hgrow="ALWAYS"/>
-                                            <Button fx:id="btnBorrar"
-                                                    maxWidth="Infinity"
-                                                    onAction="#borrarParametro"
-                                                    styleClass="secondary-button"
-                                                    text="Borrar"
-                                                    HBox.hgrow="ALWAYS"/>
-                                            <Button fx:id="btnLimpiar"
-                                                    maxWidth="Infinity"
-                                                    onAction="#limpiarCampos"
-                                                    styleClass="secondary-button"
-                                                    text="Limpiar"
-                                                    HBox.hgrow="ALWAYS"/>
-                                        </children>
-                                    </HBox>
-                                    <Button fx:id="btnGuardar"
-                                            maxWidth="Infinity"
-                                            onAction="#guardar"
-                                            text="Guardar analisis"/>
-                                    <HBox alignment="CENTER_RIGHT" spacing="8.0">
-                                        <children>
-                                            <Button fx:id="btnSiguienteAnalisis"
-                                                    onAction="#siguienteDesdeAnalisis"
-                                                    text="Siguiente"/>
-                                        </children>
-                                    </HBox>
-                                    <Label fx:id="mensajeLabel" styleClass="form-message" wrapText="true"/>
-                                </children>
-                            </VBox>
-                        </VBox>
-                    </children>
+                <!-- Header -->
+                <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="editor-panel"
+                      style="-fx-padding: 10 18 10 18;">
+                    <Label styleClass="field-label" text="Editando:"/>
+                    <Label fx:id="lblParametroActual"
+                           style="-fx-font-size: 15px; -fx-font-weight: 700; -fx-text-fill: #005a84;"
+                           text="(nuevo)"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="lblPrioridadGeneral"
+                           style="-fx-font-size: 12px; -fx-text-fill: #64727d;" text=""/>
                 </HBox>
 
-                <VBox fx:id="panelInforme" managed="false" spacing="14.0" visible="false">
-                    <padding>
-                        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
-                    </padding>
-                    <children>
-                        <HBox alignment="CENTER_LEFT" spacing="10.0">
-                            <children>
-                                <Label styleClass="panel-title" text="Informe de practica"/>
-                                <Label fx:id="lblPracticaInforme"
-                                       style="-fx-text-fill: #005a84; -fx-font-size: 18px; -fx-font-weight: 700;"
-                                       text="-"/>
-                            </children>
-                        </HBox>
+                <HBox spacing="14.0" VBox.vgrow="ALWAYS">
 
-                        <HBox spacing="18.0" styleClass="editor-panel">
-                            <children>
-                                <HBox alignment="CENTER_LEFT" spacing="8.0">
-                                    <children>
-                                        <Label styleClass="field-label" text="Seccion:"/>
-                                        <Label fx:id="lblSeccionInforme"
-                                               style="-fx-font-size: 20px; -fx-font-weight: 700; -fx-text-fill: #b80000;"
-                                               text="-"/>
-                                    </children>
-                                </HBox>
-                                <HBox alignment="CENTER_LEFT" spacing="8.0">
-                                    <children>
-                                        <Label styleClass="field-label" text="Prioridad:"/>
-                                        <Label fx:id="lblPrioridadInforme"
-                                               style="-fx-font-size: 20px; -fx-font-weight: 700; -fx-text-fill: #b80000;"
-                                               text="-"/>
-                                    </children>
-                                </HBox>
-                                <Region HBox.hgrow="ALWAYS"/>
-                                <Button fx:id="btnAgregarTitulo"
-                                        onAction="#agregarTitulo"
-                                        styleClass="secondary-button"
-                                        text="Agregar titulo"/>
-                            </children>
-                        </HBox>
+                    <!-- Columna izquierda: Datos del parámetro (PRIMERO) + Configuración -->
+                    <VBox spacing="12.0" styleClass="editor-panel" HBox.hgrow="ALWAYS">
 
-                        <SplitPane dividerPositions="0.43" VBox.vgrow="ALWAYS">
-                            <items>
-                                <VBox spacing="10.0" styleClass="editor-panel">
-                                    <children>
-                                        <Label styleClass="panel-title" text="Titulos"/>
-                                        <TableView fx:id="tablaTitulos" VBox.vgrow="ALWAYS">
-                                            <columns>
-                                                <TableColumn fx:id="colIdAnalisisTitulo" prefWidth="90.0" text="ID Analisis"/>
-                                                <TableColumn fx:id="colIdTitulo" prefWidth="80.0" text="ID Titulo"/>
-                                                <TableColumn fx:id="colTitulo" prefWidth="210.0" text="Titulo"/>
-                                                <TableColumn fx:id="colAnalisisTitulo" prefWidth="260.0" text="Analisis"/>
-                                            </columns>
-                                        </TableView>
-                                    </children>
-                                </VBox>
+                        <!-- 1. Datos del parámetro -->
+                        <Label styleClass="panel-title" text="Datos del parámetro"/>
+                        <GridPane hgap="10.0" vgap="8.0" VBox.vgrow="ALWAYS">
+                            <columnConstraints>
+                                <ColumnConstraints minWidth="130.0"/>
+                                <ColumnConstraints hgrow="ALWAYS"/>
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="28.0"/>
+                                <RowConstraints minHeight="28.0"/>
+                                <RowConstraints minHeight="28.0"/>
+                                <RowConstraints vgrow="ALWAYS"/>
+                            </rowConstraints>
 
-                                <VBox spacing="10.0" styleClass="editor-panel">
-                                    <children>
-                                        <Label styleClass="panel-title" text="Prioridades"/>
-                                        <SplitPane dividerPositions="0.45" VBox.vgrow="ALWAYS">
-                                            <items>
-                                                <TreeView fx:id="treePrioridades"/>
-                                                <TableView fx:id="tablaPrioridadesInforme">
-                                                    <columns>
-                                                        <TableColumn fx:id="colNombrePrioridadInforme" prefWidth="250.0" text="Nombre"/>
-                                                        <TableColumn fx:id="colPrioridadInforme" prefWidth="110.0" text="Prioridad"/>
-                                                    </columns>
-                                                </TableView>
-                                            </items>
-                                        </SplitPane>
-                                    </children>
-                                </VBox>
-                            </items>
-                        </SplitPane>
+                            <Label styleClass="field-label" text="Nombre del parámetro"
+                                   GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                            <TextField fx:id="txtNombreParametro" promptText="Ej: Hemoglobina"
+                                       GridPane.columnIndex="1" GridPane.rowIndex="0"/>
 
-                        <VBox spacing="10.0" styleClass="editor-panel">
-                            <children>
-                                <HBox alignment="CENTER_LEFT" spacing="8.0">
-                                    <children>
-                                        <Button fx:id="btnPrincipalInforme"
-                                                onAction="#cerrarVentana"
-                                                styleClass="secondary-button"
-                                                text="Principal"/>
-                                        <Button fx:id="btnAtrasInforme"
-                                                onAction="#volverAnalisisDesdeInforme"
-                                                styleClass="secondary-button"
-                                                text="Atras"/>
-                                        <Button fx:id="btnPrevisualizarInforme"
-                                                onAction="#previsualizarInforme"
-                                                text="Previsualizar informe"/>
-                                        <Region HBox.hgrow="ALWAYS"/>
-                                        <Button fx:id="btnModificarPrioridad"
-                                                onAction="#modificarPrioridadInforme"
-                                                styleClass="secondary-button"
-                                                text="Modificar prioridad"/>
-                                        <Button fx:id="btnFinalizarInforme"
-                                                onAction="#finalizarProceso"
-                                                styleClass="secondary-button"
-                                                text="Finalizar"/>
-                                    </children>
-                                </HBox>
-                                <TextArea fx:id="txtPreviewInforme"
-                                          editable="false"
-                                          prefHeight="150.0"
-                                          promptText="Aqui se mostrara la previsualizacion del informe."
-                                          wrapText="true"/>
-                            </children>
+                            <Label styleClass="field-label" text="Unidad de medida"
+                                   GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                            <TextField fx:id="txtUnidad" promptText="Ej: g/dL"
+                                       GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                            <Label styleClass="field-label" text="Aplica a"
+                                   GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                            <ComboBox fx:id="cboSexo4" maxWidth="Infinity"
+                                      GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                            <Label styleClass="field-label" text="Valores de referencia"
+                                   GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                            <TextArea fx:id="txtValoresReferencia" promptText="Ej: 12.0 - 16.0 g/dL"
+                                      wrapText="true"
+                                      GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                        </GridPane>
+
+                        <Separator/>
+
+                        <!-- 2. Configuración del análisis -->
+                        <Label styleClass="panel-title" text="Configuración del análisis"/>
+
+                        <VBox spacing="6.0">
+                            <Label styleClass="field-label" text="Método analítico"/>
+                            <HBox spacing="8.0">
+                                <TextField fx:id="txtMetodo" promptText="Buscar método..." HBox.hgrow="ALWAYS"/>
+                                <Button fx:id="btnMetodo" onAction="#accionMetodo"
+                                        styleClass="secondary-button" text="Métodos"/>
+                            </HBox>
                         </VBox>
-                    </children>
+
+                        <VBox spacing="6.0">
+                            <Label styleClass="field-label" text="Título en el informe"/>
+                            <HBox spacing="8.0">
+                                <TextField fx:id="txtTitulo" promptText="Buscar título..." HBox.hgrow="ALWAYS"/>
+                                <Button fx:id="btnTitulo" onAction="#accionTitulo"
+                                        styleClass="secondary-button" text="Títulos"/>
+                            </HBox>
+                        </VBox>
+
+                        <VBox spacing="6.0">
+                            <Label styleClass="field-label" text="Código en mesada (máx. 15 caracteres)"/>
+                            <TextField fx:id="txtFormatoMesada" promptText="Ej: HGB, HCT, GLU"/>
+                        </VBox>
+
+                        <HBox alignment="CENTER_LEFT" spacing="12.0">
+                            <Label styleClass="field-label" text="Un solo método para todos los parámetros:"/>
+                            <ToggleSwitchControl fx:id="chkUnSoloMetodo"/>
+                        </HBox>
+
+                    </VBox>
+
+                    <!-- Columna derecha: Tipo de resultado -->
+                    <VBox spacing="12.0" styleClass="editor-panel" minWidth="420.0" prefWidth="440.0">
+                        <Label styleClass="panel-title" text="Tipo de Resultado"/>
+
+                        <fx:define><ToggleGroup fx:id="grupoTipoResultado"/></fx:define>
+
+                        <GridPane hgap="10.0" vgap="12.0">
+                            <columnConstraints>
+                                <ColumnConstraints minWidth="160.0"/>
+                                <ColumnConstraints hgrow="ALWAYS"/>
+                                <ColumnConstraints minWidth="110.0"/>
+                            </columnConstraints>
+
+                            <RadioButton fx:id="radionum" onAction="#seleccionarResultadoNumerico"
+                                         selected="true" text="Numérico"
+                                         toggleGroup="$grupoTipoResultado"
+                                         GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                            <ComboBox fx:id="cbounidad" maxWidth="Infinity" promptText="Unidad"
+                                      GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                            <Button fx:id="btnAgregarUnidad" onAction="#abrirUnidades"
+                                    styleClass="secondary-button" text="Unidades"
+                                    GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+
+                            <RadioButton fx:id="radioposneg" onAction="#seleccionarResultadoPosNeg"
+                                         text="Positivo / Negativo"
+                                         toggleGroup="$grupoTipoResultado"
+                                         GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                            <ComboBox fx:id="cboPosneg" maxWidth="Infinity"
+                                      GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1"/>
+
+                            <Button fx:id="btnTipoResultado" maxWidth="Infinity"
+                                    onAction="#agregarTipoResultado"
+                                    styleClass="secondary-button" text="Otro tipo"
+                                    GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                            <ComboBox fx:id="cboTexto" maxWidth="Infinity"
+                                      GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2"/>
+
+                            <RadioButton fx:id="radioposnegnum" onAction="#seleccionarResultadoPosNegNumerico"
+                                         text="+/− y Numérico"
+                                         toggleGroup="$grupoTipoResultado"
+                                         GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                            <ComboBox fx:id="cboUnidadPositivoNegativo" maxWidth="Infinity" promptText="Unidad"
+                                      GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                            <TextField fx:id="txtPositivoNegativoNumerico" promptText="Valor"
+                                       GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+
+                            <HBox alignment="CENTER_LEFT" spacing="8.0"
+                                  GridPane.columnIndex="0" GridPane.rowIndex="4">
+                                <Label styleClass="field-label" text="Fórmula:"/>
+                                <ToggleSwitchControl fx:id="chkFormula"/>
+                            </HBox>
+                            <Button fx:id="btnCargarFormula" onAction="#cargarFormula"
+                                    styleClass="secondary-button" text="Cargar"
+                                    GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                            <TextField fx:id="txtformula" editable="false"
+                                       promptText="Fórmula seleccionada"
+                                       GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="5"/>
+                        </GridPane>
+
+                        <Region VBox.vgrow="ALWAYS"/>
+                        <Separator/>
+
+                        <Label fx:id="mensajeLabel" styleClass="form-message" wrapText="true"/>
+
+                        <HBox spacing="8.0">
+                            <Button maxWidth="Infinity" onAction="#limpiarCampos"
+                                    styleClass="secondary-button" text="Limpiar" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="btnGuardar" maxWidth="Infinity" onAction="#agregarParametro"
+                                    text="Confirmar" HBox.hgrow="ALWAYS"/>
+                        </HBox>
+                    </VBox>
+
+                </HBox>
+            </VBox>
+
+            <!-- ════════════════ PANEL INFORME ════════════════ -->
+            <VBox fx:id="panelInforme" managed="false" visible="false" spacing="14.0"
+                  maxWidth="Infinity" maxHeight="Infinity" StackPane.alignment="TOP_LEFT">
+                <padding><Insets bottom="14.0" left="14.0" right="14.0" top="14.0"/></padding>
+
+                <HBox alignment="CENTER_LEFT" spacing="14.0" styleClass="editor-panel"
+                      style="-fx-padding: 10 18 10 18;">
+                    <Label styleClass="panel-title" text="Informe —"/>
+                    <Label fx:id="lblPracticaInforme"
+                           style="-fx-text-fill: #005a84; -fx-font-size: 16px; -fx-font-weight: 700;" text="-"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label styleClass="field-label" text="Sección:"/>
+                    <Label fx:id="lblSeccionInforme"
+                           style="-fx-font-size: 15px; -fx-font-weight: 700; -fx-text-fill: #b80000;" text="-"/>
+                </HBox>
+
+                <HBox spacing="14.0" VBox.vgrow="ALWAYS">
+                    <!-- Árbol de prioridades (visual, read-only) -->
+                    <VBox spacing="10.0" styleClass="editor-panel" HBox.hgrow="ALWAYS">
+                        <Label styleClass="panel-title" text="Orden de parámetros en el informe"/>
+                        <Label styleClass="field-label"
+                               text="El título de cada parámetro se configura en el panel Parámetros (campo Título)."/>
+                        <TreeView fx:id="treePrioridades" VBox.vgrow="ALWAYS"/>
+                    </VBox>
+
+                    <!-- Tabla editable de prioridades -->
+                    <VBox spacing="10.0" styleClass="editor-panel" minWidth="340.0" prefWidth="360.0">
+                        <Label styleClass="panel-title" text="Ajustar prioridades"/>
+                        <TableView fx:id="tablaPrioridadesInforme" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="colNombrePrioridadInforme" text="Parámetro"/>
+                                <TableColumn fx:id="colPrioridadInforme" prefWidth="70.0" maxWidth="75.0" text="Prior."/>
+                            </columns>
+                        </TableView>
+                        <Label styleClass="field-label"
+                               text="Puede editar la prioridad haciendo doble clic en la celda."/>
+                    </VBox>
+                </HBox>
+
+                <VBox spacing="10.0" styleClass="editor-panel">
+                    <HBox alignment="CENTER_RIGHT" spacing="8.0">
+                        <Button onAction="#previsualizarInforme"
+                                styleClass="secondary-button" text="Previsualizar"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button fx:id="btnFinalizarInforme" onAction="#guardarTodo" text="Guardar"/>
+                    </HBox>
+                    <TextArea fx:id="txtPreviewInforme" editable="false" prefHeight="130.0"
+                              promptText="La previsualización aparece aquí." wrapText="true"/>
                 </VBox>
-            </children>
+            </VBox>
+
         </StackPane>
     </center>
 </BorderPane>

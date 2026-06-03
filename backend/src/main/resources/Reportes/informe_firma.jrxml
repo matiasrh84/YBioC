@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
+                  http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="informe_firma"
+              pageWidth="595" pageHeight="421" orientation="Landscape"
+              columnWidth="555" leftMargin="20" rightMargin="20"
+              topMargin="0" bottomMargin="0"
+              uuid="aa000006-0000-0000-0000-000000000006">
+
+    <!-- Página final del informe: muestra la firma del bioquímico
+         posicionada a la derecha. Se agrega al final del informe compuesto
+         solo cuando ConfiguracionReporte.firma != null. -->
+
+    <parameter name="firma"       class="java.lang.Object"/>
+    <parameter name="laboratorio" class="java.lang.String"/>
+
+    <background><band splitType="Stretch"/></background>
+
+    <title>
+        <band height="421">
+            <line>
+                <reportElement x="0" y="0" width="555" height="1"
+                               uuid="aa000006-0001-0000-0000-000000000006"/>
+                <graphicElement><pen lineWidth="0.5" lineColor="#cccccc"/></graphicElement>
+            </line>
+            <!-- Firma posicionada al centro-derecha, en la parte inferior -->
+            <image onErrorType="Blank">
+                <reportElement x="320" y="330" width="235" height="70"
+                               uuid="aa000006-0002-0000-0000-000000000006">
+                    <printWhenExpression><![CDATA[$P{firma} != null]]></printWhenExpression>
+                </reportElement>
+                <imageExpression><![CDATA[$P{firma}]]></imageExpression>
+            </image>
+            <line>
+                <reportElement x="320" y="402" width="235" height="1"
+                               uuid="aa000006-0003-0000-0000-000000000006"/>
+                <graphicElement><pen lineWidth="0.5"/></graphicElement>
+            </line>
+            <textField isBlankWhenNull="true">
+                <reportElement x="320" y="404" width="235" height="10"
+                               uuid="aa000006-0004-0000-0000-000000000006"/>
+                <textElement textAlignment="Center"><font size="8"/></textElement>
+                <textFieldExpression><![CDATA[$P{laboratorio}]]></textFieldExpression>
+            </textField>
+        </band>
+    </title>
+
+</jasperReport>

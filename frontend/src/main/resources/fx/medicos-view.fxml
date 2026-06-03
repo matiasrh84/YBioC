@@ -3,18 +3,18 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Priority?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.ComboBox?>
 
-<?import javafx.scene.control.TextArea?>
 <VBox minHeight="760.0"
       minWidth="1260.0"
       prefHeight="760.0"
@@ -30,15 +30,8 @@
         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0"/>
     </padding>
 
-    <VBox spacing="6.0">
-        <Label styleClass="section-title" text="Medicos"/>
-        <Label styleClass="section-subtitle" text="Mantenimiento de medicos y estado operativo."/>
-    </VBox>
-
-    <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="editor-panel">
-        <TextField fx:id="filtroField" promptText="Buscar por apellido, nombre o matricula" HBox.hgrow="ALWAYS"/>
-        <Button onAction="#cargar" styleClass="secondary-button" text="Actualizar"/>
-    </HBox>
+    <!-- Barra de búsqueda -->
+    <TextField fx:id="filtroField" promptText="Buscar por apellido, nombre o matricula"/>
 
     <HBox spacing="18.0" VBox.vgrow="ALWAYS">
         <TableView fx:id="medicosTable" prefWidth="760.0" HBox.hgrow="ALWAYS">
@@ -52,7 +45,7 @@
             </columns>
         </TableView>
 
-        <VBox minWidth="360.0" prefWidth="380.0" spacing="12.0" styleClass="editor-panel">
+        <VBox minWidth="360.0" prefWidth="400.0" spacing="12.0" styleClass="editor-panel">
             <Label styleClass="panel-title" text="Datos del medico"/>
 
             <GridPane hgap="10.0" vgap="10.0">
@@ -74,14 +67,9 @@
                     <TextField fx:id="telefonoField" promptText="Telefono"/>
                 </VBox>
 
-                <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="2">
                     <Label styleClass="field-label" text="Mail"/>
                     <TextField fx:id="mailField" promptText="Mail"/>
-                </VBox>
-
-                <VBox spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                    <Label styleClass="field-label" text="Especialidad"/>
-                    <ComboBox fx:id="especialidadCombo" prefWidth="200.0" promptText="Seleccionar..." maxWidth="Infinity"/>
                 </VBox>
 
                 <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="2">
@@ -92,16 +80,34 @@
 
             <CheckBox fx:id="estadoCheck" text="Activo"/>
 
+            <!-- Sección especialidades -->
+            <VBox spacing="6.0">
+                <Label styleClass="field-label" text="Especialidades"/>
+                <HBox spacing="6.0" alignment="CENTER_LEFT">
+                    <ComboBox fx:id="especialidadCombo" promptText="Seleccionar especialidad..."
+                              HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    <Button text="−" onAction="#quitarEspecialidad" styleClass="secondary-button"/>
+                </HBox>
+                <ListView fx:id="especialidadesListView" prefHeight="80.0"/>
+            </VBox>
+
             <Region VBox.vgrow="ALWAYS"/>
 
             <Label fx:id="mensajeLabel" styleClass="form-message" wrapText="true"/>
 
-            <HBox alignment="CENTER_LEFT" spacing="8.0">
-                <Button onAction="#nuevo" styleClass="secondary-button" text="Nuevo"/>
-                <Button onAction="#guardar" text="Guardar"/>
-                <Button onAction="#agregarEspecialidad" styleClass="secondary-button" text="Agregar Especialidad"/>
+            <!-- Fila 1: Nuevo + Guardar -->
+            <HBox spacing="8.0">
+                <Button onAction="#nuevo" styleClass="secondary-button" text="Nuevo"
+                        maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                <Button onAction="#guardar" text="Guardar"
+                        maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
             </HBox>
-            <Button maxWidth="Infinity" onAction="#cambiarEstado" styleClass="secondary-button" text="Baja / Reactivar"/>
+            <!-- Fila 2: Agregar Especialidad -->
+            <Button maxWidth="Infinity" onAction="#agregarEspecialidad" styleClass="secondary-button"
+                    text="Agregar Especialidad"/>
+            <!-- Fila 3: Baja / Reactivar -->
+            <Button maxWidth="Infinity" onAction="#cambiarEstado" styleClass="secondary-button"
+                    text="Baja / Reactivar"/>
         </VBox>
     </HBox>
 </VBox>

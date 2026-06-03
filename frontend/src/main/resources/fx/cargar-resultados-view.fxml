@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<VBox spacing="12.0"
+      styleClass="content"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ybc.ybioq.fx.controller.CargarResultadosFxController">
+    <padding>
+        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
+    </padding>
+
+    <!-- ══ BÚSQUEDA ═════════════════════════════════════════════════════ -->
+    <VBox spacing="8.0" styleClass="editor-panel">
+        <Label styleClass="panel-title" text="Buscar Orden"/>
+        <HBox spacing="8.0" alignment="CENTER_LEFT">
+            <TextField fx:id="txtBuscarOrden" onAction="#buscarOrden"
+                       promptText="Nro. orden o DNI del paciente..." HBox.hgrow="ALWAYS"/>
+            <Button onAction="#buscarOrden" text="Buscar">
+                <graphic><FontIcon iconLiteral="mdi2m-magnify" iconSize="16" iconColor="white"/></graphic>
+            </Button>
+        </HBox>
+        <HBox spacing="20.0">
+            <VBox spacing="4.0">
+                <Label styleClass="field-label" text="Orden"/>
+                <Label fx:id="lblOrdenInfo" style="-fx-font-weight: 700;" text="-"/>
+            </VBox>
+            <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                <Label styleClass="field-label" text="Paciente"/>
+                <Label fx:id="lblPacienteInfo" style="-fx-font-weight: 700;" text="-"/>
+            </VBox>
+        </HBox>
+    </VBox>
+
+    <!-- ══ TABLA DE RESULTADOS ════════════════════════════════════════════ -->
+    <VBox spacing="8.0" styleClass="editor-panel" VBox.vgrow="ALWAYS">
+        <Label styleClass="panel-title" text="Resultados (verde = cargado)"/>
+        <TableView fx:id="tablaResultados" VBox.vgrow="ALWAYS" editable="true">
+            <columns>
+                <TableColumn fx:id="colAnalisis"  text="Análisis"        minWidth="150.0" prefWidth="180.0"/>
+                <TableColumn fx:id="colPractica"  text="Práctica"        minWidth="120.0" prefWidth="140.0"/>
+                <TableColumn fx:id="colTipo"      text="Tipo"           minWidth="80.0"  prefWidth="100.0"/>
+                <TableColumn fx:id="colUnidad"    text="Unidad"         minWidth="70.0"  prefWidth="90.0"/>
+                <TableColumn fx:id="colValoresRef" text="Valores Ref"     minWidth="100.0" prefWidth="140.0"/>
+                <TableColumn fx:id="colResultado" text="Resultado"       minWidth="100.0" prefWidth="120.0"/>
+                <TableColumn fx:id="colObservacion" text="Observación"    minWidth="120.0" prefWidth="150.0"/>
+                <TableColumn fx:id="colEstadoImprime" text="Imprime"      minWidth="60.0"  prefWidth="70.0"/>
+                <TableColumn fx:id="colImprimirNombre" text="Nom."        minWidth="50.0"  prefWidth="60.0"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+    <!-- ══ ACCIONES ═══════════════════════════════════════════════════════ -->
+    <Separator/>
+    <Label fx:id="mensajeLabel" styleClass="form-message" wrapText="true"/>
+    <HBox spacing="8.0">
+        <Button maxWidth="Infinity" onAction="#limpiar"
+                styleClass="secondary-button" text="Limpiar" HBox.hgrow="ALWAYS"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button onAction="#cerrar" styleClass="secondary-button" text="Cerrar"/>
+        <Button onAction="#verInforme" styleClass="secondary-button" text="Ver Informe"/>
+        <Button onAction="#guardar" text="Guardar Resultados" style="-fx-font-weight: 700;">
+            <graphic><FontIcon iconLiteral="mdi2c-check-bold" iconSize="16" iconColor="white"/></graphic>
+        </Button>
+    </HBox>
+</VBox>

@@ -31,8 +31,8 @@
     </VBox>
 
     <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="editor-panel">
-        <TextField fx:id="filtroField" onAction="#cargar" promptText="Persona" HBox.hgrow="ALWAYS"/>
-        <Button onAction="#cargar" styleClass="secondary-button" text="Actualizar"/>
+        <TextField fx:id="filtroField" onAction="#buscar" promptText="Apellido, nombre o DNI..." HBox.hgrow="ALWAYS"/>
+        <Button onAction="#buscar" text="Buscar"/>
     </HBox>
 
     <VBox spacing="10.0" styleClass="editor-panel" VBox.vgrow="ALWAYS">

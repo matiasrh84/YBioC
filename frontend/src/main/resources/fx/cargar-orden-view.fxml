@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<VBox spacing="12.0"
+      styleClass="content"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ybc.ybioq.fx.controller.CargarOrdenFxController">
+    <padding>
+        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
+    </padding>
+
+    <!-- Modo edición (oculto en modo creación) -->
+    <Label fx:id="lblModoOrden" managed="false" visible="false"
+           style="-fx-font-size: 14px; -fx-font-weight: 700; -fx-text-fill: #b45309; -fx-background-color: #fef3c7; -fx-padding: 6 12; -fx-background-radius: 6;"/>
+
+    <!-- ══ PACIENTE ══════════════════════════════════════════════ -->
+    <VBox spacing="8.0" styleClass="editor-panel">
+        <Label styleClass="panel-title" text="Paciente"/>
+        <GridPane hgap="10.0" vgap="8.0">
+            <!-- DNI -->
+            <VBox fx:id="vboxBuscarDni" spacing="4.0" GridPane.columnIndex="0" GridPane.rowIndex="0" minWidth="180.0">
+                <Label styleClass="field-label" text="DNI"/>
+                <HBox spacing="6.0">
+                    <TextField fx:id="txtDni" onAction="#buscarPorDni" promptText="Ingrese DNI..." HBox.hgrow="ALWAYS"/>
+                    <Button onAction="#buscarPorDni" text="Buscar">
+                        <graphic><FontIcon iconLiteral="mdi2m-magnify" iconSize="16" iconColor="white"/></graphic>
+                    </Button>
+                </HBox>
+            </VBox>
+            <!-- Nombre del paciente -->
+            <VBox spacing="4.0" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.hgrow="ALWAYS">
+                <Label styleClass="field-label" text="Paciente"/>
+                <Label fx:id="lblPaciente" style="-fx-font-weight: 700; -fx-font-size: 14px;" text="(sin seleccionar)"/>
+            </VBox>
+            <!-- Obra Social -->
+            <VBox spacing="4.0" GridPane.columnIndex="0" GridPane.rowIndex="1" minWidth="180.0">
+                <Label styleClass="field-label" text="Obra Social"/>
+                <ComboBox fx:id="cboObraSocial" maxWidth="Infinity" onAction="#sincronizarObraSocial"/>
+            </VBox>
+            <!-- Número de afiliado -->
+            <VBox spacing="4.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.hgrow="ALWAYS">
+                <Label styleClass="field-label" text="Nro. afiliado"/>
+                <TextField fx:id="txtNumeroAfiliado" promptText="Automático"/>
+            </VBox>
+        </GridPane>
+    </VBox>
+
+    <!-- ══ DATOS DE LA ORDEN ═══════════════════════════════════════ -->
+    <VBox spacing="8.0" styleClass="editor-panel">
+        <Label styleClass="panel-title" text="Datos de la orden"/>
+        <GridPane hgap="10.0" vgap="8.0">
+            <!-- Nro. de orden -->
+            <VBox spacing="4.0" GridPane.columnIndex="0" GridPane.rowIndex="0" minWidth="180.0">
+                <Label styleClass="field-label" text="Nro. de orden (OS)"/>
+                <TextField fx:id="txtNumeroOrden" promptText="Ej: A-001234"/>
+            </VBox>
+            <!-- Tipo de orden -->
+            <VBox spacing="4.0" GridPane.columnIndex="1" GridPane.rowIndex="0" minWidth="160.0">
+                <Label styleClass="field-label" text="Tipo"/>
+                <ComboBox fx:id="cboTipoOrden" maxWidth="Infinity"/>
+            </VBox>
+            <!-- Médico -->
+            <VBox spacing="4.0" GridPane.columnIndex="0" GridPane.rowIndex="1" minWidth="180.0">
+                <Label styleClass="field-label" text="Médico"/>
+                <TextField fx:id="txtMedico" promptText="Buscar médico..."/>
+            </VBox>
+            <!-- Especialidad -->
+            <VBox spacing="4.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.hgrow="ALWAYS">
+                <Label styleClass="field-label" text="Especialidad"/>
+                <ComboBox fx:id="cboEspecialidad" maxWidth="Infinity"/>
+            </VBox>
+        </GridPane>
+    </VBox>
+
+    <!-- ══ PRÁCTICAS ══════════════════════════════════════════════ -->
+    <VBox spacing="8.0" styleClass="editor-panel" VBox.vgrow="ALWAYS">
+        <Label styleClass="panel-title" text="Prácticas"/>
+
+        <HBox spacing="8.0" alignment="CENTER_LEFT">
+            <TextField fx:id="txtBuscarPractica" onAction="#agregarPractica"
+                       promptText="Código o nombre..." HBox.hgrow="ALWAYS"/>
+            <Button onAction="#agregarPractica" text="Agregar">
+                <graphic><FontIcon iconLiteral="mdi2p-plus" iconSize="16" iconColor="white"/></graphic>
+            </Button>
+            <Button onAction="#quitarPractica" styleClass="danger-button" text="Quitar"/>
+        </HBox>
+
+        <TableView fx:id="tablaPracticas" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colCodigo"  text="Código"   minWidth="70.0"  maxWidth="90.0"/>
+                <TableColumn fx:id="colNombre"  text="Práctica" minWidth="200.0"/>
+                <TableColumn fx:id="colPrecio"  text="Precio"   minWidth="90.0"  maxWidth="120.0"/>
+                <TableColumn fx:id="colCodFac"  text="Cód. Fac" minWidth="80.0"  maxWidth="110.0"/>
+            </columns>
+        </TableView>
+
+        <HBox alignment="CENTER_RIGHT" spacing="8.0">
+            <Label styleClass="field-label" text="Total:"/>
+            <Label fx:id="lblTotal" style="-fx-font-weight: 700; -fx-font-size: 16px;" text="/$ 0.00"/>
+        </HBox>
+    </VBox>
+
+    <!-- ══ ACCIONES ═══════════════════════════════════════════════ -->
+    <Separator/>
+    <Label fx:id="mensajeLabel" styleClass="form-message" wrapText="true"/>
+    <HBox spacing="8.0">
+        <Button maxWidth="Infinity" onAction="#limpiarFormulario"
+                styleClass="secondary-button" text="Limpiar" HBox.hgrow="ALWAYS"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button onAction="#cerrar" styleClass="secondary-button" text="Cerrar"/>
+        <Button onAction="#guardar" text="Guardar Orden" style="-fx-font-weight: 700;">
+            <graphic><FontIcon iconLiteral="mdi2c-check-bold" iconSize="16" iconColor="white"/></graphic>
+        </Button>
+    </HBox>
+</VBox>
